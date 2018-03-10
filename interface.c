@@ -8,7 +8,7 @@
 GtkEntryBuffer *buffer;
 GtkWidget *window;
 
-GtkListStore* storeCode, storeHeap, storeOP, storeCall;
+GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 
 //-----------------------------------------------------------------------------//
 
@@ -21,8 +21,12 @@ static void bExeT (GtkWidget *widget, gpointer data) {
   g_print ("Click Executar N\n");
 }
 
-static void bLoadFile (GtkWidget *widget, gpointer data) {
-  g_print ("Click Load Ficheiros\n");
+static void bLoadPFile (GtkWidget *widget, gpointer data) {
+  g_print ("Click Load Programa\n");
+}
+
+static void bLoadIFile (GtkWidget *widget, gpointer data) {
+  g_print ("Click Load Input\n");
 }
 
 //-----------------------------------------------------------------------------//
@@ -33,30 +37,54 @@ static void activateInputs (GtkWidget *grid) {
 
   buffer = gtk_entry_buffer_new ("-1", 25);
   entry = gtk_entry_new_with_buffer (buffer);
-  gtk_grid_attach (GTK_GRID (grid), entry, 5, 3, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), entry, 6, 2, 1, 1);
 
     //-----------------------------------------//
 
   GtkWidget *button;
 
-  button = gtk_button_new_with_label ("Execute");
+  button = gtk_button_new_with_label ("Execute 1");
   g_signal_connect (button, "clicked", G_CALLBACK (bExe), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 5, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 5, 1, 2, 1);
 
-  button = gtk_button_new_with_label ("Execute N");
+  button = gtk_button_new_with_label ("Execute N:");
   g_signal_connect (button, "clicked", G_CALLBACK (bExeT), NULL);
   gtk_grid_attach (GTK_GRID (grid), button, 5, 2, 1, 1);
 
-  button = gtk_button_new_with_label ("Load File");
-  g_signal_connect (button, "clicked", G_CALLBACK (bLoadFile), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 5, 4, 1, 1);
+  button = gtk_button_new_with_label ("Load Program File");
+  g_signal_connect (button, "clicked", G_CALLBACK (bLoadPFile), NULL);
+  gtk_grid_attach (GTK_GRID (grid), button, 5, 3, 2, 1);
+
+  button = gtk_button_new_with_label ("Load Input File");
+  g_signal_connect (button, "clicked", G_CALLBACK (bLoadIFile), NULL);
+  gtk_grid_attach (GTK_GRID (grid), button, 5, 4, 2, 1);
+
+    //-----------------------------------------//
+
+  GtkWidget *scrolled_window;
+  GtkWidget *view;
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+
+  gtk_widget_set_hexpand (scrolled_window, TRUE);
+  gtk_widget_set_vexpand (scrolled_window, TRUE);
+
+  view = gtk_text_view_new ();
+
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), TRUE);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 5, 5, 2, 1);
+
 }
+
+//-----------------------------------------------------------------------------//
 
 static void activateStacks (GtkListStore *store, GtkWidget *grid, int x, int y) {
 
   enum { C1, C2, C3, C4, NUM_COLS };
-
-  GtkTreeIter   iter;
 
   GtkWidget       *view;
   GtkCellRenderer *renderer;
@@ -81,21 +109,19 @@ static void activateStacks (GtkListStore *store, GtkWidget *grid, int x, int y) 
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 
-  gtk_widget_show (scrolled_window);
   gtk_widget_set_hexpand (scrolled_window, TRUE);
   gtk_widget_set_vexpand (scrolled_window, TRUE);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, x, y, 1, 25);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, x, y, 1, 5);
 
-    //-----------------------------------------//
+  GtkTreeIter iter;
 
   for (int i=0; i<50; i++){
     gtk_list_store_append (store, &iter);
     gtk_list_store_set (store, &iter, C1, i, C2, "a", C3, i+i, C4, i*i, -1);
   }
 
-  gtk_widget_show_all (window);
 }
 
 //-----------------------------------------------------------------------------//
@@ -124,6 +150,11 @@ static void activate (GtkApplication *app, gpointer user_data) {
   activateStacks (storeCode, grid, 2, 1);
   activateStacks (storeCode, grid, 3, 1);
   activateStacks (storeCode, grid, 4, 1);
+
+    //-----------------------------------------//
+
+  gtk_widget_show_all (window);
+
 }
 
 //-----------------------------------------------------------------------------//
