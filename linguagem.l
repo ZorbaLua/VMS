@@ -23,7 +23,7 @@
 "DIV"   { yylval.cha = '/'; return OCP; }
 "MOD"   { yylval.cha = '%'; return OCP; }
 
-"NOT"   { yylval.cha = 'z'; return OSP; }
+"NOT"   { yylval.cha = 'z'; return OSP; } // Duvida
 
 "INF"   { yylval.cha = 'l'; return REL; }
 "INFEQ" { yylval.cha = 'L'; return REL; }
@@ -42,6 +42,10 @@
 "FMUL"   { yylval.cha = '*'; return FOCP; }
 "FDIV"   { yylval.cha = '/'; return FOCP; }
 
+"FCOS"   { yylval.cha = 'c'; return FOP; }
+"FSIN"   { yylval.cha = 's'; return FOP; }
+"FTAN"   { yylval.cha = 't'; return FOP; } // ?
+
 "FINF"   { yylval.cha = 'l'; return FREL; }
 "FINFEQ" { yylval.cha = 'L'; return FREL; }
 "FSUP"   { yylval.cha = 'g'; return FREL; }
@@ -49,13 +53,10 @@
 "FEQ"    { yylval.cha = 'e'; return FREL; } // ?
 "FDIF"   { yylval.cha = 'n'; return FREL; } // ?
 
-"FCOS"   { yylval.cha = 'c'; return FOP; }
-"FSIN"   { yylval.cha = 's'; return FOP; }
-"FTAN"   { yylval.cha = 't'; return FOP; } // ?
-
   //-Operacoes Sobre Enderecos---------------------//
 
-"PADD"   { yylval.cha = 'p'; return PD; }
+"PADD"   { yylval.cha = 'p'; return ED; }
+"CONCAT" { yylval.cha = 'c'; return ED; }
 
   //-Operacoes Sobre Cadeias de Caracteres---------//
 
@@ -65,7 +66,6 @@
 
   //-Igualdade-------------------------------------//
 
-    // Comandos diferentes para soma, div etc. mas o mesmo para a igualdade?
 "EQUAL"  { yylval.cha = 'e'; return REL; }
 
   //-Conversoes------------------------------------//
@@ -112,8 +112,6 @@
 
   //-Input/Output----------------------------------//
 
-"WRITE"  {                   return WRITE; } // ?
-
 "WRITEI" { yylval.cha = 'i'; return WRITE; }
 "WRITEF" { yylval.cha = 'f'; return WRITE; }
 "WRITES" { yylval.cha = 's'; return WRITE; }
@@ -126,7 +124,7 @@
 
   //-Primitivas Graficas---------------------------//
 
-    // Apartida nada
+    // Apartida Nada
 
   //-Registo PC------------------------------------//
 
@@ -158,6 +156,6 @@
 
 [ \t\n]*          { ; }
 "//".*            { ; }
-
 .                 { GString *erro = GSN(""); GSAP(erro,"\e[1minvalid char: \"%s\"\e[0m\n", yytext); yyerror(erro->str); }
+
 %%

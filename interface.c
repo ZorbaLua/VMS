@@ -10,6 +10,7 @@ GtkWidget *window;
 
 GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 
+//-----------------------------------------------------------------------------//
 
 static char GtkFileOpen () {
   GtkWidget *dialog;
@@ -35,6 +36,7 @@ static char GtkFileOpen () {
 
 static void bExe (GtkWidget *widget, gpointer data) {
   g_print ("Click Executar\n");
+  //gtk_tree_view_set_cursor (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *focus_column, gboolean start_editing);
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
