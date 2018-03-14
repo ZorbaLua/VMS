@@ -13,7 +13,7 @@
 
 %%
 
-// Operacoes com "?" nao estao na VMS anterior
+  // Operacoes com "?" nao estao na VMS anterior
 
   //-Operacoes Sobre Inteiros----------------------//
 
@@ -33,9 +33,6 @@
 "DIF"   { yylval.cha = 'n'; return REL; } // ?
 
   //-Operacoes Sobre Flutuantes--------------------//
-
-    // Nao sei se ignoramos a distincao entre operacoes sobre inteiros e floats...
-    // ou fazemos como esta na VMS anterior
 
 "FADD"   { yylval.cha = '+'; return FOSP; }
 "FSUB"   { yylval.cha = '-'; return FOSP; }

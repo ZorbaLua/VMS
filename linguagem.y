@@ -30,12 +30,15 @@ Instruction : Function0                 { }
             | Function2                 { }
             ; // Incompleto
 
-Function0 : Calc                        { getCalc(&$$, $1); }
+Function0 : ADD                         { getCalc(&$$, $1); }
+          |
+          |
+          |
+          |
+          |
+          |
 
-
-
-
-%%
+|%%
 
 void initArgs(GString **ret) {
   stackA=-1;

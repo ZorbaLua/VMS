@@ -73,16 +73,20 @@ static void activateLables (GtkWidget *grid) {
   label = gtk_label_new ("OPStack");
   gtk_grid_attach (GTK_GRID (grid), label, 9, 0, 3, 1);
 
-  /*
+  //-------------------------------------------//
+
   label = gtk_label_new ("PC:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 12, 0, 1, 1);
 
   label = gtk_label_new ("FP:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1);
 
   label = gtk_label_new ("SP:0");
+  gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1);
+
+  label = gtk_label_new ("GP:0");
   gtk_grid_attach (GTK_GRID (grid), label, 15, 0, 1, 1);
-  */
+
 }
 
 //-----------------------------------------------------------------------------//
@@ -97,7 +101,7 @@ static void activateInputs (GtkWidget *grid) {
   bufferS = gtk_entry_buffer_new ("-1", 3);
   entry = gtk_entry_new_with_buffer (bufferS);
   gtk_entry_set_max_length (GTK_ENTRY (entry), 5);
-  gtk_grid_attach (GTK_GRID (grid), entry, 15, 2, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), entry, 14, 2, 2, 1);
 
     //-----------------------------------------//
 
@@ -109,7 +113,7 @@ static void activateInputs (GtkWidget *grid) {
 
   button = gtk_button_new_with_label ("Execute N:");
   g_signal_connect (button, "clicked", G_CALLBACK (bExeT), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 2, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 12, 2, 2, 1);
 
   button = gtk_button_new_with_label ("Load Program File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadPFile), NULL);
@@ -136,7 +140,7 @@ static void activateInputs (GtkWidget *grid) {
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 5, 4, 3);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 9, 4, 3);
 
     //-----------------------------------------//
 
@@ -152,7 +156,7 @@ static void activateInputs (GtkWidget *grid) {
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 8, 4, 4);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 5, 4, 4);
 
 }
 
