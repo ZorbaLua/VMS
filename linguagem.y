@@ -4,9 +4,9 @@
 
     /* Variaveis Globais */
 
-  GString *pof=NULL;
-  FILE *inFile=NULL;
-  FILE *outFile=NULL;
+  GString *pof  = NULL;
+  FILE *inFile  = NULL;
+  FILE *outFile = NULL;
 
   GHashTable *hDecs = NULL; //atencao as colisoes
   GHashTable *hFunc = NULL; //atencao as colisoes
@@ -24,19 +24,11 @@ Instructions : Instruction Instructions { }
              |                          { }
              ;
 
-// Mudar nomes
-Instruction : Function0                 { }
-            | Function1                 { }
-            | Function2                 { }
-            ; // Incompleto
+Instruction : Function                  { }
 
-Function0 : ADD                         { getCalc(&$$, $1); }
-          |
-          |
-          |
-          |
-          |
-          |
+
+
+
 
 |%%
 
