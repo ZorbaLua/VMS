@@ -1,10 +1,14 @@
 CC=gcc
 CFLAGS=-Wall
 
-darray: nodes darray.c
-	$(CC) $(CFLAGS) -o darray darray.c nodes.c
+teste: nodes.o darray.o 
+	$(CC) $(CFLAGS) -o teste teste.c darray.o nodes.o
 
-nodes: nodes.c
+darray.o: darray.c nodes.o 
+	$(CC) $(CFLAGS) -c darray.c
+
+nodes.o: nodes.c
 	$(CC) $(CFLAGS) -c nodes.c
 
-
+clean:
+	rm -f *.o

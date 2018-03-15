@@ -18,20 +18,3 @@ void addDarray(Darray da, Node n){
      da->node[da->len++] = n;
 }
 
-int main(){
-    /*
-    NodeCode n = NewNodeCode(0, "ola\n", 1);
-    printf("%s",n->a1.s);
-    NodeCode r = NewNodeCode(0, 1, 1);
-    printf("%d\n",r->a1.i);
-    */
-    Darray da = newDarray('c', 1024);
-
-    addDarray(da, NewNodeCode(0,1,1));
-    addDarray(da, NewNodeCode(0,2,1));
-    addDarray(da, NewNodeCode(0,3,1));
-    printf("%d\n",da->node[1].c->a1.i);
-
-}
-
-

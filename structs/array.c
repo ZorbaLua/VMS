@@ -29,7 +29,7 @@ int main(){
     addCodeStack(cs, NewNodeCode(0,1,1));
     addCodeStack(cs, NewNodeCode(0,2,1));
     addCodeStack(cs, NewNodeCode(0,3,1));
-    printf("%d\n",cs->nc[1]->a1.i);
+    printf("%d\n",cs->nc[1]->a1);
 }
 
 
