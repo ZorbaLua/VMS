@@ -1,11 +1,10 @@
 #ifndef node_H
 #define node_H
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "darray.h"
 
 #define NewNodeCode(x,y,z) newNodeCode(x,(Arg)y,(Arg)z)
+#define NewNodeOp(x,y) newNodeOp(x,(Value)y)
 
 typedef union arg{
     int i;
@@ -19,6 +18,9 @@ typedef struct nodeCode{
     Arg a2;
 } *NodeCode;
 
+
+NodeCode newNodeCode(int instruction, Arg a1, Arg a2);
+
 //----------------------------------------------------------------------------------------------------
 
 typedef union value{
@@ -26,19 +28,15 @@ typedef union value{
     float f;
 } Value;
 
-typedef struct nodeOpStack{ 
-    Value value;
+typedef struct nodeOp{ 
     char type;
-} *NodeOpStack;
+    Value value;
+} *NodeOp;
+
+NodeOp newNodeOp(char type, Value v);
 
 //----------------------------------------------------------------------------------------------------
 
-typedef union node{
-    NodeCode c;
-    NodeOpStack ops;
-} Node;
 
-
-Node newNodeCode(int instruction, Arg a1, Arg a2);
 
 #endif

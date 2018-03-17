@@ -1,20 +1,17 @@
 #ifndef DARRAY_H
 #define DARRAY_H
 
-#include "nodes.h"
-
-
 
 typedef struct darray{
     int len;
     int size;
-    char type;
-    Node* node;
+    void** array;
 } *Darray;
 
 
-Darray newDarray(char type, int size);
-void addDarray(Darray da, Node n);
+Darray newDarray(int size);
+void addDarray(Darray da, void* pt);
+void* getPos(Darray da, int index);
 
 
 #endif
