@@ -17,7 +17,9 @@ typedef struct opStack{
 
 
 
-void push(OperandElem);
+int opsPop(OperandElem*);
+int opsTop(OperandElem*);
+void opsPush(OperandElem, char pt);
 OperandElem newOperandElem(Value);
 void opStackInit(int);
 

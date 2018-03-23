@@ -9,9 +9,10 @@ typedef struct darray{
 } *Darray;
 
 
-Darray newDarray(int size);
-void addDarray(Darray da, void* pt);
-void* getPos(Darray da, int index);
+Darray newDarray(int);
+void addDarray(Darray, void*);
+void* removeDarray(Darray, int);
+void* getPos(Darray, int);
 
 
 #endif

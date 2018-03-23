@@ -1,8 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+
 typedef enum etype{
-    INTEGER,
+    INT,
     FLOAT,
     STRING,
     POINTER,
@@ -10,12 +11,76 @@ typedef enum etype{
 } Etype;
 
 typedef enum inst {
-  ADD, SUB, MUL, DIV, MOD, NOT, INF, INFEQ, SUP, SUPEQ, EQ, DIF, FADD, FSUB, FMUL,
-  FDIV, FCOS, FSIN, FTAN, FINF, FINFEQ, FSUP, FSUPEQ, FEQ, FDIF, PADD, CONCAT, ALLOC,
-  ALLOCN, FREE, EQUAL, ATOI, ATOF, ITOF, FTOI, STRI, STRF, PUSHI, PUSHN, PUSHF, PUSHS,
-  PUSHG, PUSHL, PUSHSP, PUSHFP, PUSHGP, LOAD, LOADN, DUP, DUPN, POP, POPN, STOREL, STOREG,
-  STORE, STOREN, CHECK, SWAP, WRITEI, WRITEF, WRITES, READ, READI, READF, READS, JUMP,
-  JZ, PUSHA, CALL, RETURN, START, NOP, ERR, STOP
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    MOD,
+    NOT,
+    INF,
+    INFEQ,
+    SUP,
+    SUPEQ,
+    EQ,
+    DIF,
+    FADD,
+    FSUB,
+    FMUL,
+    FDIV,
+    FCOS,
+    FSIN,
+    FTAN,
+    FINF,
+    FINFEQ,
+    FSUP,
+    FSUPEQ,
+    FEQ,
+    FDIF,
+    PADD,
+    CONCAT,
+    ALLOC,
+    ALLOCN,
+    FREE,
+    EQUAL,
+    ATOI,
+    ATOF,
+    ITOF,
+    FTOI,
+    STRI,
+    STRF,
+    PUSHI,
+    PUSHN,
+    PUSHF,
+    PUSHS,
+    PUSHG,
+    PUSHL,
+    PUSHSP,
+    PUSHFP,
+    PUSHGP,
+    LOAD,
+    LOADN,
+    DUP,
+    DUPN,
+    POP,
+    POPN,
+    STOREL,
+    STOREG,
+    STORE,
+    STOREN,
+    CHECK,
+    SWAP,
+    WRITE,
+    READ,
+    JUMP,
+    JZ,
+    PUSHA,
+    CALL,
+    RETURN,
+    START,
+    NOP,
+    ERR,
+    STOP,
+    LABEL
 } Einst;
 
 typedef union uvalue{
@@ -30,4 +95,5 @@ typedef struct value{
     Etype type;
 } Value;
 
+Value newValue(Uvalue,Etype);
 #endif

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "darray.h"
 
+
 typedef struct codeElem{
     Einst inst;
     Value first;
@@ -16,7 +17,7 @@ typedef struct code{
 } Code;
 
 void codeInit(int);
-CodeElem newCodeElem(Einst, Value, Value);
+CodeElem newCodeElem(Einst, Uvalue, Etype, Uvalue, Etype);
 void addCode(CodeElem);
 CodeElem getCode();
 

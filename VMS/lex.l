@@ -1,7 +1,6 @@
 %{
-/* Declaracoes C diversas */
+#include <unistd.h>
 #include "y.tab.h"
-#include "structs/types.h"
 %}
 
 %option noyywrap
@@ -18,7 +17,7 @@
 "div"    { return _DIV; }
 "mod"    { return _MOD; }
 
-"not"    { return _NOT; } // Duvida
+"not"    { return _NOT; } 
 
 "inf"    { return _INF;   }
 "infeq"  { return _INFEQ; }
@@ -94,16 +93,8 @@
 "swap"   { return _SWAP;  }
 
 
-"writei" { return _WRITEI; }
-"writef" { return _WRITEF; }
-"writes" { return _WRITES; }
-
+"write"  { return _WRITE; }
 "read"   { return _READ;   }
-
-"readi"  { return _READI;  } // ?
-"readf"  { return _READF;  } // ?
-"reads"  { return _READS;  } // ?
-
 
 "jump"   { return _JUMP;  }
 "jz"     { return _JZ;    }
@@ -120,16 +111,18 @@
 "stop"   { return _STOP;  }
 
 
--?[0-9]+"."[0-9]+ { yylval.v.type = FLOAT;      yylval.v.val = atof(yytext);    return _FLOAT; }
--?[0-9]+		  { yylval.v.type = INTEGER;    yylval.v.val = atoi(yytext);    return _INT; }
+-?[0-9]+"."[0-9]+ { yylval.f = atof(yytext);    return _FLOAT; }
+-?[0-9]+		  { yylval.i = atoi(yytext);    return _INT; }
 \"(\\.|[^"\\])*\" { return _STRING; }
 
 [a-z][a-zA-Z0-9]* { return _LABEL; }
 
-[\[\](){}=;,]     { return yytext[0]; }
-
 [ \t\n]*          { ; }
 "//".*            { ; }
-.                 { fprintf(stderr,"\e[1minvalid char: \"%s\"\e[0m\n", yytext); }
+.                 { _exit(0);}
+
+
 
 %%
+
+

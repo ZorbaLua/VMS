@@ -10,8 +10,10 @@ void codeInit(int size){
     code.pc = 0;
 }
 
-CodeElem newCodeElem(Einst inst, Value f, Value s){
+CodeElem newCodeElem(Einst inst, Uvalue v1, Etype t1, Uvalue v2, Etype t2){
     CodeElem ce = (CodeElem)malloc(sizeof(struct codeElem));
+    Value f = newValue(v1,t1);
+    Value s = newValue(v2,t2);
 
     ce->inst = inst;
     ce->first = f;
@@ -25,6 +27,7 @@ void addCode(CodeElem ce){
 }
 
 CodeElem getCode(){
+    code.pc += 1;
     return getPos(code.array, code.pc);
 }
 
