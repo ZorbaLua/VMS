@@ -17,7 +17,7 @@
 "div"    { return _DIV; }
 "mod"    { return _MOD; }
 
-"not"    { return _NOT; } 
+"not"    { return _NOT; }
 
 "inf"    { return _INF;   }
 "infeq"  { return _INFEQ; }
@@ -111,8 +111,8 @@
 "stop"   { return _STOP;  }
 
 
--?[0-9]+"."[0-9]+ { yylval.f = atof(yytext);    return _FLOAT; }
--?[0-9]+		  { yylval.i = atoi(yytext);    return _INT; }
+-?[0-9]+"."[0-9]+ { yylval.f = atof(yytext); return _FLOAT; }
+-?[0-9]+		      { yylval.i = atoi(yytext); return _INT; }
 \"(\\.|[^"\\])*\" { return _STRING; }
 
 [a-z][a-zA-Z0-9]* { return _LABEL; }
@@ -121,8 +121,4 @@
 "//".*            { ; }
 .                 { _exit(0);}
 
-
-
 %%
-
-

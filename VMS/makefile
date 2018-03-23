@@ -8,12 +8,12 @@ semantic.o: semantic.c
 	$(CC) $(CFLAGS) -c semantic.c
 
 ####################################################################################################
-structs: structs/types.o structs/darray.o structs/code.o structs/opStack.o 
+structs: structs/types.o structs/darray.o structs/code.o structs/opStack.o
 
-structs/types.o: structs/types.c 
+structs/types.o: structs/types.c
 	$(CC) $(CFLAGS) -c structs/types.c
 
-structs/darray.o: structs/darray.c  
+structs/darray.o: structs/darray.c
 	$(CC) $(CFLAGS) -c structs/darray.c
 
 structs/code.o: structs/code.c
@@ -30,16 +30,16 @@ structs/callStack.o: structs/callStack.c
 
 ####################################################################################################
 parser: y.tab.o lex.yy.o
-	
+
 y.tab.o: y.tab.c
 	$(CC) $(CFLAGS) -c y.tab.c
-	
+
 y.tab.c: syntax.y
 	yacc -d syntax.y
 
 lex.yy.o: lex.yy.c
 	$(CC) $(CFLAGS) -c lex.yy.c
-	
+
 lex.yy.c: lex.l
 	flex -l lex.l
 
