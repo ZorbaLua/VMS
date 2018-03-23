@@ -8,23 +8,24 @@
 extern Code code;
 extern OpStack opStack;
 
+
 int semPushi(Value v){
     OperandElem oe = newOperandElem(v);
-    opsPush(oe,'s');
+    OpStack_push(oe,'s');
 
     return 0;
 }
 
 int semPushf(Value v){ 
     OperandElem oe = newOperandElem(v);
-    opsPush(oe,'s');
+    OpStack_push(oe,'s');
 
     return 0;
 } 
 
 int semWrite(){
     OperandElem oe = NULL;
-    opsPop(&oe);
+    OpStack_pop(&oe);
     
     switch(oe->val.type){
         case INT    : printf("%d\n", oe->val.val.i); break;
@@ -38,16 +39,15 @@ int semNot(){
     OperandElem oe = NULL;
     Uvalue uv;
     Value v;
-    opsPop(&oe);
+    OpStack_pop(&oe);
     switch(oe->val.type){
         case INT    : uv = (Uvalue)(oe->val.val.i == 0); break;
         case FLOAT  : uv = (Uvalue)(oe->val.val.f == 0); break;
         case POINTER: uv = (Uvalue)(oe->val.val.p == 0); break;
         default     : return -1;
     }
-fprintf(stderr,"1: %d\n",uv.i);
     v = newValue(uv, INT);
-    opsPush(newOperandElem(v), 's');
+    OpStack_push(newOperandElem(v), 's');
 
     return 0;
 }   

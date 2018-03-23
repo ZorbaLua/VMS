@@ -2,14 +2,14 @@
 #define OPSTACK_H
 
 #include "types.h"
-#include "darray.h"
+#include "array.h"
 
 typedef struct operandElem{
     Value val;
 } *OperandElem;
 
 typedef struct opStack{
-    Darray array;
+    Array array;
     int sp;
     int fp;
     int gp;
@@ -17,10 +17,10 @@ typedef struct opStack{
 
 
 
-int opsPop(OperandElem*);
-int opsTop(OperandElem*);
-void opsPush(OperandElem, char pt);
+int OpStack_pop(OperandElem*);
+int OpStack_top(OperandElem*);
+void OpStack_push(OperandElem, char pt);
 OperandElem newOperandElem(Value);
-void opStackInit(int);
+void OpStack_init(int);
 
 #endif

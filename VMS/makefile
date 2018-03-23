@@ -2,19 +2,19 @@ CC=gcc
 CFLAGS=-Wall
 
 main: main.c semantic.o parser structs
-	$(CC) $(CFLAGS) main.c types.o darray.o code.o opStack.o semantic.o lex.yy.o y.tab.o -o main
+	$(CC) $(CFLAGS) main.c types.o array.o code.o opStack.o semantic.o lex.yy.o y.tab.o -o main
 
 semantic.o: semantic.c
 	$(CC) $(CFLAGS) -c semantic.c
 
 ####################################################################################################
-structs: structs/types.o structs/darray.o structs/code.o structs/opStack.o 
+structs: structs/types.o structs/array.o structs/code.o structs/opStack.o 
 
 structs/types.o: structs/types.c 
 	$(CC) $(CFLAGS) -c structs/types.c
 
-structs/darray.o: structs/darray.c  
-	$(CC) $(CFLAGS) -c structs/darray.c
+structs/array.o: structs/array.c  
+	$(CC) $(CFLAGS) -c structs/array.c
 
 structs/code.o: structs/code.c
 	$(CC) $(CFLAGS) -c structs/code.c

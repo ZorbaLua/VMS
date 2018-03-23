@@ -4,42 +4,38 @@
 #include <stdio.h>
 
 
-extern OpStack opStack;
+extern OpStack opstack;
 
-int opsPop(OperandElem* ret){
-    if(opStack.sp == opStack.fp) return -1;
-    *ret = removeDarray(opStack.array, opStack.sp-1);
-    opStack.sp -=1;
-    return 0;
+int OpStack_pop(OperandElem* ret){
+    if(opstack.sp == opstack.fp) return -1;
+    opstack.sp -= 1;
+    return Array_remove(&opstack.array, opstack.sp, (void**)ret);
 }
 
-int opsTop(OperandElem* ret){
-    *ret = getPos(opStack.array, opStack.sp-1);
-    return 0;
+int OpStack_top(OperandElem* ret){
+    return Array_getPos(&opstack.array, opstack.sp-1, (void**)ret);
 }
 
-void opsPush(OperandElem oe, char pt){
-    addDarray(opStack.array, oe);
+void OpStack_push(OperandElem oe, char pt){
+    Array_add(&opstack.array, oe);
     switch(pt){
-        case 's': opStack.sp += 1;
-        case 'g': opStack.gp += 1;
+        case 's': opstack.sp += 1;
+        case 'g': opstack.gp += 1;
     }
 }
 
 
-void opStackInit(int size){
-    opStack.array = newDarray(size);
-    opStack.sp = 0;
-    opStack.fp = 0;
-    opStack.gp = 0;
+void OpStack_init(int size){
+    Array_init(&opstack.array, size);
+    opstack.sp = 0;
+    opstack.fp = 0;
+    opstack.gp = 0;
 }
 
 
 OperandElem newOperandElem(Value v){
     OperandElem oe = (OperandElem)malloc(sizeof(struct operandElem));
-
     oe->val = v;
-
     return oe;
 }
 

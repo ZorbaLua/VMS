@@ -2,7 +2,7 @@
 #define CODE_H
 
 #include "types.h"
-#include "darray.h"
+#include "array.h"
 
 
 typedef struct codeElem{
@@ -12,13 +12,14 @@ typedef struct codeElem{
 } *CodeElem;
 
 typedef struct code{
-    Darray array;
+    Array array;
     int pc;
 } Code;
 
-void codeInit(int);
+void Code_add(CodeElem);
+int  Code_get(CodeElem*);
+
+void Code_init(int);
 CodeElem newCodeElem(Einst, Uvalue, Etype, Uvalue, Etype);
-void addCode(CodeElem);
-CodeElem getCode();
 
 #endif

@@ -8,11 +8,10 @@
 
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
+Code code;
+OpStack opstack;
 
 int yyparse();
-// var globais
-Code code;
-OpStack opStack;
 
 void try(int erro){
     switch(erro){
@@ -24,7 +23,7 @@ void try(int erro){
 
 void runInst(CodeElem ce){
     Value f = ce->first;
-    Value s = ce->second;
+    //Value s = ce->second;
 
     switch(ce->inst){
         case ADD    :   semAdd();           break;	
@@ -101,20 +100,17 @@ void runInst(CodeElem ce){
 }
 
 void runProgram(){
-    CodeElem ce = getCode();
-    while(code.pc!=code.array->len && ce->inst!=STOP){
+    CodeElem ce;
+    while( !Code_get(&ce) ){
         runInst(ce);
-        ce = getCode();
     }
 }
 
-void vmsInit(){
-    codeInit(1024);
-    opStackInit(1024);
-}
 
 int main(){
-    vmsInit();
+    Code_init(1024);
+    OpStack_init(1024);
+
     yyparse();
     //for(int i=0; i<3; i++) printf("%d\n", ((CodeElem)(code.array->array[i]))->first.val.i);
     runProgram();

@@ -7,6 +7,7 @@
 #define newCodeElem(x,y1,y2,z1,z2) newCodeElem(x,(Uvalue)y1,y2,(Uvalue)z1,z2)
 
 extern int yylineno;
+extern Code code;
 
 void yyerror (const char*);
 int yylex();
@@ -106,12 +107,12 @@ Program : Instr Program
         | 
         ;
 
-Instr   :_PUSHI _INT                { addCode(newCodeElem(PUSHI  , $2, INT    , -1, NOTHING)); } 
-        |_PUSHF _FLOAT              { addCode(newCodeElem(PUSHF  , $2, FLOAT  , -1, NOTHING)); }	     
-        |_START                     { addCode(newCodeElem(START  , -1, NOTHING, -1, NOTHING)); } 
-        |_ADD                       { addCode(newCodeElem(ADD    , -1, NOTHING, -1, NOTHING)); }    
-        |_WRITE                     { addCode(newCodeElem(WRITE  , -1, NOTHING, -1, NOTHING)); } 
-        |_NOT                       { addCode(newCodeElem(NOT    , -1, NOTHING, -1, NOTHING)); }	      
+Instr   :_PUSHI _INT                { Code_add(newCodeElem(PUSHI  , $2, INT    , -1, NOTHING)); } 
+        |_PUSHF _FLOAT              { Code_add(newCodeElem(PUSHF  , $2, FLOAT  , -1, NOTHING)); }	     
+        |_START                     { Code_add(newCodeElem(START  , -1, NOTHING, -1, NOTHING)); } 
+        |_ADD                       { Code_add(newCodeElem(ADD    , -1, NOTHING, -1, NOTHING)); }    
+        |_WRITE                     { Code_add(newCodeElem(WRITE  , -1, NOTHING, -1, NOTHING)); } 
+        |_NOT                       { Code_add(newCodeElem(NOT    , -1, NOTHING, -1, NOTHING)); }	      
         ;
 //|_SUB	     
 //|_MUL	     
