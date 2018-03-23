@@ -10,7 +10,7 @@ semantic.o: semantic.c
 ####################################################################################################
 structs: structs/types.o structs/array.o structs/code.o structs/opStack.o 
 
-structs/types.o: structs/types.c 
+structs/types.o: structs/types.c
 	$(CC) $(CFLAGS) -c structs/types.c
 
 structs/array.o: structs/array.c  
@@ -30,16 +30,16 @@ structs/callStack.o: structs/callStack.c
 
 ####################################################################################################
 parser: y.tab.o lex.yy.o
-	
+
 y.tab.o: y.tab.c
 	$(CC) $(CFLAGS) -c y.tab.c
-	
+
 y.tab.c: syntax.y
 	yacc -d syntax.y
 
 lex.yy.o: lex.yy.c
 	$(CC) $(CFLAGS) -c lex.yy.c
-	
+
 lex.yy.c: lex.l
 	flex -l lex.l
 
