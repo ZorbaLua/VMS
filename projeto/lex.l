@@ -1,5 +1,6 @@
 %{
 #include <unistd.h>
+#include <glib.h>
 #include "structs/types.h"
 #include "structs/code.h"
 #include "y.tab.h"
@@ -113,9 +114,9 @@
 "stop"   { return _STOP;  }
 
 
--?[0-9]+"."[0-9]+   { yylval.f = atof(yytext); return _FLOAT; }
--?[0-9]+		    { yylval.i = atoi(yytext); return _INT; }
-\"(\\.|[^"\\])*\"   { return _STRING; }
+-?[0-9]+"."[0-9]+   { yylval.f = atof(yytext);          return _FLOAT; }
+-?[0-9]+		    { yylval.i = atoi(yytext);          return _INT; }
+\"(\\.|[^"\\])*\"   { yylval.s = g_string_new(yytext);  return _STRING; }
 
 [a-z][a-zA-Z0-9]*   { return _LABEL; }
 

@@ -7,21 +7,29 @@
 #include "structs/code.h"
 #include "structs/opStack.h"
 #include "structs/callStack.h"
+#include "structs/heap.h"
 
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
 Code code;
 OpStack opstack;
 CallStack callstack;
+Heap heap;
+int codeSize = 10000;
+int opSize   = 1000;
+int callSize = 100;
+int heapSize = 1000;
+
 
 int yyparse();
 
-void try (int erro) {
+void try(int erro) {
     switch (erro) {
-        case 0: return;
-        case -2: eprintf("Aritmetic operation mod only defined to int\n");
+        case  0: return;
+        case -1: eprintf("Missing input file\n");                           break;
+        case -2: eprintf("Aritmetic operation mod only defined to int\n");  break;
     }
-    _exit(-1);
+    _exit(erro);
 }
 
 void runInst(CodeElem ce){
@@ -31,129 +39,162 @@ void runInst(CodeElem ce){
     switch(ce->inst){
 
       //-Operacoes Sobre Inteiros----------------------//
-        case ADD    : semAdd();     break;
-        case SUB    : semSub();     break;
-        case MUL    : semMul();     break;
-        case DIV    : semDiv();     break;
-        case MOD    : semMod();     break;
+        case ADD    : semAdd();     break;//x 
+        case SUB    : semSub();     break;//x
+        case MUL    : semMul();     break;//x
+        case DIV    : semDiv();     break;//x
+        case MOD    : semMod();     break;//x
 
-        case NOT    : semNot();     break; 
+        case NOT    : semNot();     break;//x 
 
-        case INF    : semInf();     break;
-        case INFEQ  : semInfeq();   break;
-        case SUP    : semSup();     break;
-        case SUPEQ  : semSupeq();   break;
-        case EQ	    : semEq();      break;
-        case DIF    : semDif();     break;
+        case INF    : semInf();     break;//x
+        case INFEQ  : semInfeq();   break;//x
+        case SUP    : semSup();     break;//x
+        case SUPEQ  : semSupeq();   break;//x
+        case EQ	    : semEq();      break;//x
+        case DIF    : semDif();     break;//x
 
       //-Operacoes Sobre Flutuantes--------------------//
-        case FADD   : semFadd();  	break;
-        case FSUB   : semFsub();  	break;
-        case FMUL   : semFmul();  	break;
-        case FDIV   : semFdiv();  	break;
+        case FADD   : semFadd();  	break;//x
+        case FSUB   : semFsub();  	break;//x
+        case FMUL   : semFmul();  	break;//x
+        case FDIV   : semFdiv();  	break;//x
 
-        case FCOS   : semFcos();  	break;
-        case FSIN   : semFsin();  	break;
-        case FTAN   : semFtan();  	break;
+        case FCOS   : semFcos();  	break;//x
+        case FSIN   : semFsin();  	break;//x
+        case FTAN   : semFtan();  	break;//x
 
-        case FINF   : semFinf();  	break;
-        case FINFEQ : semFinfeq();  break;
-        case FSUP   : semFsup();  	break;
-        case FSUPEQ : semFsupeq();  break;
-        case FEQ    : semFeq();   	break;
-        case FDIF   : semFdif();  	break;
+        case FINF   : semFinf();  	break;//x
+        case FINFEQ : semFinfeq();  break;//x
+        case FSUP   : semFsup();  	break;//x
+        case FSUPEQ : semFsupeq();  break;//x
+        case FEQ    : semFeq();   	break;//x
+        case FDIF   : semFdif();  	break;//x
 
       //-Operacoes Sobre Enderecos---------------------//
-        case PADD   : semPadd();  	break;
-        case CONCAT : semConcat();  break;
-
+        case PADD   : semPadd();  	break;//x
+                      
       //-Operacoes Sobre Cadeias de Caracteres---------//
-        case ALLOC  : semAlloc();   break;
-        case ALLOCN : semAllocn();  break;
-        case FREE   : semFree();  	break;
+        case CONCAT : semConcat();  break;//x
+
+      //-Operacoes Sobre Heap--------------------------//
+        case ALLOC  : semAlloc();   break;//x
+        case ALLOCN : semAllocn();  break;//x
+        case FREE   : semFree();  	break;//x
 
       //-Igualdade-------------------------------------//
-        case EQUAL  : semEqual();   break;
+        case EQUAL  : semEqual();   break;//x
 
       //-Conversoes------------------------------------//
-        case ATOI   : semAtoi();  	break;
-        case ATOF   : semAtof();  	break;
-        case ITOF   : semItof();  	break;
-        case FTOI   : semFtoi();  	break;
-        case STRI   : semStri();  	break;
-        case STRF   : semStrf();  	break;
+        case ATOI   : semAtoi();  	break;//x
+        case ATOF   : semAtof();  	break;//x
+        case ITOF   : semItof();  	break;//x
+        case FTOI   : semFtoi();  	break;//x
+        case STRI   : semStri();  	break;//x
+        case STRF   : semStrf();  	break;//x
 
       //-Empilhar--------------------------------------//
-        case PUSHI  : semPushi(f);  break;//
-        case PUSHN  : semPushn();   break;
-        case PUSHF  : semPushf(f);  break;//
-        case PUSHS  : semPushs();   break;
-        case PUSHG  : semPushg();   break;
-        case PUSHL  : semPushl();   break;
-        case PUSHSP : semPushsp();  break;
-        case PUSHFP : semPushfp();  break;
-        case PUSHGP : semPushgp();  break;
-        case LOAD   : semLoad();  	break;
-        case LOADN  : semLoadn();   break;
-        case DUP    : semDup();  	break;
-        case DUPN   : semDupn();  	break;
+        case PUSHI  : semPushi(f);  break;//v
+        case PUSHN  : semPushn();   break;//x
+        case PUSHF  : semPushf(f);  break;//v
+        case PUSHS  : semPushs();   break;//x
+        case PUSHG  : semPushg();   break;//x
+        case PUSHL  : semPushl();   break;//x
+        case PUSHSP : semPushsp();  break;//x
+        case PUSHFP : semPushfp();  break;//x
+        case PUSHGP : semPushgp();  break;//x
+        case LOAD   : semLoad();  	break;//x
+        case LOADN  : semLoadn();   break;//x
+        case DUP    : semDup();  	break;//x
+        case DUPN   : semDupn();  	break;//x
 
       //-Retirar---------------------------------------//
-        case POP    : semPop();   	break;
-        case POPN   : semPopn();  	break;
+        case POP    : semPop();   	break;//x
+        case POPN   : semPopn();  	break;//x
 
       //-Arquivar--------------------------------------//
-        case STOREL : semStorel();  break;
-        case STOREG : semStoreg();  break;
-        case STORE  : semStore();   break;
-        case STOREN : semStoren();  break;
+        case STOREL : semStorel();  break;//x
+        case STOREG : semStoreg();  break;//x
+        case STORE  : semStore();   break;//x
+        case STOREN : semStoren();  break;//x
 
       //-Diversos--------------------------------------//
-        case CHECK  : semCheck();   break;
-        case SWAP   : semSwap();  	break;
+        case CHECK  : semCheck();   break;//x
+        case SWAP   : semSwap();  	break;//x
 
       //-Input/Output----------------------------------//
-        case WRITE  : semWrite();   break;
-        case READ   : semRead();  	break;
+        case WRITE  : semWrite();   break;//x
+        case READ   : semRead();  	break;//x
 
       //-Registo PC------------------------------------//
-        case JUMP   : semJump();  	break;
-        case JZ     : semJz();    	break;
-        case PUSHA  : semPusha();   break;
+        case JUMP   : semJump();  	break;//x
+        case JZ     : semJz();    	break;//x
+        case PUSHA  : semPusha();   break;//x
 
       //-Procedimentos---------------------------------//
-        case CALL   : semCall();  	break;
-        case RETURN : semReturn();  break;
+        case CALL   : semCall();  	break;//x
+        case RETURN : semReturn();  break;//x
 
       //-Inicializacao e Fim---------------------------//
-        case START  : semStart();   break;
-        case NOP    : semNop();   	break;
-        case ERR    : semErr();   	break;
-        case STOP   : semStop();  	break;
+        case START  : semStart();   break;//x
+        case NOP    : semNop();   	break;//x
+        case ERR    : semErr();   	break;//x
+        case STOP   : semStop();  	break;//x
 
       //-Extra-----------------------------------------//
-        case LABEL  : semLabel();   break;
+        case LABEL  : semLabel();   break;//x
     }
 }
 
 void runProgram(){
     CodeElem ce;
     while( !Code_get(&ce)){
-        printf("ola\n");
         printCode(ce, ' ');
         runInst(ce);
     }
 }
 
+void execGui(){
+    int d[2];
+    pipe(d);
+    if(!fork()){//parent
+        
+    }
+    else{
+        execvp("interface", NULL);
+    }
+}
 
-int main(){
-    Code_init(1024);
-    OpStack_init(1024);
-    CallStack_init(100);
+void options(int argc, char** argv){
+    int i, j, k;
+    if(argc < 2) try(-1);
+    for(i=1; i<argc; i++){
+        if(argv[i][0] == '-'){
+            k=1;
+            for(j=1; argv[i][j] != '\0'; j++){
+                switch(argv[i][j]){
+                    case 's': break; 
+                    case 'c': codeSize = atoi(argv[i+k++]); break;
+                    case 'o': opSize = atoi(argv[i+k++]);   break;
+                    case 'C': callSize = atoi(argv[i+k++]); break;
+                    case 'h': heapSize = atoi(argv[i+k++]); break;
+                    case 'g': execGui();                    break;
+                }
+            }
+        }
+    }
+}
+
+int main(int argc, char** argv){
+    options(argc, argv);
+    Code_init(codeSize);
+    OpStack_init(opSize);
+    CallStack_init(callSize);
+    Heap_init(heapSize);
 
 
     yyparse();
     runProgram();
 
-    return 0;
+    _exit(0);
 }

@@ -10,16 +10,16 @@ typedef struct operandElem{
 
 typedef struct opStack{
     Array stack;
-    int sp;
-    int fp;
-    int gp;
+    opPt sp;
+    opPt fp;
+    opPt gp;
 } OpStack;
 
 
 
 int OpStack_pop(OperandElem*);
 int OpStack_top(OperandElem*);
-void OpStack_push(OperandElem, char pt);
+void OpStack_push(OperandElem, char);
 
 OperandElem newOperandElem(Value);
 void OpStack_init(int);

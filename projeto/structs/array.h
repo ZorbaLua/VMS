@@ -2,8 +2,6 @@
 #define ARRAY_H
 
 
-typedef struct array Array;
-
 typedef struct array{
     int len;
     int size;

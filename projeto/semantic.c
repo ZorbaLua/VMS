@@ -7,6 +7,8 @@
 
 extern Code code;
 extern OpStack opstack;
+extern FILE* io;
+extern FILE* extra;
 
 int semPushi(Value v) {
     OperandElem oe = newOperandElem(v);
@@ -27,10 +29,12 @@ int semWrite() {
     OpStack_pop(&oe);
     
     switch(oe->val.type){
-        case INT    : printf("output\t%d\n", oe->val.val.i); break;
-        case FLOAT  : printf("output\t%f\n", oe->val.val.f); break;
+        case T_int    : printf("OUTPUT:\t%d\n", oe->val.val.i); break;
+        case T_float  : printf("OUTPUT:\t%f\n", oe->val.val.f); break;
+        case T_codePt : printf("OUTPUT:\t%d\n", oe->val.val.c); break;
+        case T_opPt   : printf("OUTPUT:\t%d\n", oe->val.val.o); break;
+        case T_heapPt : printf("OUTPUT:\t%d\n", oe->val.val.h); break;
         case NOTHING: return -1;
-        default     : printf("output\t%d\n", oe->val.val.i); break;
     }
     return 0;
 }
@@ -41,12 +45,14 @@ int semNot() {
     Value v;
     OpStack_pop(&oe);
     switch(oe->val.type){
-        case INT    : uv = (Uvalue)(oe->val.val.i == 0); break;
-        case FLOAT  : uv = (Uvalue)(oe->val.val.f == 0); break;
+        case T_int      : uv = (Uvalue)(oe->val.val.i == 0); break;
+        case T_float    : uv = (Uvalue)(oe->val.val.f == 0); break;
+        case T_codePt   : uv = (Uvalue)(oe->val.val.c == 0); break;
+        case T_opPt     : uv = (Uvalue)(oe->val.val.o == 0); break;
+        case T_heapPt   : uv = (Uvalue)(oe->val.val.h == 0); break;
         case NOTHING: return -1;
-        default     : uv = (Uvalue)(oe->val.val.i == 0); break;
     }
-    v = newValue(uv, INT);
+    v = newValue(uv, T_int);
     OpStack_push(newOperandElem(v), 's');
 
     return 0;

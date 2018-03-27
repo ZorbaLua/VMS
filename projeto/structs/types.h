@@ -4,13 +4,29 @@
 #define MAX_LINE 100
 
 typedef enum etype{
-    INT,
-    FLOAT,
-    CODE_PT,
-    OP_PT,
-    HEAP_PT,
+    T_int,
+    T_float,
+    T_codePt,
+    T_opPt,
+    T_heapPt,
     NOTHING
 } Etype;
+
+typedef int codePt, opPt, heapPt;
+
+typedef union uvalue{
+    int i;
+    float f;   
+    codePt c;
+    opPt o;  
+    heapPt h;
+} Uvalue; 
+
+typedef struct value{
+    Uvalue val;
+    Etype type;
+} Value;
+
 
 typedef enum inst {
     ADD,
@@ -85,15 +101,7 @@ typedef enum inst {
     LABEL
 } Einst;
 
-typedef union uvalue{
-    int i;
-    float f;
-} Uvalue; 
 
-typedef struct value{
-    Uvalue val;
-    Etype type;
-} Value;
 
 Value newValue(Uvalue,Etype);
 char* Value_toString(Value);

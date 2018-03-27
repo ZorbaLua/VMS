@@ -14,12 +14,12 @@ Value newValue(Uvalue val, Etype type){
 char* Value_toString(Value v){
     char* ret = (char*)malloc(MAX_LINE*sizeof(char));
     switch(v.type){
-        case INT    : snprintf(ret, 100, "[%d|%d]", INT, v.val.i);     break; 
-        case FLOAT  : snprintf(ret, 100, "[%d|%f]", FLOAT, v.val.f);   break; 
-        case CODE_PT: snprintf(ret, 100, "[%d|%d]", CODE_PT, v.val.i); break; 
-        case HEAP_PT: snprintf(ret, 100, "[%d|%d]", HEAP_PT, v.val.i); break; 
-        case OP_PT  : snprintf(ret, 100, "[%d|%d]", OP_PT, v.val.i);   break; 
-        case NOTHING: snprintf(ret, 100, "[%d|]"  , NOTHING);          break; 
+        case T_int      : snprintf(ret, 100, "[%d|%d]", T_int       , v.val.i);     break; 
+        case T_float    : snprintf(ret, 100, "[%d|%f]", T_float     , v.val.f);     break; 
+        case T_codePt   : snprintf(ret, 100, "[%d|%d]", T_codePt    , v.val.c);     break; 
+        case T_heapPt   : snprintf(ret, 100, "[%d|%d]", T_heapPt    , v.val.h);     break; 
+        case T_opPt     : snprintf(ret, 100, "[%d|%d]", T_opPt      , v.val.o);     break; 
+        case NOTHING    : snprintf(ret, 100, "[%d|]"  , NOTHING);   break; 
     }
     return ret;
 }
