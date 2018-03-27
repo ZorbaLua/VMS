@@ -1,5 +1,6 @@
 
 #include <gtk/gtk.h> // code heap opstack call stack
+#include <stdio.h>
 
 // gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0)
 
@@ -7,8 +8,11 @@
 
 GtkEntryBuffer *bufferS, *bufferConsole, *bufferInput;
 GtkWidget *window;
+GtkTreeIter iter;
 
 GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
+
+int ii = 0;  // mais tarde substituido pelo indicador do num de linhas em cada stack
 
 //-----------------------------------------------------------------------------//
 
@@ -162,70 +166,149 @@ static void activateInputs (GtkWidget *grid) {
 
 //-----------------------------------------------------------------------------//
 
-static void activateStacks (GtkListStore *store, int stack, GtkWidget *grid, int x, int y, int ll) {
+static void insCode(char *instr, int vA, int vB) {
+  enum stack {Index, Instruction, ValueA, ValueB, NUM_COLS };
+  gtk_list_store_append(storeCode, &iter);
+  gtk_list_store_set (storeCode, &iter, Index, ii, Instruction, instr, ValueA, vA, ValueB, vB, -1);
+}
 
-  enum stack {Index, C2, C3, C4, NUM_COLS };
-  static const char *nomes[] = {"Index", "C2", "C3", "C4"};
+static void insHeap(int val, char *tp) {
+  enum stack {Index, Value, Type, NUM_COLS };
+  gtk_list_store_append(storeHeap, &iter);
+  gtk_list_store_set (storeHeap, &iter, Index, ii, Value, val, Type, tp, -1);
+}
 
-  switch(stack){ //ESQUECIME QUE ISTO NAO DA PARA FAZER ASSIM, (AS VARIAVEIS SO ESTAO DECLARADAS DENTRO DO SWITCH...)
-    case 0: { enum stack {Index, Intruction, ValueA, ValueB, NUM_COLS }; // g_print ("0\n");
-      static const char *nomes[] = {"Index", "Intruction", "ValueA", "ValueB"};
-      store = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_INT, G_TYPE_INT ); break; }
-    case 1: { enum stack {Index, Value, Type, NUM_COLS }; // g_print ("1\n");
-      static const char *nomes[] = {"Index", "Value", "Type"};
-      store = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING); break; }
-    case 2: { enum stack {Index, PcValue, FpValue, NUM_COLS }; // g_print ("2\n");
-      static const char *nomes[] = {"Index", "PcValue", "FpValue"};
-      store = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT); break; }
-    case 3: { enum stack {Index, Value, Type, NUM_COLS }; // g_print ("3\n");
-      static const char *nomes[] = {"Index", "Value", "Type"};
-      store = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING); break; }
-    default:{ g_print ("ERRO INTERFACE STACKS\n");  enum fuck {C1, C2, C3, C4, NUM_COLS };
-          static const char *nomes[] = {"C1", "C2", "C3", "C4"}; break; }
-  }
+static void insOP(int pc, int fp) {
+  enum stack {Index, PcValue, FpValue, NUM_COLS };
+  gtk_list_store_append(storeOP, &iter);
+  gtk_list_store_set (storeOP, &iter, Index, ii, PcValue, pc, FpValue, fp, -1);
+}
+
+static void insCall(int val, char *tp) {
+  enum stack {Index, Value, Type, NUM_COLS };
+  gtk_list_store_append(storeCall, &iter);
+  gtk_list_store_set (storeCall, &iter, Index, ii, Value, val, Type, tp, -1);
+}
+
+//-----------------------------------------------------------------------------//
+
+static void criarJanela (GtkWidget *view, GtkWidget *grid, int x, int y, int xx, int yy) {
+
+  GtkWidget *scrolled_window;
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_hexpand (scrolled_window, TRUE);
+  gtk_widget_set_vexpand (scrolled_window, TRUE);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, x, y, xx, yy);
+
+}
+
+//-----------------------------------------------------------------------------//
+
+static void activateSCode (GtkWidget *grid, int x, int y, int xx, int yy) {
 
   GtkWidget       *view;
   GtkCellRenderer *renderer;
   GtkTreeModel    *model;
 
   view = gtk_tree_view_new ();
-  renderer = gtk_cell_renderer_text_new ();
+  renderer = gtk_cell_renderer_text_new ();\
 
-  for (int coluna = Index; coluna < NUM_COLS; coluna++){
+  enum stack {Index, Instruction, ValueA, ValueB, NUM_COLS };
+  static const char *nomes[] = {"Index", "Instruction", "ValueA", "ValueB"};
+  storeCode = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_INT, G_TYPE_INT );
+
+  for (int coluna = Index; coluna < NUM_COLS; coluna++) {
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
   }
 
-  /*
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, "Index", renderer, "text", Index, NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, "C2", renderer, "text", C2, NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, "C3", renderer, "text", C3, NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, "C4", renderer, "text", C4, NULL);
-  */
-
-  store = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_INT, G_TYPE_INT);
-
-  model = GTK_TREE_MODEL (store);
+  model = GTK_TREE_MODEL (storeCode);
   gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
 
-    //-----------------------------------------//
+  criarJanela(view, grid, x, y, xx, yy);
+}
 
-  GtkWidget *scrolled_window;
+static void activateSHeap (GtkWidget *grid, int x, int y, int xx, int yy) {
 
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget       *view;
+  GtkCellRenderer *renderer;
+  GtkTreeModel    *model;
 
-  gtk_widget_set_hexpand (scrolled_window, TRUE);
-  gtk_widget_set_vexpand (scrolled_window, TRUE);
+  view = gtk_tree_view_new ();
+  renderer = gtk_cell_renderer_text_new ();\
 
-  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, x, y, 3, 11);
+  enum stack {Index, Value, Type, NUM_COLS };
+  static const char *nomes[] = {"Index", "Value", "Type"};
+  storeHeap = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
 
-  GtkTreeIter iter;
-
-  for (int i=0; i<ll; i++){
-    gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter, Index, i, C2, "teste", C3, i+i, C4, i*i, -1);
+  for (int coluna = Index; coluna < NUM_COLS; coluna++) {
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
   }
 
+  model = GTK_TREE_MODEL (storeHeap);
+  gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
+
+  criarJanela(view, grid, x, y, xx, yy);
+}
+
+static void activateSOP (GtkWidget *grid, int x, int y, int xx, int yy) {
+
+  GtkWidget       *view;
+  GtkCellRenderer *renderer;
+  GtkTreeModel    *model;
+
+  view = gtk_tree_view_new ();
+  renderer = gtk_cell_renderer_text_new ();\
+
+  enum stack {Index, PcValue, FpValue, NUM_COLS };
+  static const char *nomes[] = {"Index", "PcValue", "FpValue"};
+  storeOP = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT);
+
+  for (int coluna = Index; coluna < NUM_COLS; coluna++) {
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
+  }
+
+  model = GTK_TREE_MODEL (storeOP);
+  gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
+
+  criarJanela(view, grid, x, y, xx, yy);
+}
+
+static void activateSCall (GtkWidget *grid, int x, int y, int xx, int yy) {
+
+  GtkWidget       *view;
+  GtkCellRenderer *renderer;
+  GtkTreeModel    *model;
+
+  view = gtk_tree_view_new ();
+  renderer = gtk_cell_renderer_text_new ();\
+
+  enum stack {Index, Value, Type, NUM_COLS };
+  static const char *nomes[] = {"Index", "Value", "Type"};
+  storeCall= gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
+
+  for (int coluna = Index; coluna < NUM_COLS; coluna++) {
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
+  }
+
+  model = GTK_TREE_MODEL (storeCall);
+  gtk_tree_view_set_model (GTK_TREE_VIEW (view), model);
+
+  criarJanela(view, grid, x, y, xx, yy);
+}
+
+//-----------------------------------------------------------------------------//
+
+void activateStacks (GtkWidget *grid) {
+  activateSCode (grid, 0, 1, 3, 11);
+  activateSHeap (grid, 3, 1, 3, 11);
+  activateSOP   (grid, 6, 1, 3, 11);
+  activateSCall (grid, 9, 1, 3, 11);
+
+  insCode("yey", 1, 2);
+  insHeap(1, "yey");
+  insOP(3, 3);
+  insCall(3,"yey");
 }
 
 //-----------------------------------------------------------------------------//
@@ -248,12 +331,7 @@ static void activate (GtkApplication *app, gpointer user_data) {
     //-----------------------------------------//
 
   activateInputs (grid);
-
-  activateStacks (storeCode, 0, grid, 0, 1, 100);
-  activateStacks (storeHeap, 1, grid, 3, 1, 2);
-  activateStacks (storeOP  , 2, grid, 6, 1, 43);
-  activateStacks (storeCall, 3, grid, 9, 1, 10);
-
+  activateStacks (grid);
   activateLables (grid);
 
     //-----------------------------------------//
