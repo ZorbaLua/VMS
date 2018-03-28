@@ -108,7 +108,9 @@
 -?[0-9]+		    { yylval.i = atoi(yytext);          return _INT; }
 \"(\\.|[^"\\])*\"   { yylval.s = g_string_new(yytext);  return _STRING; }
 
-[a-z][a-zA-Z0-9]*   { return _LABEL; }
+[a-z][a-zA-Z0-9]*   { yylval.s = g_string_new(yytext);  return _LABEL; }
+
+":"                 { return yytext[0];}
 
 [ \t\n]*            { ; }
 "//".*              { ; }

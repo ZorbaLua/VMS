@@ -12,6 +12,7 @@
 
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
+GHashTable* labels = NULL;
 Code code;
 OpStack opstack;
 CallStack callstack;
@@ -114,35 +115,34 @@ void runInst(CodeElem ce){
 
       //-Diversos--------------------------------------//
         case CHECK  : semCheck();   break;//x
-        case SWAP   : semSwap();  	break;//x
+        case SWAP   : semSwap();  	break;//v
 
       //-Input/Output----------------------------------//
         case WRITE  : semWrite();   break;//x
         case READ   : semRead();  	break;//x
 
       //-Registo PC------------------------------------//
-        case JUMP   : semJump();  	break;//x
-        case JZ     : semJz();    	break;//x
-        case PUSHA  : semPusha();   break;//x
+        case JUMP   : semJump(f);  	break;//v
+        case JZ     : semJz(f);    	break;//v
+        case PUSHA  : semPusha(f);  break;//v
 
       //-Procedimentos---------------------------------//
-        case CALL   : semCall();  	break;//x
-        case RETURN : semReturn();  break;//x
+        case CALL   : semCall();  	break;//v
+        case RETURN : semReturn();  break;//v
 
       //-Inicializacao e Fim---------------------------//
-        case START  : semStart();   break;//x
-        case NOP    : semNop();   	break;//x
+        case START  : semStart();   break;//v
+        case STOP   :               break;//v
+        case NOP    : semNop();   	break;//v
         case ERR    : semErr();   	break;//x
-        case STOP   : semStop();  	break;//x
-
-      //-Extra-----------------------------------------//
-        case LABEL  : semLabel();   break;//x
     }
 }
 
 void runProgram(){
     CodeElem ce;
-    while( !Code_get(&ce)){
+    int stop = 0;
+    while( !Code_get(&ce) && !stop){
+        if(ce->inst == STOP) stop = 1;
         printCode(ce, ' ');
         runInst(ce);
     }
@@ -151,14 +151,14 @@ void runProgram(){
 void execGui(){
     pipe(wp);
     pipe(rp);
-    if(!fork()){//parent
+    if(fork()){//parent
         dup2(wp[1], 1); 
     }
     else{//child
         dup2(wp[0], 0);
         dup2(rp[1], 1);
-        execlp("interface", "interface", "\0");
-        //execvp("interface", NULL);
+        //execlp("interface", "interface", "\0");
+        execvp("interface", NULL);
     }
 }
 
@@ -193,6 +193,7 @@ int main(int argc, char** argv){
     OpStack_init(opSize);
     CallStack_init(callSize);
     Heap_init(heapSize);
+    labels = g_hash_table_new(g_str_hash, g_str_equal);
 
     yyparse();
     if(gui) dup2(rp[0], 0);

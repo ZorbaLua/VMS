@@ -13,7 +13,7 @@ typedef struct codeElem{
 
 typedef struct code{
     Array array;
-    int pc;
+    codePt pc;
 } Code;
 
 void Code_add(CodeElem);

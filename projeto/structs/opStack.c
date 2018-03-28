@@ -24,6 +24,9 @@ int OpStack_getPos(int index, OperandElem* ret){
     return Array_getPos(&(opstack.stack), index, (void**)ret);
 }
 
+int OpStack_addPos(int index, OperandElem oe){
+    return Array_addPos(&(opstack.stack), index, oe);
+}
 
 void OpStack_push(OperandElem oe){
     Array_add(&(opstack.stack), oe);

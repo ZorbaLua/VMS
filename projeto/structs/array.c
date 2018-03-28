@@ -16,6 +16,13 @@ int Array_getPos(Array* self, int index, void** ret){
     *ret = self->array[index]; 
     return 0;
 }
+
+int Array_addPos(Array* self, int index, void* pt){
+    if(index>=self->len || index<0) return -1;
+    self->array[index] = pt; 
+    return 0;
+}
+
 void Array_add(Array* self, void* pt){
     if(self->len == self->size){
         self->size *= 2;

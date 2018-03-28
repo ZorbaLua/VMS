@@ -14,7 +14,7 @@ int CallStack_pop(CallElem* ret){
 }
 
 
-void CallStack_push(CallElem oe, char pt){
+void CallStack_push(CallElem oe){
     Array_add(&(callstack.stack), oe);
     printCallStack(oe, '+');
 }
@@ -25,17 +25,17 @@ void CallStack_init(int size){
 }
 
 
-CallElem newCallElem(int pc,  int fp){
+CallElem newCallElem(codePt pc, opPt fp){
     CallElem ce = (CallElem)malloc(sizeof(struct callElem));
-    ce->cpc = pc;
-    ce->cfp = fp;
+    ce->pc = pc;
+    ce->fp = fp;
 
     return ce;
 }
 
 char* Call_toString(CallElem ce){
     char* ret = (char*)malloc(MAX_LINE*sizeof(char));
-    snprintf(ret, MAX_LINE, "(%d:%d)", ce->cpc, ce->cfp);
+    snprintf(ret, MAX_LINE, "(%d:%d)", ce->pc, ce->fp);
     return ret;
 }
 

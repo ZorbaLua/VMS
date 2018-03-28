@@ -27,19 +27,19 @@ linkedlist.o: $(STRUCTS)/linkedlist.c
 ####################################################################################################
 
 types.o: $(STRUCTS)/types.c
-	$(CC) $(CFLAGS) -c $(STRUCTS)/types.c
+	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/types.c
 
 code.o: $(STRUCTS)/code.c
-	$(CC) $(CFLAGS) -c $(STRUCTS)/code.c
+	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/code.c
 
 opStack.o: $(STRUCTS)/opStack.c
-	$(CC) $(CFLAGS) -c $(STRUCTS)/opStack.c
+	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/opStack.c
 
 heap.o: $(STRUCTS)/heap.c
 	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/heap.c
 
 callStack.o: $(STRUCTS)/callStack.c
-	$(CC) $(CFLAGS) -c $(STRUCTS)/callStack.c
+	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/callStack.c
 
 ####################################################################################################
 

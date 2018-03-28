@@ -6,8 +6,8 @@
 
 
 typedef struct callElem{
-    int cpc;
-    int cfp;
+    int pc;
+    int fp;
 } *CallElem;
 
 typedef struct callStack{
@@ -17,9 +17,9 @@ typedef struct callStack{
 
 
 int CallStack_pop(CallElem*);
-void CallStack_push(CallElem, char pt);
+void CallStack_push(CallElem);
 
-CallElem newCallElem(int, int);
+CallElem newCallElem(codePt, opPt);
 void CallStack_init(int);
 void printCallStack(CallElem, char signal);
 char* Call_toString(CallElem);

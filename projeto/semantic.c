@@ -8,6 +8,7 @@
 #include "structs/callStack.h"
 #include "structs/heap.h"
 
+extern GHashTable* labels;
 extern Code code;
 extern OpStack opstack;
 extern FILE* io;
@@ -39,7 +40,7 @@ int semWrite() {
         case T_codePt : printf("OUTPUT:\t%d\n", oe->val.val.c); break;
         case T_opPt   : printf("OUTPUT:\t%d\n", oe->val.val.o); break;
         case T_heapPt : printf("OUTPUT:\t%d\n", oe->val.val.h); break;
-        case NOTHING: return -1;
+        default: return -1;
     }
     return 0;
 }
@@ -55,7 +56,7 @@ int semNot() {
         case T_codePt   : uv.i = oe->val.val.c == 0; break;
         case T_opPt     : uv.i = oe->val.val.o == 0; break;
         case T_heapPt   : uv.i = oe->val.val.h == 0; break;
-        case NOTHING: return -1;
+        default: return -1;
     }
     v = newValue(uv, T_int);
     OpStack_push(newOperandElem(v));
@@ -81,7 +82,7 @@ int semEqual() {
             case T_codePt   : uv.i = top->val.val.c == other->val.val.c; break;
             case T_opPt     : uv.i = top->val.val.o == other->val.val.o; break;
             case T_heapPt   : uv.i = top->val.val.h == other->val.val.h; break;
-            case NOTHING    : return -1;
+            default: return -1;
         }
         v = newValue(uv, T_int);
         OpStack_push(newOperandElem(v));
@@ -391,11 +392,17 @@ int semPopn() {
  	return 0;
 }
 
-int semStorel() {
+int semStorel(Value f) {
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    try( OpStack_addPos(opstack.fp + f.val.i, newOperandElem(newValue(oe->val.val, oe->val.type))) );
  	return 0;
 }
 
-int semStoreg() {
+int semStoreg(Value f) {
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    try( OpStack_addPos(opstack.gp + f.val.i, newOperandElem(newValue(oe->val.val, oe->val.type))) );
  	return 0;
 }
 
@@ -431,23 +438,46 @@ int semReads() {
  	return 0;
 }
 
-int semJump() {
+int semJump(Value f) {
+    HashData hd = g_hash_table_lookup(labels, f.val.s->str);
+    code.pc = hd->line;
  	return 0;
 }
 
-int semJz() {
+int semJz(Value f) {
+    OperandElem oe;
+    HashData hd;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_int) return -1;
+    if(oe->val.val.i == 0){
+        hd = g_hash_table_lookup(labels, f.val.s->str);
+        code.pc = hd->line;
+    }
  	return 0;
 }
 
-int semPusha() {
+int semPusha(Value f) {
+    HashData hd = g_hash_table_lookup(labels, f.val.s->str);
+    OpStack_push( newOperandElem(newValue((Uvalue)hd->line, T_codePt)) );
  	return 0;
 }
 
 int semCall() {
+    OperandElem oe;
+    CallStack_push(newCallElem(code.pc, opstack.fp));
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_codePt) return -1;
+    code.pc = oe->val.val.c;
+    opstack.fp = opstack.sp;
  	return 0;
 }
 
 int semReturn() {
+    CallElem ce;
+    try(CallStack_pop(&ce));
+    opstack.sp = opstack.fp;
+    code.pc = ce->pc;
+    opstack.fp = ce->fp;
  	return 0;
 }
 
@@ -459,6 +489,7 @@ int semStart() {
 }
 
 int semNop() {
+    code.pc -= 1;
  	return 0;
 }
 
@@ -466,10 +497,4 @@ int semErr() {
  	return 0;
 }
 
-int semStop() {
- 	return 0;
-}
 
-int semLabel() {
- 	return 0;
-}

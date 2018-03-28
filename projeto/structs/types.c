@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <glib.h>
+
 #include "types.h"
 
 
@@ -27,6 +29,7 @@ char* Value_toString(Value v){
         case T_codePt   : snprintf(ret, 100, "[%d|CODE_PT]",v.val.c);   break; 
         case T_heapPt   : snprintf(ret, 100, "[%d|HEAP_PT]",v.val.h);   break; 
         case T_opPt     : snprintf(ret, 100, "[%d|OP_PT]",  v.val.o);   break; 
+        case T_string   : snprintf(ret, 100, "[%s|STRING]", v.val.s->str); break;
         case NOTHING    : snprintf(ret, 100, "");   break; 
     }
     return ret;
@@ -97,7 +100,13 @@ char* Inst_toString(Einst i){
         case NOP    : snprintf(ret, 100, "NOP   "); break; 
         case ERR    : snprintf(ret, 100, "ERR   "); break; 
         case STOP   : snprintf(ret, 100, "STOP  "); break; 
-        case LABEL  : snprintf(ret, 100, "LABEL "); break; 
     }
     return ret;
 }
+
+HashData newHashData(codePt line){
+    HashData hd = (HashData)malloc(sizeof(struct hashData));
+    hd->line = line;
+    return hd;
+}
+

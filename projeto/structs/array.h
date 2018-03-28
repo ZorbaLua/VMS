@@ -11,6 +11,7 @@ typedef struct array{
 
 int  Array_remove(Array*, int, void**);
 int  Array_getPos(Array*, int, void**);
+int  Array_addPos(Array*, int, void*);
 void Array_add(Array*, void*);
 
 void Array_init(Array*, int);

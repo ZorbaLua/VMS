@@ -1,11 +1,16 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <glib.h>
+
 #define MAX_LINE 100
+
+
 
 typedef enum etype{
     T_int,
     T_float,
+    T_string,
     T_codePt,
     T_opPt,
     T_heapPt,
@@ -17,6 +22,7 @@ typedef int codePt, opPt, heapPt;
 typedef union uvalue{
     int i;
     float f;   
+    GString* s;
     codePt c;
     opPt o;  
     heapPt h;
@@ -91,11 +97,14 @@ typedef enum inst {
     NOP,
     ERR,
     STOP,
-    LABEL
 } Einst;
 
+typedef struct hashData{
+    codePt line;
+} *HashData;
 
 
+HashData newHashData(codePt);
 Value newValue(Uvalue,Etype);
 char* Value_toString(Value);
 char* Inst_toString(Einst);
