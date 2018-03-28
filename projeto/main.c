@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "semantic.h"
 
@@ -19,6 +20,9 @@ int codeSize = 10000;
 int opSize   = 1000;
 int callSize = 100;
 int heapSize = 1000;
+int gui = 0;
+int wp[2];
+int rp[2];
 
 
 int yyparse();
@@ -38,52 +42,42 @@ void runInst(CodeElem ce){
 
     switch(ce->inst){
 
+        case NOT    : semNot();     break;//v 
+        case EQUAL  : semEqual();   break;//v
+
       //-Operacoes Sobre Inteiros----------------------//
-        case ADD    : semAdd();     break;//x 
-        case SUB    : semSub();     break;//x
-        case MUL    : semMul();     break;//x
-        case DIV    : semDiv();     break;//x
-        case MOD    : semMod();     break;//x
+        case ADD    : semAdd();     break;//v 
+        case SUB    : semSub();     break;//v
+        case MUL    : semMul();     break;//v
+        case DIV    : semDiv();     break;//v
+        case MOD    : semMod();     break;//v
 
-        case NOT    : semNot();     break;//x 
-
-        case INF    : semInf();     break;//x
-        case INFEQ  : semInfeq();   break;//x
-        case SUP    : semSup();     break;//x
-        case SUPEQ  : semSupeq();   break;//x
-        case EQ	    : semEq();      break;//x
-        case DIF    : semDif();     break;//x
+        case INF    : semInf();     break;//v
+        case INFEQ  : semInfeq();   break;//v
+        case SUP    : semSup();     break;//v
+        case SUPEQ  : semSupeq();   break;//v
 
       //-Operacoes Sobre Flutuantes--------------------//
-        case FADD   : semFadd();  	break;//x
-        case FSUB   : semFsub();  	break;//x
-        case FMUL   : semFmul();  	break;//x
-        case FDIV   : semFdiv();  	break;//x
+        case FADD   : semFadd();  	break;//v
+        case FSUB   : semFsub();  	break;//v
+        case FMUL   : semFmul();  	break;//v
+        case FDIV   : semFdiv();  	break;//v
 
-        case FCOS   : semFcos();  	break;//x
-        case FSIN   : semFsin();  	break;//x
-        case FTAN   : semFtan();  	break;//x
-
-        case FINF   : semFinf();  	break;//x
-        case FINFEQ : semFinfeq();  break;//x
-        case FSUP   : semFsup();  	break;//x
-        case FSUPEQ : semFsupeq();  break;//x
-        case FEQ    : semFeq();   	break;//x
-        case FDIF   : semFdif();  	break;//x
+        case FINF   : semFinf();  	break;//v
+        case FINFEQ : semFinfeq();  break;//v
+        case FSUP   : semFsup();  	break;//v
+        case FSUPEQ : semFsupeq();  break;//v
 
       //-Operacoes Sobre Enderecos---------------------//
-        case PADD   : semPadd();  	break;//x
+        case PADD   : semPadd();  	break;//v
                       
       //-Operacoes Sobre Cadeias de Caracteres---------//
         case CONCAT : semConcat();  break;//x
 
       //-Operacoes Sobre Heap--------------------------//
-        case ALLOC  : semAlloc();   break;//x
-        case ALLOCN : semAllocn();  break;//x
+        case ALLOC  : semAlloc(f);  break;//v
+        case ALLOCN : semAllocn();  break;//v
         case FREE   : semFree();  	break;//x
-
-      //-Igualdade-------------------------------------//
-        case EQUAL  : semEqual();   break;//x
 
       //-Conversoes------------------------------------//
         case ATOI   : semAtoi();  	break;//x
@@ -95,22 +89,22 @@ void runInst(CodeElem ce){
 
       //-Empilhar--------------------------------------//
         case PUSHI  : semPushi(f);  break;//v
-        case PUSHN  : semPushn();   break;//x
+        case PUSHN  : semPushn(f);  break;//v
         case PUSHF  : semPushf(f);  break;//v
         case PUSHS  : semPushs();   break;//x
-        case PUSHG  : semPushg();   break;//x
-        case PUSHL  : semPushl();   break;//x
-        case PUSHSP : semPushsp();  break;//x
-        case PUSHFP : semPushfp();  break;//x
-        case PUSHGP : semPushgp();  break;//x
+        case PUSHG  : semPushg(f);  break;//v~
+        case PUSHL  : semPushl(f);  break;//v
+        case PUSHSP : semPushsp();  break;//v
+        case PUSHFP : semPushfp();  break;//v
+        case PUSHGP : semPushgp();  break;//v
         case LOAD   : semLoad();  	break;//x
         case LOADN  : semLoadn();   break;//x
-        case DUP    : semDup();  	break;//x
-        case DUPN   : semDupn();  	break;//x
+        case DUP    : semDup(f);  	break;//v
+        case DUPN   : semDupn();  	break;//v
 
       //-Retirar---------------------------------------//
-        case POP    : semPop();   	break;//x
-        case POPN   : semPopn();  	break;//x
+        case POP    : semPop(f);   	break;//v
+        case POPN   : semPopn();  	break;//v
 
       //-Arquivar--------------------------------------//
         case STOREL : semStorel();  break;//x
@@ -155,18 +149,21 @@ void runProgram(){
 }
 
 void execGui(){
-    int d[2];
-    pipe(d);
+    pipe(wp);
+    pipe(rp);
     if(!fork()){//parent
-        
+        dup2(wp[1], 1); 
     }
-    else{
-        execvp("interface", NULL);
+    else{//child
+        dup2(wp[0], 0);
+        dup2(rp[1], 1);
+        execlp("interface", "interface", "\0");
+        //execvp("interface", NULL);
     }
 }
 
 void options(int argc, char** argv){
-    int i, j, k;
+    int i, j, k, fd;
     if(argc < 2) try(-1);
     for(i=1; i<argc; i++){
         if(argv[i][0] == '-'){
@@ -175,12 +172,17 @@ void options(int argc, char** argv){
                 switch(argv[i][j]){
                     case 's': break; 
                     case 'c': codeSize = atoi(argv[i+k++]); break;
-                    case 'o': opSize = atoi(argv[i+k++]);   break;
+                    case 'o': opSize   = atoi(argv[i+k++]); break;
                     case 'C': callSize = atoi(argv[i+k++]); break;
                     case 'h': heapSize = atoi(argv[i+k++]); break;
-                    case 'g': execGui();                    break;
+                    case 'g': gui = 1; execGui();           break;
                 }
             }
+            i += k-1;
+        }
+        else{
+            fd = open(argv[i], O_RDONLY);
+            dup2(fd, 0);
         }
     }
 }
@@ -192,8 +194,8 @@ int main(int argc, char** argv){
     CallStack_init(callSize);
     Heap_init(heapSize);
 
-
     yyparse();
+    if(gui) dup2(rp[0], 0);
     runProgram();
 
     _exit(0);

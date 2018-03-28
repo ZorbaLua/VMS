@@ -14,20 +14,19 @@
 
 %%
 
+"not"    { return _NOT; }
+"equal"  { return _EQUAL; }
+
 "add"    { return _ADD; }
 "sub"    { return _SUB; }
 "mul"    { return _MUL; }
 "div"    { return _DIV; }
 "mod"    { return _MOD; }
 
-"not"    { return _NOT; }
-
 "inf"    { return _INF;   }
 "infeq"  { return _INFEQ; }
 "sup"    { return _SUP;   }
 "supeq"  { return _SUPEQ; }
-"eq"     { return _EQ;    } // ?
-"dif"    { return _DIF;   } // ?
 
 
 "fadd"   { return _FADD; }
@@ -35,16 +34,10 @@
 "fmul"   { return _FMUL; }
 "fdiv"   { return _FDIV; }
 
-"fcos"   { return _FCOS; }
-"fsin"   { return _FSIN; }
-"ftan"   { return _FTAN; } // ?
-
 "finf"   { return _FINF;   }
 "finfeq" { return _FINFEQ; }
 "fsup"   { return _FSUP;   }
 "fsupeq" { return _FSUPEQ; }
-"feq"    { return _FEQ;    } // ?
-"fdif"   { return _FDIF;   } // ?
 
 
 "padd"   { return _PADD;   }
@@ -54,9 +47,6 @@
 "alloc"  { return _ALLOC;  }
 "allocn" { return _ALLOCN; }
 "free"   { return _FREE;   }
-
-
-"equal"  { return _EQUAL; }
 
 
 "atoi"   { return _ATOI; }

@@ -39,21 +39,14 @@ typedef enum inst {
     INFEQ,
     SUP,
     SUPEQ,
-    EQ,
-    DIF,
     FADD,
     FSUB,
     FMUL,
     FDIV,
-    FCOS,
-    FSIN,
-    FTAN,
     FINF,
     FINFEQ,
     FSUP,
     FSUPEQ,
-    FEQ,
-    FDIF,
     PADD,
     CONCAT,
     ALLOC,
@@ -105,4 +98,6 @@ typedef enum inst {
 
 Value newValue(Uvalue,Etype);
 char* Value_toString(Value);
+char* Inst_toString(Einst);
+
 #endif

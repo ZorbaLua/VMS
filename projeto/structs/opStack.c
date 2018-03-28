@@ -6,25 +6,29 @@
 
 extern OpStack opstack;
 
+extern void try(int);
+
 int OpStack_pop(OperandElem* ret){
-    int erro;
     if(opstack.sp == opstack.fp) return -1;
     opstack.sp -= 1;
-    erro = Array_remove(&(opstack.stack), opstack.sp, (void**)ret);
+    try(Array_remove(&(opstack.stack), opstack.sp, (void**)ret));
     printOpStack(*ret, '-');
-    return erro;
+    return 0;
 }
 
 int OpStack_top(OperandElem* ret){
     return Array_getPos(&(opstack.stack), opstack.sp-1, (void**)ret);
 }
 
-void OpStack_push(OperandElem oe, char pt){
+int OpStack_getPos(int index, OperandElem* ret){
+    return Array_getPos(&(opstack.stack), index, (void**)ret);
+}
+
+
+void OpStack_push(OperandElem oe){
     Array_add(&(opstack.stack), oe);
-    switch(pt){
-        case 's': opstack.sp += 1; break;
-        case 'g': opstack.gp += 1; break;
-    }
+    if(opstack.flagGlobal)  opstack.gp += 1;
+    else                    opstack.sp += 1;
     printOpStack(oe, '+');
 }
 
@@ -34,6 +38,7 @@ void OpStack_init(int size){
     opstack.sp = 0;
     opstack.fp = 0;
     opstack.gp = 0;
+    opstack.flagGlobal = 1;
 }
 
 
@@ -44,6 +49,6 @@ OperandElem newOperandElem(Value v){
 }
 
 void printOpStack(OperandElem oe, char signal){
-    printf("OPSTACK\t\t(%d,%d,%d)\t\t-%s\n", opstack.sp, opstack.fp, opstack.gp, Value_toString(oe->val));
+    printf("OPSTACK\t\t(%d,%d,%d)\t\t%c%s\n", opstack.sp, opstack.fp, opstack.gp, signal,Value_toString(oe->val));
 }
 

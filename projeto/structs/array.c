@@ -6,6 +6,7 @@
 
 int Array_remove(Array* self, int index, void** ret){
     if(index>=self->len || index<0) return -1;
+    if(index+1 == self->len) self->len--;
     *ret = self->array[index];
     self->array[index] = NULL;
     return 0;

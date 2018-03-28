@@ -18,7 +18,7 @@ typedef struct heap{
 
 int Heap_remove(heapPt);
 int Heap_getBlock(heapPt, GString*);
-void Heap_alloc(GString, heapPt*);
+heapPt Heap_alloc(GString);
 
 void Heap_init(int);
 HeapInfo newHeapInfo(heapPt, int);

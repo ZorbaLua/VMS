@@ -35,5 +35,6 @@ CodeElem newCodeElem(Einst inst, Value v1, Value v2){
 }
 
 void printCode(CodeElem ce, char signal){
-    printf("CODE\t\t(%d)\t\t%c(%d:%s:%s)\n", code.pc, signal,ce->inst, Value_toString(ce->first), Value_toString(ce->second));
+    //printf("CODE\t\t(%d)\t\t%c(%d:%s:%s)\n", code.pc, signal,ce->inst, Value_toString(ce->first), Value_toString(ce->second));
+    printf("CODE\t\t(%d)\t\t%c(%s:%s:%s)\n", code.pc, signal, Inst_toString(ce->inst), Value_toString(ce->first), Value_toString(ce->second));
 }

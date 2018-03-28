@@ -13,13 +13,15 @@ typedef struct opStack{
     opPt sp;
     opPt fp;
     opPt gp;
+    int flagGlobal;
 } OpStack;
 
 
 
 int OpStack_pop(OperandElem*);
 int OpStack_top(OperandElem*);
-void OpStack_push(OperandElem, char);
+int OpStack_getPos(int, OperandElem*);
+void OpStack_push(OperandElem);
 
 OperandElem newOperandElem(Value);
 void OpStack_init(int);

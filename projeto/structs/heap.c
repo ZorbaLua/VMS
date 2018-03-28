@@ -8,13 +8,16 @@ int Heap_getBlock(heapPt pt, GString* ret){
     return 0;    
 }
 
-void Heap_alloc(GString s, heapPt* ret){
+heapPt Heap_alloc(GString s){
+    int ret = heap.last;
     if(s.len + heap.last > heap.h->len){
         GString* aux = g_string_sized_new((heap.h)->len*2);
         heap.h = g_string_assign(aux, heap.h->str);
     }
+
     strncpy(&(heap.h->str[heap.last]), s.str, s.len);
     heap.last += s.len;
+    return ret;
 }
 
 void Heap_init(int size){
