@@ -6,7 +6,7 @@
 
 extern CallStack callstack;
 
-int CallStack_pop(CallElem* ret){
+int CallStack_pop(CallElem* ret) {
     int erro;
     erro = Array_remove(&(callstack.stack), callstack.stack.len, (void**)ret);
     printCallStack(*ret, '-');
@@ -19,8 +19,7 @@ void CallStack_push(CallElem oe){
     printCallStack(oe, '+');
 }
 
-
-void CallStack_init(int size){
+void CallStack_init(int size) {
     Array_init(&(callstack.stack), size);
 }
 
@@ -33,13 +32,12 @@ CallElem newCallElem(codePt pc, opPt fp){
     return ce;
 }
 
-char* Call_toString(CallElem ce){
+char* Call_toString(CallElem ce) {
     char* ret = (char*)malloc(MAX_LINE*sizeof(char));
     snprintf(ret, MAX_LINE, "(%d:%d)", ce->pc, ce->fp);
     return ret;
 }
 
-void printCallStack(CallElem ce, char signal){
+void printCallStack(CallElem ce, char signal) {
     printf("CallStack\t\t()\t\t-%s\n", Call_toString(ce));
 }
-

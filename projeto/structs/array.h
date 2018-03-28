@@ -2,7 +2,7 @@
 #define ARRAY_H
 
 
-typedef struct array{
+typedef struct array {
     int len;
     int size;
     void** array;

@@ -15,7 +15,7 @@ int yylex();
 %}
 
 %union{
-    int i; 
+    int i;
     float f;
     GString* s;
 }

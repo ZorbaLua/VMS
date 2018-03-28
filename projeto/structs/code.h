@@ -1,9 +1,9 @@
+
 #ifndef CODE_H
 #define CODE_H
 
 #include "types.h"
 #include "array.h"
-
 
 typedef struct codeElem{
     Einst inst;
