@@ -1,11 +1,10 @@
+
 #include "heap.h"
 
 extern Heap heap;
 
-
-
 int Heap_getBlock(heapPt pt, GString* ret){
-    return 0;    
+    return 0;
 }
 
 heapPt Heap_alloc(GString s){
@@ -24,7 +23,7 @@ void Heap_init(int size){
     heap.ll = NULL;
     heap.h = g_string_sized_new(size);
     heap.last = 0;
-} 
+}
 
 HeapInfo newHeapInfo(heapPt pt, int index){
     HeapInfo hi = (HeapInfo)malloc(sizeof(struct heapInfo));

@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "code.h"
@@ -30,6 +31,8 @@ CodeElem newCodeElem(Einst inst, Value v1, Value v2){
     ce->inst = inst;
     ce->first = v1;
     ce->second = v2;
+
+    //insCode(inst, v1, v2); //Interface
 
     return ce;
 }
