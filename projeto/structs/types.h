@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-#define MAX_LINE 100
+#define MAX_LINE 1000
 
 
 

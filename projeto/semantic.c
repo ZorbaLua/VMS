@@ -11,6 +11,7 @@
 extern GHashTable* labels;
 extern Code code;
 extern OpStack opstack;
+extern Heap heap;
 extern FILE* io;
 extern FILE* extra;
 
@@ -241,56 +242,123 @@ int semPadd() {
 }
 
 int semConcat() {
+    int i;
+    Uvalue uv;
+    OperandElem top, other;
+    char* s[3];
+    for(i=0; i<3; i++) s[i] = (char*)malloc(sizeof(char) * MAX_LINE);
+    try(OpStack_pop(&top));
+    try(OpStack_pop(&other));
+    if(top->val.type != other->val.type || top->val.type != T_heapPt) return -1;
+    Heap_getBlock(top->val.val.h, s[0]);
+    Heap_getBlock(other->val.val.h, s[1]);
+    snprintf(s[2], MAX_LINE, "%s%s", s[0], s[1]);
+    uv.h = Heap_alloc(s[2], MAX_LINE);
+    OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 
 int semAlloc(Value f) {
     Uvalue uv;
-    GString* s = g_string_sized_new(f.val.i);
-    uv.h = Heap_alloc(*s);
+    int i, len;
+    len = (f.val.i) + 1;
+    char* s = (char*)malloc(sizeof(char) * len);
+    for(i=0; i < f.val.i; i++) s[i] = '0';
+    s[i] = '\0';
+    uv.h = Heap_alloc(s, len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
-
  	return 0;
 }
 
 int semAllocn() {
     Uvalue uv;
     OperandElem oe;
-    GString* s;
+    int i, len;
+    char* s;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) return -1;
-    s = g_string_sized_new(oe->val.val.i);
-    uv.h = Heap_alloc(*s);
+    len = (oe->val.val.i) + 1;
+    s = (char*)malloc(sizeof(char) * len);
+    for(i=0; i < oe->val.val.i; i++) s[i] = '0';
+    s[i] = '\0';
+    uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
-
  	return 0;
 }
 
 int semFree() {
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_heapPt) return -1;
+    Heap_free(oe->val.val.h);
  	return 0;
 }
 
 int semAtoi() {
+    Uvalue uv;
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_heapPt) return -1;
+    uv.i = atoi(&(heap.h->str[oe->val.val.h]));
+    OpStack_push(newOperandElem(newValue(uv, T_int)));
  	return 0;
 }
 
 int semAtof() {
+    Uvalue uv;
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_heapPt) return -1;
+    uv.i = atof(&(heap.h->str[oe->val.val.h]));
+    OpStack_push(newOperandElem(newValue(uv, T_float)));
  	return 0;
 }
 
 int semItof() {
+    Uvalue uv;
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_int) return -1;
+    uv.f = (float)1.0 * (oe->val.val.i);
+    OpStack_push(newOperandElem(newValue(uv, T_float)));
  	return 0;
 }
 
 int semFtoi() {
+    Uvalue uv;
+    OperandElem oe;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_float) return -1;
+    uv.i = (int)(oe->val.val.f);
+    OpStack_push(newOperandElem(newValue(uv, T_float)));
  	return 0;
 }
 
 int semStri() {
+    Uvalue uv;
+    OperandElem oe;
+    char *s = (char*)malloc(sizeof(char) * MAX_LINE);
+    int len;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_int) return -1;
+    snprintf(s, MAX_LINE, "%d", oe->val.val.i);
+    len = strnlen(s, MAX_LINE);
+    uv.h = Heap_alloc(s, len);
+    OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 
 int semStrf() {
+    Uvalue uv;
+    OperandElem oe;
+    char *s = (char*)malloc(sizeof(char) * MAX_LINE);
+    int len;
+    try(OpStack_pop(&oe));
+    if(oe->val.type != T_float) return -1;
+    snprintf(s, MAX_LINE, "%f", oe->val.val.f);
+    len = strnlen(s, MAX_LINE);
+    uv.h = Heap_alloc(s, len);
+    OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 
@@ -301,14 +369,17 @@ int semPushn(Value f) {
  	return 0;
 }
 
-int semPushs() {
+int semPushs(Value f) {
+    Uvalue uv;
+    uv.h = Heap_alloc(f.val.s->str, f.val.s->len);
+    OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 
 int semPushg(Value f) {
     int index = f.val.i;
     OperandElem oe;
-    try(OpStack_getPos(opstack.gp+index, &oe));
+    try(OpStack_getPos(0+index, &oe));
     OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
  	return 0;
 }
@@ -406,8 +477,13 @@ int semStoreg(Value f) {
  	return 0;
 }
 
-int semStore() {
- 	return 0;
+int semStore(Value f) {
+    /*OperandElem v, pt;
+    try(OpStack_pop(&v));
+    try(OpStack_pop(&pt));
+    if(oe->val.type == )
+ 	*/
+    return 0;
 }
 
 int semStoren() {
@@ -419,22 +495,24 @@ int semCheck() {
 }
 
 int semSwap() {
+    OperandElem top, other;
+    try(OpStack_pop(&top));
+    try(OpStack_pop(&other));
+    OpStack_push(top);
+    OpStack_push(other);
  	return 0;
 }
 
 int semRead() {
- 	return 0;
-}
-
-int semReadi() {
- 	return 0;
-}
-
-int semReadf() {
- 	return 0;
-}
-
-int semReads() {
+    int len;
+    Uvalue uv;
+    heapPt pt;
+    char* s = (char*)malloc(sizeof(char) * MAX_LINE);
+    if(!fgets(s, MAX_LINE, stdin)) return -1;
+    len = strnlen(s, MAX_LINE);
+    pt = Heap_alloc(s, len);
+    uv.h = Heap_alloc(s,len);
+    OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 

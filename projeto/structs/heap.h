@@ -8,7 +8,7 @@
 
 typedef struct heapInfo{
     heapPt pt;
-    int index;
+    int len;
 } *HeapInfo;
 
 typedef struct heap{
@@ -17,9 +17,9 @@ typedef struct heap{
     int last;
 } Heap;
 
-int Heap_remove(heapPt);
-int Heap_getBlock(heapPt, GString*);
-heapPt Heap_alloc(GString);
+int Heap_free(heapPt);
+void Heap_getBlock(heapPt, char*);
+heapPt Heap_alloc(char*, int);
 
 void Heap_init(int);
 HeapInfo newHeapInfo(heapPt, int);

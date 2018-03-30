@@ -11,8 +11,8 @@ typedef struct node {
 
 
 int  LinkedList_remove(LinkedList, void**);
-int  LinkedList_getNext(LinkedList);
-int  LinkedList_getPrev(LinkedList);
+int  LinkedList_next(LinkedList);
+int  LinkedList_prev(LinkedList);
 void LinkedList_add(LinkedList, void*);
 
 

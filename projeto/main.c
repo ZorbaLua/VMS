@@ -10,8 +10,6 @@
 #include "structs/callStack.h"
 #include "structs/heap.h"
 
-//-----------------------------------------//
-
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
 GHashTable* labels = NULL;
@@ -27,7 +25,6 @@ int gui = 0;
 int wp[2];
 int rp[2];
 
-//-----------------------------------------------------------------------------//
 
 int yyparse();
 
@@ -40,19 +37,17 @@ void try(int erro) {
     _exit(erro);
 }
 
-//-----------------------------------------------------------------------------//
-
 void runInst(CodeElem ce){
     Value f = ce->first;
     //Value s = ce->second;
 
     switch(ce->inst){
 
-        case NOT    : semNot();     break;//v
+        case NOT    : semNot();     break;//v 
         case EQUAL  : semEqual();   break;//v
 
       //-Operacoes Sobre Inteiros----------------------//
-        case ADD    : semAdd();     break;//v
+        case ADD    : semAdd();     break;//v 
         case SUB    : semSub();     break;//v
         case MUL    : semMul();     break;//v
         case DIV    : semDiv();     break;//v
@@ -76,7 +71,7 @@ void runInst(CodeElem ce){
 
       //-Operacoes Sobre Enderecos---------------------//
         case PADD   : semPadd();  	break;//v
-
+                      
       //-Operacoes Sobre Cadeias de Caracteres---------//
         case CONCAT : semConcat();  break;//x
 
@@ -143,8 +138,6 @@ void runInst(CodeElem ce){
     }
 }
 
-//-----------------------------------------------------------------------------//
-
 void runProgram(){
     CodeElem ce;
     int stop = 0;
@@ -155,23 +148,21 @@ void runProgram(){
     }
 }
 
-//-----------------------------------------------------------------------------//
-
 void execGui(){
     pipe(wp);
     pipe(rp);
     if(fork()){//parent
         dup2(wp[1], 1); 
+        sleep(1000000);
     }
     else{//child
+        fprintf(stderr, "child\n");
         dup2(wp[0], 0);
         dup2(rp[1], 1);
-        //execlp("interface", "interface", "\0");
-        execvp("interface", NULL);
+        //execlp("./interface", "./interface", "\0");
+        execvp("./interface" ,NULL);
     }
 }
-
-//-----------------------------------------------------------------------------//
 
 void options(int argc, char** argv){
     int i, j, k, fd;
@@ -181,12 +172,12 @@ void options(int argc, char** argv){
             k=1;
             for(j=1; argv[i][j] != '\0'; j++){
                 switch(argv[i][j]){
-                    case 's': break;
+                    case 's': break; 
                     case 'c': codeSize = atoi(argv[i+k++]); break;
                     case 'o': opSize   = atoi(argv[i+k++]); break;
                     case 'C': callSize = atoi(argv[i+k++]); break;
                     case 'h': heapSize = atoi(argv[i+k++]); break;
-                    case 'g': gui = 1; execGui();           break;
+                    case 'g': execGui(); gui = 1;           break;
                 }
             }
             i += k-1;
@@ -197,8 +188,6 @@ void options(int argc, char** argv){
         }
     }
 }
-
-//-----------------------------------------------------------------------------//
 
 int main(int argc, char** argv){
     options(argc, argv);

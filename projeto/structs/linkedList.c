@@ -1,8 +1,6 @@
-
-#include "linkedList.h"
-
 #include <stdlib.h>
 
+#include "linkedList.h"
 
 int LinkedList_remove(LinkedList ll, void** ret){
     if(ll == NULL) return -1;
@@ -21,7 +19,7 @@ int LinkedList_remove(LinkedList ll, void** ret){
 
 int LinkedList_next(LinkedList ll){
     if(ll == NULL) return -1;
-    if(ll->prev == NULL) return 1; //e o ultimo
+    if(ll->next == NULL) return 1; //e o ultimo
     ll = ll->next;
 
     return 0;
