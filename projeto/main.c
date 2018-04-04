@@ -189,8 +189,12 @@ void options(int argc, char** argv){
     }
 }
 
-int main(int argc, char** argv){
-    options(argc, argv);
+int mainVMS(char* filename){
+    //options(argc, argv);
+    int fd;
+    fd = open(filename, O_RDONLY);
+    dup2(fd, 0);
+
     Code_init(codeSize);
     OpStack_init(opSize);
     CallStack_init(callSize);
@@ -198,8 +202,8 @@ int main(int argc, char** argv){
     labels = g_hash_table_new(g_str_hash, g_str_equal);
 
     yyparse();
-    if(gui) dup2(rp[0], 0);
+    //if(gui) dup2(rp[0], 0);
     runProgram();
 
-    _exit(0);
+    return 0;
 }

@@ -91,7 +91,7 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI  , newValue((Uvalue)$
         | _STRF             { Code_add( newCodeElem( STRF   , newValue((Uvalue)-1, NOTHING) , newValue((Uvalue)-1, NOTHING) ) ); } 
         | _CONCAT           { Code_add( newCodeElem( CONCAT , newValue((Uvalue)-1, NOTHING) , newValue((Uvalue)-1, NOTHING) ) ); } 
         | _FREE             { Code_add( newCodeElem( FREE   , newValue((Uvalue)-1, NOTHING) , newValue((Uvalue)-1, NOTHING) ) ); } 
-        |_PUSHS	    _STRING { Code_add( newCodeElem( PUSHS  , newValue((Uvalue)$2, T_string), newValue((Uvalue)-1, NOTHING) ) ); } 
+        | _PUSHS    _STRING { Code_add( newCodeElem( PUSHS  , newValue((Uvalue)$2, T_string), newValue((Uvalue)-1, NOTHING) ) ); } 
         ;
 
 //_CAST

@@ -1,8 +1,11 @@
 
 #include <gtk/gtk.h> // code heap opstack call stack
 #include <stdio.h>
+#include "interface.h"
 
 // gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0)
+
+int mainVMS(char*);
 
 //-Globais-//
 
@@ -12,18 +15,13 @@ GtkWidget *viewC;
 
 GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 
-static void insCode();
-static void remLinha();
-static void insHeap();
-static void insOP();
-static void insCall();
 
 int ii = 0;  // mais tarde substituido pelo indicador do num de linhas em cada stack
 int n = 0;
 
 //-----------------------------------------------------------------------------//
 
-static char GtkFileOpen () {
+static char* GtkFileOpen () {
   GtkWidget *dialog;
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
   gint res;
@@ -38,7 +36,7 @@ static char GtkFileOpen () {
       //open_file (filename);
       gtk_widget_destroy (dialog);
       g_free (filename);
-      return(*filename);
+      return(filename);
     }
   gtk_widget_destroy (dialog);
 }
@@ -69,12 +67,13 @@ static void bExeT (GtkWidget *widget, gpointer data) {
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
-  char ficheiro = GtkFileOpen ();
+  char* ficheiro = GtkFileOpen ();
+    mainVMS(ficheiro);
   g_print ("Click Load Programa\n");
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-  char ficheiro = GtkFileOpen ();
+  char* ficheiro = GtkFileOpen ();
   g_print ("Click Load Input\n");
 }
 
@@ -185,7 +184,7 @@ static void activateInputs (GtkWidget *grid) {
 
 //-----------------------------------------------------------------------------//
 
-static void remLinha(char *i, GtkListStore* a) {
+void remLinha(char *i, GtkListStore* a) {
   GtkTreeIter iter;
   GtkTreePath *path;
   path = gtk_tree_path_new_from_string (i);
@@ -195,28 +194,28 @@ static void remLinha(char *i, GtkListStore* a) {
 
   //-----------------------------------------//
 
-static void insCode(char *instr, int vA, int vB) {
+void insCode(char *instr, int vA, int vB, int index) {
   GtkTreeIter iter;
   enum stack {Index, Instruction, ValueA, ValueB, NUM_COLS };
   gtk_list_store_append(storeCode, &iter);
-  gtk_list_store_set (storeCode, &iter, Index, ii, Instruction, instr, ValueA, vA, ValueB, vB, -1);
+  gtk_list_store_set (storeCode, &iter, Index, index, Instruction, instr, ValueA, vA, ValueB, vB, -1);
 }
 
-static void insHeap(int val, char *tp) {
+void insHeap(int val, char *tp) {
   GtkTreeIter iter;
   enum stack {Index, Value, Type, NUM_COLS };
   gtk_list_store_append(storeHeap, &iter);
   gtk_list_store_set (storeHeap, &iter, Index, ii, Value, val, Type, tp, -1);
 }
 
-static void insOP(int pc, int fp) {
+void insOP(int pc, int fp) {
   GtkTreeIter iter;
   enum stack {Index, PcValue, FpValue, NUM_COLS };
   gtk_list_store_append(storeOP, &iter);
   gtk_list_store_set (storeOP, &iter, Index, ii, PcValue, pc, FpValue, fp, -1);
 }
 
-static void insCall(int val, char *tp) {
+void insCall(int val, char *tp) {
   GtkTreeIter iter;
   enum stack {Index, Value, Type, NUM_COLS };
   gtk_list_store_append(storeCall, &iter);
@@ -343,22 +342,6 @@ void activateStacks (GtkWidget *grid) {
   activateSOP   (grid, 6, 1, 3, 11);
   activateSCall (grid, 9, 1, 3, 11);
 
-  insCode("yey", 0, 2);
-  insCode("yey", 1, 2);
-  insCode("yey", 2, 2);
-  insCode("yey", 3, 2);
-  insCode("yey", 4, 2);
-  insCode("yey", 5, 2);
-  insCode("yey", 6, 2);
-  insCode("yey", 7, 2);
-  insCode("yey", 8, 2);
-  insHeap(1, "yey");
-  insOP(3, 3);
-  insCall(3,"yey");
-
-  remLinha("2",storeCode);
-  remLinha("2",storeCode);
-  remLinha("0",storeHeap);
 
   GtkTreeSelection x;
 
@@ -404,6 +387,7 @@ int main (int argc, char **argv) {
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);
+
 
   return status;
 }

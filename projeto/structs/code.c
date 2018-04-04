@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "code.h"
+#include "../interface.h"
 
 extern Code code;
 
@@ -13,6 +14,7 @@ char* Code_toString(CodeElem ce){
 
 void Code_add(CodeElem ce){
     printCode(ce, '+');
+    insCode(Inst_toString(ce->inst), ce->first.val.i, ce->second.val.i, code.array.len);
     Array_add(&code.array, ce);
 }
 
