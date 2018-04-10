@@ -1,0 +1,18 @@
+\select@language {portuges}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
+\contentsline {section}{\numberline {1.1}Um belo Projeto}{2}
+\contentsline {section}{\numberline {1.2}Um belo Dia em Briteiros}{2}
+\contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\IeC {\c c}\IeC {\~a}o}{4}
+\contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o informal do problema}{4}
+\contentsline {section}{\numberline {2.2}Especifica\IeC {\c c}\IeC {\~a}o do Requisitos}{4}
+\contentsline {subsection}{\numberline {2.2.1}Dados}{4}
+\contentsline {subsection}{\numberline {2.2.2}Pedidos}{4}
+\contentsline {subsection}{\numberline {2.2.3}Rela\IeC {\c c}\IeC {\~o}es}{4}
+\contentsline {chapter}{\numberline {3}Concep\IeC {\c c}\IeC {\~a}o/desenho da Resolu\IeC {\c c}\IeC {\~a}o}{5}
+\contentsline {section}{\numberline {3.1}Estruturas de Dados}{5}
+\contentsline {section}{\numberline {3.2}Algoritmos}{5}
+\contentsline {chapter}{\numberline {4}Codifica\IeC {\c c}\IeC {\~a}o e Testes}{6}
+\contentsline {section}{\numberline {4.1}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{6}
+\contentsline {section}{\numberline {4.2}Testes realizados e Resultados}{6}
+\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{7}
+\contentsline {chapter}{\numberline {A}C\IeC {\'o}digo do Programa}{8}

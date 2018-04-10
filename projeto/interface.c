@@ -55,9 +55,8 @@ static void selecionar (char *i) {
 
 static void bExe (GtkWidget *widget, gpointer data) {
   g_print ("Click Executar\n");
-
-  //char co = (char) n;
-  //selecionar(co);
+  char co = (char) n++;
+  selecionar(co);
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
@@ -79,6 +78,35 @@ static void bLoadIFile (GtkWidget *widget, gpointer data) {
 
 //-----------------------------------------------------------------------------//
 
+void actLabel (GtkWidget *grid, int lab, int value) {
+
+  GtkWidget *label;
+  char l[10], b[5];
+  sprintf(b, "%d", value);
+  switch (lab) {
+    case 0:
+      l = "PC:"; strcat(l,b);
+      label = gtk_label_new (l);
+      gtk_grid_attach (GTK_GRID (grid), label, 12, 0, 1, 1); break;
+    case 1:
+      l = "FP:"; strcat(l,b);
+      label = gtk_label_new (l);
+      gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1); break;
+    case 2:
+      l = "SP:"; strcat(l,b);
+      label = gtk_label_new (l);
+      gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1); break;
+    case 3:
+      l = "GP:"; strcat(l,b);
+      label = gtk_label_new (l);
+      gtk_grid_attach (GTK_GRID (grid), label, 15, 0, 1, 1); break;
+    default :
+     gprintf("Erro label invalido\n" );
+  }
+}
+
+    //-----------------------------------------//
+
 static void activateLables (GtkWidget *grid) {
 
   GtkWidget *label;
@@ -97,18 +125,10 @@ static void activateLables (GtkWidget *grid) {
 
   //-------------------------------------------//
 
-  label = gtk_label_new ("PC:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 12, 0, 1, 1);
-
-  label = gtk_label_new ("FP:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1);
-
-  label = gtk_label_new ("SP:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1);
-
-  label = gtk_label_new ("GP:0");
-  gtk_grid_attach (GTK_GRID (grid), label, 15, 0, 1, 1);
-
+  actLabel (GTK_GRID (grid), 0, 0);
+  actLabel (GTK_GRID (grid), 1, 0);
+  actLabel (GTK_GRID (grid), 2, 0);
+  actLabel (GTK_GRID (grid), 3, 0);
 }
 
 //-----------------------------------------------------------------------------//
@@ -179,7 +199,6 @@ static void activateInputs (GtkWidget *grid) {
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 5, 4, 4);
-
 }
 
 //-----------------------------------------------------------------------------//
@@ -194,32 +213,32 @@ void remLinha(char *i, GtkListStore* a) {
 
   //-----------------------------------------//
 
-void insCode(char *instr, int vA, int vB, int index) {
+void insCode(char *instr, int vA, int vB, int idx) {
   GtkTreeIter iter;
   enum stack {Index, Instruction, ValueA, ValueB, NUM_COLS };
   gtk_list_store_append(storeCode, &iter);
-  gtk_list_store_set (storeCode, &iter, Index, index, Instruction, instr, ValueA, vA, ValueB, vB, -1);
+  gtk_list_store_set (storeCode, &iter, Index, idx, Instruction, instr, ValueA, vA, ValueB, vB, -1);
 }
 
-void insHeap(int val, char *tp) {
+void insHeap(int val, char *tp, int idx) {
   GtkTreeIter iter;
   enum stack {Index, Value, Type, NUM_COLS };
   gtk_list_store_append(storeHeap, &iter);
-  gtk_list_store_set (storeHeap, &iter, Index, ii, Value, val, Type, tp, -1);
+  gtk_list_store_set (storeHeap, &iter, Index, idx, Value, val, Type, tp, -1);
 }
 
-void insOP(int pc, int fp) {
+void insOP(int pc, int fp, int idx) {
   GtkTreeIter iter;
   enum stack {Index, PcValue, FpValue, NUM_COLS };
   gtk_list_store_append(storeOP, &iter);
-  gtk_list_store_set (storeOP, &iter, Index, ii, PcValue, pc, FpValue, fp, -1);
+  gtk_list_store_set (storeOP, &iter, Index, idx, PcValue, pc, FpValue, fp, -1);
 }
 
-void insCall(int val, char *tp) {
+void insCall(int val, char *tp, int idx) {
   GtkTreeIter iter;
   enum stack {Index, Value, Type, NUM_COLS };
   gtk_list_store_append(storeCall, &iter);
-  gtk_list_store_set (storeCall, &iter, Index, ii, Value, val, Type, tp, -1);
+  gtk_list_store_set (storeCall, &iter, Index, idx, Value, val, Type, tp, -1);
 }
 
 //-----------------------------------------------------------------------------//
@@ -232,7 +251,6 @@ static void criarJanela (GtkWidget *view, GtkWidget *grid, int x, int y, int xx,
   gtk_widget_set_vexpand (scrolled_window, TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_grid_attach (GTK_GRID (grid), scrolled_window, x, y, xx, yy);
-
 }
 
 //-----------------------------------------------------------------------------//
@@ -341,7 +359,6 @@ void activateStacks (GtkWidget *grid) {
   activateSHeap (grid, 3, 1, 3, 11);
   activateSOP   (grid, 6, 1, 3, 11);
   activateSCall (grid, 9, 1, 3, 11);
-
 
   GtkTreeSelection x;
 
