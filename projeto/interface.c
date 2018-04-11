@@ -85,23 +85,23 @@ void actLabel (GtkWidget *grid, int lab, int value) {
   sprintf(b, "%d", value);
   switch (lab) {
     case 0:
-      l = "PC:"; strcat(l,b);
+      strncpy(l, "PC:", 10); strcat(l,b);
       label = gtk_label_new (l);
       gtk_grid_attach (GTK_GRID (grid), label, 12, 0, 1, 1); break;
     case 1:
-      l = "FP:"; strcat(l,b);
+      strncpy(l, "FP:", 10); strcat(l,b);
       label = gtk_label_new (l);
       gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1); break;
     case 2:
-      l = "SP:"; strcat(l,b);
+      strncpy(l, "SP:", 10); strcat(l,b);
       label = gtk_label_new (l);
       gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1); break;
     case 3:
-      l = "GP:"; strcat(l,b);
+      strncpy(l, "GP:", 10); strcat(l,b);
       label = gtk_label_new (l);
       gtk_grid_attach (GTK_GRID (grid), label, 15, 0, 1, 1); break;
     default :
-     gprintf("Erro label invalido\n" );
+    g_print("Erro label invalido\n" );
   }
 }
 
