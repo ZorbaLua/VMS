@@ -159,8 +159,7 @@ void execGui(){
         fprintf(stderr, "child\n");
         dup2(wp[0], 0);
         dup2(rp[1], 1);
-        //execlp("./interface", "./interface", "\0");
-        execvp("./interface" ,NULL);
+        execlp("./interface", "./interface", NULL);
     }
 }
 

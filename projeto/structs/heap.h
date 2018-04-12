@@ -3,7 +3,6 @@
 #define HEAP_H
 
 #include "types.h"
-#include "linkedList.h"
 #include <glib.h>
 
 typedef struct heapInfo{
@@ -12,7 +11,6 @@ typedef struct heapInfo{
 } *HeapInfo;
 
 typedef struct heap{
-    LinkedList ll;
     GString* h;
     int last;
 } Heap;
