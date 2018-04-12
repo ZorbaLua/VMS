@@ -153,14 +153,11 @@ void execGui(){
     pipe(rp);
     if(fork()){//parent
         dup2(wp[1], 1); 
-        sleep(1000000);
     }
     else{//child
-        fprintf(stderr, "child\n");
         dup2(wp[0], 0);
         dup2(rp[1], 1);
-        //execlp("./interface", "./interface", "\0");
-        execvp("./interface" ,NULL);
+        execlp("./interface", "./interface", NULL);
     }
 }
 
