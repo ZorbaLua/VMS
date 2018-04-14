@@ -41,6 +41,7 @@ static char* GtkFileOpen () {
       return(filename);
     }
   gtk_widget_destroy (dialog);
+  return(NULL);
 }
 
 //-----------------------------------------------------------------------------//
@@ -69,7 +70,7 @@ static void bExeT (GtkWidget *widget, gpointer data) {
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
   char* ficheiro = GtkFileOpen ();
-    mainVMS(ficheiro);
+  mainVMS(ficheiro);
   g_print ("Click Load Programa\n");
 }
 
