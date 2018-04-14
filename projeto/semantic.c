@@ -36,11 +36,11 @@ int semWrite() {
     try(OpStack_pop(&oe));
     
     switch(oe->val.type){
-        case T_int    : printf("OUTPUT:\t%d\n", oe->val.val.i); break;
-        case T_float  : printf("OUTPUT:\t%f\n", oe->val.val.f); break;
-        case T_codePt : printf("OUTPUT:\t%d\n", oe->val.val.c); break;
-        case T_opPt   : printf("OUTPUT:\t%d\n", oe->val.val.o); break;
-        case T_heapPt : printf("OUTPUT:\t%d\n", oe->val.val.h); break;
+        case T_int    : printf("OUTPUT:%d\n", oe->val.val.i); break;
+        case T_float  : printf("OUTPUT:%f\n", oe->val.val.f); break;
+        case T_codePt : printf("OUTPUT:%d\n", oe->val.val.c); break;
+        case T_opPt   : printf("OUTPUT:%d\n", oe->val.val.o); break;
+        case T_heapPt : printf("OUTPUT:%d\n", oe->val.val.h); break;
         default: return -1;
     }
     return 0;

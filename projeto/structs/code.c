@@ -1,13 +1,14 @@
-
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "code.h"
 
 extern Code code;
+extern int try(int);
 
 char* Code_toString(CodeElem ce){
     char* ret = (char*)malloc(MAX_LINE*sizeof(char));
-    snprintf(ret, MAX_LINE, "(%d:%s:%s)", ce->inst, Value_toString(ce->first), Value_toString(ce->second));
+    snprintf(ret, MAX_LINE, "%s %s %s", Inst_toString(ce->inst), Value_toString(ce->first), Value_toString(ce->second));
     return ret;
 }
 
@@ -32,12 +33,17 @@ CodeElem newCodeElem(Einst inst, Value v1, Value v2){
     ce->first = v1;
     ce->second = v2;
 
-    //insCode(inst, v1, v2); //Interface
-
     return ce;
 }
 
 void printCode(CodeElem ce, char signal){
-    //printf("CODE\t\t(%d)\t\t%c(%d:%s:%s)\n", code.pc, signal,ce->inst, Value_toString(ce->first), Value_toString(ce->second));
-    printf("CODE\t\t(%d)\t\t%c(%s:%s:%s)\n", code.pc, signal, Inst_toString(ce->inst), Value_toString(ce->first), Value_toString(ce->second));
+    char str[MAX_LINE];
+    int len;
+    len = snprintf(str, MAX_LINE, "CODE %c %d %s %d\n", signal,
+                    code.array.len, 
+                    Code_toString(ce),
+                    code.pc
+                   );
+    if(len>MAX_LINE) try(1);
+    write(1,str,len);
 }

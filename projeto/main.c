@@ -1,4 +1,4 @@
-
+#include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -12,6 +12,7 @@
 
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
+extern FILE* yyin;
 GHashTable* labels = NULL;
 Code code;
 OpStack opstack;
@@ -22,8 +23,7 @@ int opSize   = 1000;
 int callSize = 100;
 int heapSize = 1000;
 int gui = 0;
-int wp[2];
-int rp[2];
+pid_t pidGui;
 
 
 int yyparse();
@@ -140,29 +140,55 @@ void runInst(CodeElem ce){
 
 void runProgram(){
     CodeElem ce;
-    int stop = 0;
-    while( !Code_get(&ce) && !stop){
-        if(ce->inst == STOP) stop = 1;
-        printCode(ce, ' ');
-        runInst(ce);
+    char str[MAX_LINE];
+    int stop = 0, nInst=0, i=0;
+    while(1){
+        write(1, "n inst:\n", 8);
+        fprintf(stderr, "ISTO");
+        fgets(str, MAX_LINE, stdin);
+        fprintf(stderr, "%s",str);
+        if(str[0]<'0' || str[0]>'9'){
+            // limpar estruturas
+            if((yyin = fopen(str, "r"))<0) try(1);
+            yyparse();
+        }
+        else{
+            i=0;
+            nInst = atoi(str);
+            while( !Code_get(&ce) && !stop && i<nInst){
+                if(ce->inst == STOP) stop = 1;
+                printCode(ce, '_');
+                runInst(ce);
+                i++;
+            }
+        }
     }
 }
 
 void execGui(){
-    pipe(wp);
-    pipe(rp);
-    if(fork()){//parent
+    int wp[2], rp[2];
+    char filename[MAX_LINE];
+    if (pipe(wp)<0 || pipe(rp)<0) try(1);
+    if( (pidGui=fork()) ){//parent
+        close(wp[0]);
+        close(rp[1]);
         dup2(wp[1], 1); 
+        dup2(rp[0], 0);
+        fgets(filename, MAX_LINE, stdin);
+//fprintf(stderr, "%s\n", filename);
+        if((yyin = fopen(filename, "r"))<0) try(1);
     }
     else{//child
+        close(wp[1]);
+        close(rp[0]);
         dup2(wp[0], 0);
         dup2(rp[1], 1);
         execlp("./interface", "./interface", NULL);
     }
 }
 
-void options(int argc, char** argv){
-    int i, j, k, fd;
+void options(int argc, char** argv){// debug
+    int i, j, k;
     if(argc < 2) try(-1);
     for(i=1; i<argc; i++){
         if(argv[i][0] == '-'){
@@ -170,23 +196,31 @@ void options(int argc, char** argv){
             for(j=1; argv[i][j] != '\0'; j++){
                 switch(argv[i][j]){
                     case 's': break; 
-                    case 'c': codeSize = atoi(argv[i+k++]); break;
-                    case 'o': opSize   = atoi(argv[i+k++]); break;
-                    case 'C': callSize = atoi(argv[i+k++]); break;
-                    case 'h': heapSize = atoi(argv[i+k++]); break;
+                    case 'c': codeSize = atoi(argv[i+k]);k++; break;
+                    case 'o': opSize   = atoi(argv[i+k]);k++; break;
+                    case 'C': callSize = atoi(argv[i+k]);k++; break;
+                    case 'h': heapSize = atoi(argv[i+k]);k++; break;
                     case 'g': execGui(); gui = 1;           break;
                 }
+                i += k-1;
             }
-            i += k-1;
         }
-        else{
-            fd = open(argv[i], O_RDONLY);
-            dup2(fd, 0);
-        }
+        else if(!gui) if((yyin = fopen(argv[i], "r"))<0) try(1);
     }
 }
 
+void finish(){
+    kill(pidGui, SIGKILL);
+}
+
+void signals(){
+    signal(SIGKILL, finish);
+    signal(SIGQUIT, finish);
+    //signal(SIGSEGV, finish);
+}
+
 int main(int argc, char** argv){
+    signals();
     options(argc, argv);
     Code_init(codeSize);
     OpStack_init(opSize);
@@ -195,7 +229,6 @@ int main(int argc, char** argv){
     labels = g_hash_table_new(g_str_hash, g_str_equal);
 
     yyparse();
-    if(gui) dup2(rp[0], 0);
     runProgram();
 
     _exit(0);
