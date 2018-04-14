@@ -6,5 +6,6 @@ void remLinha();
 void insHeap();
 void insOP();
 void insCall();
+void actLabel();
 
 #endif

@@ -3,8 +3,8 @@ CFLAGS=-Wall
 STRUCTS=structs
 GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
 GTK_flags=`pkg-config --cflags gtk+-3.0`
-GLIBS=`pkg-config --cflags --libs glib-2.0` 
-CFLAGS_GLIB=`pkg-config --cflags glib-2.0` 
+GLIBS=`pkg-config --cflags --libs glib-2.0`
+CFLAGS_GLIB=`pkg-config --cflags glib-2.0`
 
 main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o
 	$(CC) $(GTK_LIBS) $(CFLAGS) $(GLIBS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o -o main
@@ -15,12 +15,16 @@ semantic.o: semantic.c
 ####################################################################################################
 
 interface.o: interface.c
-	$(CC) $(GTK_flags) -c interface.c  
-#$(GTK_LIBS)
+	$(CC) -c	 interface.c $(GTK_LIBS) -o interface
+	#$gcc -g -c	 interface.c $(`pkg-config --cflags --libs gtk+-3.0`) -o interface
+	#gcc -o $(shell pkg-config --cflags --libs gtk+-3.0) interface.c interface
+	#gcc -Wall -g interface.c -o interface `pkg-config --cflags gtk+-3.0`
+	#$(CC) $(GTK_flags) -c interface.c
+	#$(GTK_LIBS)
 
 ####################################################################################################
 
-array.o: $(STRUCTS)/array.c  
+array.o: $(STRUCTS)/array.c
 	$(CC) $(CFLAGS) -c $(STRUCTS)/array.c
 
 ####################################################################################################

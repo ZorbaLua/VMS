@@ -1,7 +1,9 @@
 
 #include <gtk/gtk.h> // code heap opstack call stack
 #include <stdio.h>
+#include <string.h>
 #include "interface.h"
+#include "main.c"
 
 // gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0)
 
@@ -56,7 +58,7 @@ static void selecionar (char *i) {
 static void bExe (GtkWidget *widget, gpointer data) {
   g_print ("Click Executar\n");
   char co = (char) n++;
-  selecionar(co);
+  //selecionar(co);
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
@@ -125,10 +127,10 @@ static void activateLables (GtkWidget *grid) {
 
   //-------------------------------------------//
 
-  actLabel (GTK_GRID (grid), 0, 0);
-  actLabel (GTK_GRID (grid), 1, 0);
-  actLabel (GTK_GRID (grid), 2, 0);
-  actLabel (GTK_GRID (grid), 3, 0);
+  actLabel (grid, 0, 0);
+  actLabel (grid, 1, 0);
+  actLabel (grid, 2, 0);
+  actLabel (grid, 3, 0);
 }
 
 //-----------------------------------------------------------------------------//
