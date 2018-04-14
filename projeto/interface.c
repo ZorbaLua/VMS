@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "interface.h"
-#include "main.c"
+
 
 // gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0)
 

@@ -4,7 +4,6 @@
 #include <fcntl.h>
 
 #include "semantic.h"
-
 #include "structs/code.h"
 #include "structs/opStack.h"
 #include "structs/callStack.h"

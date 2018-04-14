@@ -2,26 +2,21 @@ CC=gcc -g
 CFLAGS=-Wall
 STRUCTS=structs
 GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
-GTK_flags=`pkg-config --cflags gtk+-3.0`
 GLIBS=`pkg-config --cflags --libs glib-2.0`
-CFLAGS_GLIB=`pkg-config --cflags glib-2.0`
+GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
+GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 
-main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o
-	$(CC) $(GTK_LIBS) $(CFLAGS) $(GLIBS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o -o main
+
+interface: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o
+	$(CC) $(CFLAGS) $(GTK_LIBS) $(GLIBS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o interface.o -o interface
 
 semantic.o: semantic.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c semantic.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c semantic.c
 
 ####################################################################################################
 
 interface.o: interface.c
-	$(CC) -c	 interface.c $(GTK_LIBS) -o interface
-	#$gcc -g -c	 interface.c $(`pkg-config --cflags --libs gtk+-3.0`) -o interface
-	#gcc -o $(shell pkg-config --cflags --libs gtk+-3.0) interface.c interface
-	#gcc -Wall -g interface.c -o interface `pkg-config --cflags gtk+-3.0`
-	#$(CC) $(GTK_flags) -c interface.c
-	#$(GTK_LIBS)
-
+	$(CC) $(CFLAGS) $(GTK_FLAGS) -c interface.c 
 ####################################################################################################
 
 array.o: $(STRUCTS)/array.c
@@ -30,34 +25,34 @@ array.o: $(STRUCTS)/array.c
 ####################################################################################################
 
 types.o: $(STRUCTS)/types.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/types.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/types.c
 
 code.o: $(STRUCTS)/code.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/code.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/code.c
 
 opStack.o: $(STRUCTS)/opStack.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/opStack.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/opStack.c
 
 heap.o: $(STRUCTS)/heap.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/heap.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/heap.c
 
 callStack.o: $(STRUCTS)/callStack.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c $(STRUCTS)/callStack.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/callStack.c
 
 ####################################################################################################
 
 y.tab.o: y.tab.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c y.tab.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c y.tab.c
 
 y.tab.c: syntax.y
 	yacc -d syntax.y
 
 lex.yy.o: lex.yy.c
-	$(CC) $(CFLAGS) $(CFLAGS_GLIB) -c lex.yy.c
+	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c lex.yy.c
 
 lex.yy.c: lex.l
 	flex -l lex.l
 
 ####################################################################################################
 clean:
-	rm -f *.o y.tab.h y.tab.c lex.yy.c
+	rm -f *.o y.tab.h y.tab.c lex.yy.c main
