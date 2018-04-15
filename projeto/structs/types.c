@@ -1,6 +1,6 @@
+#include <glib.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <glib.h>
 
 #include "types.h"
 
@@ -16,7 +16,7 @@ Value newValue(Uvalue val, Etype type){
 char* Value_toString(Value v){
     char* ret = (char*)malloc(MAX_LINE*sizeof(char));
     switch(v.type){
-        case T_int      : snprintf(ret, MAX_LINE, "INT  %d",      v.val.i);   break; 
+        case T_int      : snprintf(ret, MAX_LINE, "INT %d",      v.val.i);   break; 
         case T_float    : snprintf(ret, MAX_LINE, "FLOAT %f",    v.val.f);   break; 
         case T_codePt   : snprintf(ret, MAX_LINE, "CODE_PT %d",  v.val.c);   break; 
         case T_heapPt   : snprintf(ret, MAX_LINE, "HEAP_PT %d",  v.val.h);   break; 

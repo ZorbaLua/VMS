@@ -143,10 +143,8 @@ void runProgram(){
     char str[MAX_LINE];
     int stop = 0, nInst=0, i=0;
     while(1){
-        write(1, "n inst:\n", 8);
-        fprintf(stderr, "ISTO");
+        write(1, "inst:\n", 6);
         fgets(str, MAX_LINE, stdin);
-        fprintf(stderr, "%s",str);
         if(str[0]<'0' || str[0]>'9'){
             // limpar estruturas
             if((yyin = fopen(str, "r"))<0) try(1);
@@ -155,9 +153,9 @@ void runProgram(){
         else{
             i=0;
             nInst = atoi(str);
-            while( !Code_get(&ce) && !stop && i<nInst){
+            while( i<nInst && !Code_get(&ce) && !stop ){
                 if(ce->inst == STOP) stop = 1;
-                printCode(ce, '_');
+                printCode(ce, '_', code.pc);
                 runInst(ce);
                 i++;
             }
@@ -166,7 +164,7 @@ void runProgram(){
 }
 
 void execGui(){
-    int wp[2], rp[2];
+    int wp[2], rp[2], len;
     char filename[MAX_LINE];
     if (pipe(wp)<0 || pipe(rp)<0) try(1);
     if( (pidGui=fork()) ){//parent
@@ -175,7 +173,8 @@ void execGui(){
         dup2(wp[1], 1); 
         dup2(rp[0], 0);
         fgets(filename, MAX_LINE, stdin);
-//fprintf(stderr, "%s\n", filename);
+        len = strnlen(filename, MAX_LINE);
+        filename[len-1] = '\0';
         if((yyin = fopen(filename, "r"))<0) try(1);
     }
     else{//child
@@ -210,13 +209,15 @@ void options(int argc, char** argv){// debug
 }
 
 void finish(){
+    close(0);
+    close(1);
     kill(pidGui, SIGKILL);
 }
 
 void signals(){
     signal(SIGKILL, finish);
     signal(SIGQUIT, finish);
-    //signal(SIGSEGV, finish);
+    signal(SIGSEGV, finish);
 }
 
 int main(int argc, char** argv){

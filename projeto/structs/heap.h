@@ -1,27 +1,25 @@
-
 #ifndef HEAP_H
 #define HEAP_H
 
 #include "types.h"
-#include "linkedList.h"
-#include <glib.h>
+#include "array.h"
 
-typedef struct heapInfo{
-    heapPt pt;
-    int len;
-} *HeapInfo;
+typedef struct heapElem{
+    char c;
+    heapPt next;
+} HeapElem;
 
 typedef struct heap{
-    LinkedList ll;
-    GString* h;
-    int last;
+    HeapElem* mem;
+    int size;
+    heapPt first;
 } Heap;
 
-int Heap_free(heapPt);
-void Heap_getBlock(heapPt, char*);
+
+void Heap_free(heapPt);
+char* Heap_getBlock(heapPt);
 heapPt Heap_alloc(char*, int);
 
 void Heap_init(int);
-HeapInfo newHeapInfo(heapPt, int);
 
 #endif

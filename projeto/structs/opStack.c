@@ -52,6 +52,6 @@ OperandElem newOperandElem(Value v){
 }
 
 void printOpStack(OperandElem oe, char signal){
-    printf("OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
+    fprintf(stdout, "OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
+    fflush(stdout);
 }
-

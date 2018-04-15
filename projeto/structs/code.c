@@ -13,7 +13,7 @@ char* Code_toString(CodeElem ce){
 }
 
 void Code_add(CodeElem ce){
-    printCode(ce, '+');
+    printCode(ce, '+', code.array.len);
     Array_add(&code.array, ce);
 }
 
@@ -36,14 +36,18 @@ CodeElem newCodeElem(Einst inst, Value v1, Value v2){
     return ce;
 }
 
-void printCode(CodeElem ce, char signal){
-    char str[MAX_LINE];
+
+void printCode(CodeElem ce, char signal, int index){
+    /*char str[MAX_LINE];
     int len;
     len = snprintf(str, MAX_LINE, "CODE %c %d %s %d\n", signal,
-                    code.array.len, 
+                    index, 
                     Code_toString(ce),
                     code.pc
                    );
     if(len>MAX_LINE) try(1);
     write(1,str,len);
+    */
+    fprintf(stdout, "CODE %c %d %s %d\n", signal, index, Code_toString(ce), code.pc);
+    fflush(stdout);
 }

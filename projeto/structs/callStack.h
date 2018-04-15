@@ -20,6 +20,5 @@ void CallStack_push(CallElem);
 CallElem newCallElem(codePt, opPt);
 void CallStack_init(int);
 void printCallStack(CallElem, char signal);
-char* Call_toString(CallElem);
 
 #endif

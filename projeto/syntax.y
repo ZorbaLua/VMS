@@ -110,6 +110,6 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI  , newValue((Uvalue)$
 %%
 
 void yyerror(const char *s){
-    fprintf(stderr , "\e[1mline:%d: \e[31mERRO\e[0m\e[1m: %s\e[0m \n" , yylineno, s);
+    fprintf(stdout, "\e[1mline:%d: \e[31mERRO\e[0m\e[1m: %s\e[0m \n" , yylineno, s);
     _exit(0);
 }
