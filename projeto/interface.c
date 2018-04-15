@@ -4,18 +4,20 @@
 #include <string.h>
 #include "interface.h"
 
-
-// gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0)
-
 int mainVMS(char*);
 
 //-Globais-//
 
+char *filename;
+
 GtkEntryBuffer *bufferS, *bufferConsole, *bufferInput;
 GtkWidget *window;
 GtkWidget *viewC;
+GtkWidget *buttonR, *button1, *buttonN;
 
 GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
+
+GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
 
 
 int ii = 0;  // mais tarde substituido pelo indicador do num de linhas em cada stack
@@ -32,7 +34,6 @@ static char* GtkFileOpen () {
 
   res = gtk_dialog_run (GTK_DIALOG (dialog));
   if (res == GTK_RESPONSE_ACCEPT) {
-      char *filename;
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
       filename = gtk_file_chooser_get_filename (chooser);
       //open_file (filename);
@@ -41,7 +42,7 @@ static char* GtkFileOpen () {
       return(filename);
     }
   gtk_widget_destroy (dialog);
-  return(NULL);
+  //return(NULL);
 }
 
 //-----------------------------------------------------------------------------//
@@ -56,53 +57,62 @@ static void selecionar (char *i) {
   gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
 }
 
+static void turnOnButtons () {
+  gtk_widget_set_sensitive (buttonR, TRUE);
+  gtk_widget_set_sensitive (button1, TRUE);
+  gtk_widget_set_sensitive (buttonN, TRUE);
+}
+
 static void bExe (GtkWidget *widget, gpointer data) {
   g_print ("Click Executar\n");
   char co = (char) n++;
-  //selecionar(co);
+  selecionar(co);
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
-  const gchar *vezes = gtk_entry_buffer_get_text(bufferS);
   g_print ("Click Executar N\n");
+  const gchar *vezes = gtk_entry_buffer_get_text(bufferS);
   g_print ("-> %s\n", vezes);
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
-  char* ficheiro = GtkFileOpen ();
-  mainVMS(ficheiro);
   g_print ("Click Load Programa\n");
+  char* ficheiro = GtkFileOpen ();
+  if (ficheiro != NULL) {
+    mainVMS(ficheiro);
+    turnOnButtons();
+  }
+}
+
+static void bReloadFile (GtkWidget *widget, gpointer data) {
+  mainVMS(filename);
+  g_print ("Click Reload File\n");
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-  char* ficheiro = GtkFileOpen ();
   g_print ("Click Load Input\n");
+  char* ficheiro = GtkFileOpen ();
 }
 
 //-----------------------------------------------------------------------------//
 
 void actLabel (GtkWidget *grid, int lab, int value) {
 
-  GtkWidget *label;
   char l[10], b[5];
   sprintf(b, "%d", value);
   switch (lab) {
     case 0:
       strncpy(l, "PC:", 10); strcat(l,b);
-      label = gtk_label_new (l);
-      gtk_grid_attach (GTK_GRID (grid), label, 12, 0, 1, 1); break;
+      gtk_label_set_text (GTK_LABEL (labelPC), l);
     case 1:
       strncpy(l, "FP:", 10); strcat(l,b);
-      label = gtk_label_new (l);
-      gtk_grid_attach (GTK_GRID (grid), label, 13, 0, 1, 1); break;
+      gtk_label_set_text (GTK_LABEL (labelFP), l);
     case 2:
       strncpy(l, "SP:", 10); strcat(l,b);
-      label = gtk_label_new (l);
-      gtk_grid_attach (GTK_GRID (grid), label, 14, 0, 1, 1); break;
+      gtk_label_set_text (GTK_LABEL (labelSP), l);
     case 3:
       strncpy(l, "GP:", 10); strcat(l,b);
-      label = gtk_label_new (l);
-      gtk_grid_attach (GTK_GRID (grid), label, 15, 0, 1, 1); break;
+      gtk_label_set_text (GTK_LABEL (labelGP), l);
     default :
     g_print("Erro label invalido\n" );
   }
@@ -128,10 +138,18 @@ static void activateLables (GtkWidget *grid) {
 
   //-------------------------------------------//
 
-  actLabel (grid, 0, 0);
-  actLabel (grid, 1, 0);
-  actLabel (grid, 2, 0);
-  actLabel (grid, 3, 0);
+  labelPC = gtk_label_new ("PC:...");
+  gtk_grid_attach (GTK_GRID (grid), labelPC, 12, 0, 1, 1);
+
+  labelFP = gtk_label_new ("FP:...");
+  gtk_grid_attach (GTK_GRID (grid), labelFP, 13, 0, 1, 1);
+
+  labelSP = gtk_label_new ("SP:...");
+  gtk_grid_attach (GTK_GRID (grid), labelSP, 14, 0, 1, 1);
+
+  labelGP = gtk_label_new ("GP:...");
+  gtk_grid_attach (GTK_GRID (grid), labelGP, 15, 0, 1, 1);
+
 }
 
 //-----------------------------------------------------------------------------//
@@ -143,26 +161,33 @@ static void activateInputs (GtkWidget *grid) {
   //gtk_widget_set_hexpand (entry, FALSE);
   //gtk_widget_set_vexpand (entry, FALSE);
 
-  bufferS = gtk_entry_buffer_new ("-1", 3);
+  bufferS = gtk_entry_buffer_new ("-1", 2);
   entry = gtk_entry_new_with_buffer (bufferS);
-  gtk_entry_set_max_length (GTK_ENTRY (entry), 5);
+  gtk_entry_set_max_length (GTK_ENTRY (entry), 2);
   gtk_grid_attach (GTK_GRID (grid), entry, 14, 2, 2, 1);
 
     //-----------------------------------------//
 
   GtkWidget *button;
 
-  button = gtk_button_new_with_label ("Execute 1");
-  g_signal_connect (button, "clicked", G_CALLBACK (bExe), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 1, 4, 1);
+  button1 = gtk_button_new_with_label ("Execute 1");
+  g_signal_connect (button1, "clicked", G_CALLBACK (bExe), NULL);
+  gtk_widget_set_sensitive (button1, FALSE);
+  gtk_grid_attach (GTK_GRID (grid), button1, 12, 1, 4, 1);
 
-  button = gtk_button_new_with_label ("Execute N:");
-  g_signal_connect (button, "clicked", G_CALLBACK (bExeT), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 2, 2, 1);
+  buttonN = gtk_button_new_with_label ("Execute N:");
+  g_signal_connect (buttonN, "clicked", G_CALLBACK (bExeT), NULL);
+  gtk_widget_set_sensitive (buttonN, FALSE);
+  gtk_grid_attach (GTK_GRID (grid), buttonN, 12, 2, 2, 1);
 
   button = gtk_button_new_with_label ("Load Program File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadPFile), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 3, 4, 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 12, 3, 2, 1);
+
+  buttonR = gtk_button_new_with_label ("Reload File");
+  g_signal_connect (button, "clicked", G_CALLBACK (bReloadFile), NULL);
+  gtk_widget_set_sensitive (buttonR, FALSE);
+  gtk_grid_attach (GTK_GRID (grid), buttonR, 14, 3, 2, 1);
 
   button = gtk_button_new_with_label ("Load Input File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadIFile), NULL);
