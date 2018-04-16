@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "code.h"
-#include "../interface.h"
 
 extern Code code;
 extern int try(int);

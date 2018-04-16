@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include <glib.h>
-#include <stdlib.h>
 
 #include "semantic.h"
 #include "structs/code.h"
@@ -33,7 +32,7 @@ int semPushf(Value v) {
 int semWrite() {
     OperandElem oe = NULL;
     try(OpStack_pop(&oe));
-
+    
     switch(oe->val.type){
         case T_int    : printf("OUTPUT:%d\n", oe->val.val.i); break;
         case T_float  : printf("OUTPUT:%f\n", oe->val.val.f); break;
@@ -97,7 +96,7 @@ void operationsInt(char op){
     try(OpStack_pop(&top));
     try(OpStack_pop(&other));
     switch(op){
-        case '+': uv.i = other->val.val.i +  top->val.val.i;    break;
+        case '+': uv.i = other->val.val.i +  top->val.val.i;    break; 
         case '-': uv.i = other->val.val.i -  top->val.val.i;    break;
         case '*': uv.i = other->val.val.i *  top->val.val.i;    break;
         case '/': uv.i = other->val.val.i /  top->val.val.i;    break;
@@ -118,7 +117,7 @@ void operationsFloat(char op){
     try(OpStack_pop(&top));
     try(OpStack_pop(&other));
     switch(op){
-        case '+': uv.f = other->val.val.f +  top->val.val.f;    break;
+        case '+': uv.f = other->val.val.f +  top->val.val.f;    break; 
         case '-': uv.f = other->val.val.f -  top->val.val.f;    break;
         case '*': uv.f = other->val.val.f *  top->val.val.f;    break;
         case '/': uv.f = other->val.val.f /  top->val.val.f;    break;
@@ -132,47 +131,47 @@ void operationsFloat(char op){
 }
 
 int semAdd() {
-    operationsInt('+');
+    operationsInt('+'); 
     return 0;
 }
 
 int semSub() {
-    operationsInt('-');
+    operationsInt('-'); 
     return 0;
 }
 
 int semMul() {
-    operationsInt('*');
+    operationsInt('*'); 
     return 0;
 }
 
 int semDiv() {
-    operationsInt('/');
+    operationsInt('/'); 
     return 0;
 }
 
 int semMod() {
-    operationsInt('%');
+    operationsInt('%'); 
     return 0;
 }
 
 int semInf() {
-    operationsInt('i');
+    operationsInt('i'); 
  	return 0;
 }
 
 int semInfeq() {
-    operationsInt('I');
+    operationsInt('I'); 
  	return 0;
 }
 
 int semSup() {
-    operationsInt('s');
+    operationsInt('s'); 
  	return 0;
 }
 
 int semSupeq() {
-    operationsInt('S');
+    operationsInt('S'); 
  	return 0;
 }
 
@@ -223,8 +222,8 @@ int semPadd() {
     try(OpStack_pop(&integer));
     if( integer->val.type != T_int ) return -1;
     switch(pt->val.type){
-        case T_codePt:
-            uv.c = pt->val.val.c + integer->val.val.i;
+        case T_codePt: 
+            uv.c = pt->val.val.c + integer->val.val.i; 
             OpStack_push(newOperandElem(newValue(uv, T_codePt)));
             break;
         case T_opPt:
@@ -232,7 +231,7 @@ int semPadd() {
             OpStack_push(newOperandElem(newValue(uv, T_opPt)));
             break;
         case T_heapPt:
-            uv.h = pt->val.val.h + integer->val.val.i;
+            uv.h = pt->val.val.h + integer->val.val.i; 
             OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
             break;
         default: return -1;
@@ -423,7 +422,7 @@ int semLoadn() {
 }
 
 int semDup(Value f) {
-    int i, topo;
+    int i, topo; 
     i = f.val.i;
     OperandElem oe;
     if(opstack.flagGlobal) topo = opstack.gp;
@@ -438,7 +437,7 @@ int semDup(Value f) {
 }
 
 int semDupn() {
-    int i, topo;
+    int i, topo; 
     OperandElem oe;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) return -1;
@@ -568,7 +567,7 @@ int semReturn() {
 
 int semStart() {
     opstack.flagGlobal = 0;
-    opstack.fp = opstack.gp;
+    opstack.fp = opstack.gp; 
     opstack.sp = opstack.gp;
  	return 0;
 }
@@ -581,3 +580,5 @@ int semNop() {
 int semErr() {
  	return 0;
 }
+
+

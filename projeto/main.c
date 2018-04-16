@@ -4,6 +4,7 @@
 #include <fcntl.h>
 
 #include "semantic.h"
+
 #include "structs/code.h"
 #include "structs/opStack.h"
 #include "structs/callStack.h"
@@ -24,7 +25,6 @@ int heapSize = 1000;
 int gui = 0;
 pid_t pidGui;
 
-
 int yyparse();
 
 void try(int erro) {
@@ -42,11 +42,11 @@ void runInst(CodeElem ce){
 
     switch(ce->inst){
 
-        case NOT    : semNot();     break;//v 
+        case NOT    : semNot();     break;//v
         case EQUAL  : semEqual();   break;//v
 
       //-Operacoes Sobre Inteiros----------------------//
-        case ADD    : semAdd();     break;//v 
+        case ADD    : semAdd();     break;//v
         case SUB    : semSub();     break;//v
         case MUL    : semMul();     break;//v
         case DIV    : semDiv();     break;//v
@@ -70,7 +70,7 @@ void runInst(CodeElem ce){
 
       //-Operacoes Sobre Enderecos---------------------//
         case PADD   : semPadd();  	break;//v
-                      
+
       //-Operacoes Sobre Cadeias de Caracteres---------//
         case CONCAT : semConcat();  break;//x
 
@@ -169,7 +169,7 @@ void execGui(){
     if( (pidGui=fork()) ){//parent
         close(wp[0]);
         close(rp[1]);
-        dup2(wp[1], 1); 
+        dup2(wp[1], 1);
         dup2(rp[0], 0);
         fgets(filename, MAX_LINE, stdin);
         len = strnlen(filename, MAX_LINE);
@@ -193,7 +193,7 @@ void options(int argc, char** argv){// debug
             k=1;
             for(j=1; argv[i][j] != '\0'; j++){
                 switch(argv[i][j]){
-                    case 's': break; 
+                    case 's': break;
                     case 'c': codeSize = atoi(argv[i+k]);k++; break;
                     case 'o': opSize   = atoi(argv[i+k]);k++; break;
                     case 'C': callSize = atoi(argv[i+k]);k++; break;
@@ -231,5 +231,5 @@ int main(int argc, char** argv){
     yyparse();
     runProgram();
 
-    return 0;
+    _exit(0);
 }
