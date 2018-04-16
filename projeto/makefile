@@ -59,3 +59,38 @@ lex.yy.c: lex.l
 ####################################################################################################
 clean:
 	rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
+
+
+	# ---------------------------------------------------------------------------- #
+
+#	all: y.tab.c lex.yy.c main interface
+
+#	y.tab.c: syntax.y
+#		yacc -d syntax.y
+
+#	lex.yy.c: lex.l
+#		flex lex.l
+
+	#FLAGS := -std=c99 -Wall -Wextra -pedantic-errors -O2 -g
+#	FLAGS := -g
+#	FLAGS += $(shell pkg-config --cflags --libs glib-2.0 gtk+-3.0)
+#	GLIB_FLAGS= `pkg-config --cflags glib-2.0`
+
+	  # ----------------------------- #
+#	interface:
+#		$(CC) $(SRCS) $(GLIB_FLAGS) $(FLAGS) -o interface
+
+#	SRCS   := $(shell find . -name '*.c' ! -name 'interface.c')
+
+#	.PHONY: main
+#	$(TARGET):
+#		$(CC) $(SRCS) $(GLIB_FLAGS) $(FLAGS) -o $@
+
+	#.PHONY: clean
+	#clean:
+	#	rm -f $(TARGET)
+
+#	clean:
+#		rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
+
+	# ---------------------------------------------------------------------------- #

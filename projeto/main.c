@@ -1,10 +1,10 @@
+
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 
 #include "semantic.h"
-
 #include "structs/code.h"
 #include "structs/opStack.h"
 #include "structs/callStack.h"
@@ -24,6 +24,7 @@ int callSize = 100;
 int heapSize = 1000;
 int gui = 0;
 pid_t pidGui;
+
 
 int yyparse();
 
@@ -231,5 +232,5 @@ int main(int argc, char** argv){
     yyparse();
     runProgram();
 
-    _exit(0);
+    return 0;
 }

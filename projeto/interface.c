@@ -1,3 +1,4 @@
+
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
@@ -29,15 +30,16 @@ int n = 0;
 
 //-----------------------------------------------------------------------------//
 
-void freeLine(char** line, int t){
+void freeLine(char** line, int t) {
     for(int i=0; i<t; i++) free(line[i]);
 }
 
-void initLine(char** line, int t){
+void initLine(char** line, int t) {
     for(int i=0; i<t; i++) line[i] = (char*)malloc(10 * sizeof(char));
 }
 
-void parseLine(char* line){
+void parseLine(char* line) {
+
     if(!strncmp(line, "CO", 2)) insCode(line);
     else if(!strncmp(line, "CA", 2)) insCall(line);
     else if(!strncmp(line, "OP", 2)) insOP(line);
@@ -49,6 +51,7 @@ void parseLine(char* line){
 //-----------------------------------------------------------------------------//
 
 static char* GtkFileOpen () {
+
   GtkWidget *dialog;
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
   gint res;
@@ -69,71 +72,79 @@ static char* GtkFileOpen () {
 
 //-----------------------------------------------------------------------------//
 
-static void selecionar (char *i) {
+static void selecionar (gchar *i) {
 
   GtkTreeIter iter;
   GtkTreePath *path;
-  path = gtk_tree_path_new_from_string (i);
+  gchar *b = i + 3;
+  path = gtk_tree_path_new_from_string (b);
   gtk_tree_model_get_iter(GTK_TREE_MODEL(storeCode), &iter, path);
 
   gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
 }
 
 
-static void turnOnButtons () {
-  gtk_widget_set_sensitive (buttonR, TRUE);
-  gtk_widget_set_sensitive (button1, TRUE);
-  gtk_widget_set_sensitive (buttonN, TRUE);
+static void turnButtons (_Bool b) {
+  gtk_widget_set_sensitive (buttonR, b);
+  gtk_widget_set_sensitive (button1, b);
+  gtk_widget_set_sensitive (buttonN, b);
 }
 
     //-----------------------------------------//
 
+static void exeInst (const char* nvezes) {
+
+  char line[MAX_LINE];
+  // escrever n de instrucoes a executar
+  fprintf(stdout, "%s\n", nvezes); fflush(stdout);
+  // receber alteraçoes a fazer nas stacks
+  do{
+    fgets(line, MAX_LINE, stdin);
+    parseLine(line);
+  }
+  while(line[0] != 'i' && line[0] != '\e');
+}
+
 static void bExe (GtkWidget *widget, gpointer data) {
-   fprintf(stdout,"1\n"); fflush(stdout);
+  exeInst("1");
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
-    int len;
-    const char* nvezes = gtk_entry_buffer_get_text(bufferS);
-    char line[MAX_LINE];
-    // escrever n de instrucoes a executar
-    fprintf(stdout, "%s\n", nvezes); fflush(stdout);
-    // receber alteraçoes a fazer nas stacks
-    do{
-        fgets(line, MAX_LINE, stdin);
-        parseLine(line);
-    }
-    while(line[0] != 'i' && line[0] != '\e');
+  const char* n = gtk_entry_buffer_get_text(bufferS);
+  exeInst(n);
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
-    int len;
-    char* filename = GtkFileOpen();
-    if (filename != NULL) {
-      char line[MAX_LINE];
-      len = strnlen(filename ,MAX_LINE-1);
-      filename[len++] = '\n';
 
-      turnOnButtons();
+  int len;
+  char* filename = GtkFileOpen();
+  if (filename != NULL) {
+    char line[MAX_LINE];
+    len = strnlen(filename ,MAX_LINE-1);
+    filename[len++] = '\n';
+    turnButtons(TRUE);
 
-      write(1, filename, len);
-      do{
-         fgets(line, MAX_LINE, stdin);
-         parseLine(line);
-      } while(line[0] == 'C');
+    write(1, filename, len);
+    do{
+     fgets(line, MAX_LINE, stdin);
+     parseLine(line);
+    } while(line[0] == 'C');
       free(filename);
-    }
+  }
+  else { turnButtons(FALSE); }
 }
 
 static void bReloadFile (GtkWidget *widget, gpointer data) { // POR ISTO DIREITO
+
   //mainVMS(filename);
   g_print ("Click Reload File\n");
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-    char* filename = GtkFileOpen ();
-    g_free (filename);
-    g_print ("Click Load Input\n");
+
+  char* filename = GtkFileOpen ();
+  g_free (filename);
+  g_print ("Click Load Input\n");
 }
 
 //-----------------------------------------------------------------------------//
@@ -303,6 +314,7 @@ void insCode(char *line) {
                                                 -1);
     }
     actLabel(PC, codePC);
+    selecionar( gtk_label_get_text (labelPC) );
     freeLine(arr, NUM_COLS);
 }
 
@@ -482,34 +494,34 @@ void activateStacks () {
 //-----------------------------------------------------------------------------//
 
 static void activate () {
-    grid = gtk_grid_new ();
-    gtk_container_add (GTK_CONTAINER (window), grid);
-    gtk_grid_set_row_spacing (GTK_GRID (grid),10);
-    gtk_grid_set_column_spacing (GTK_GRID (grid),10);
-    //gtk_grid_set_column_homogeneous (GTK_GRID (grid),TRUE);
+  grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (window), grid);
+  gtk_grid_set_row_spacing (GTK_GRID (grid),10);
+  gtk_grid_set_column_spacing (GTK_GRID (grid),10);
+  //gtk_grid_set_column_homogeneous (GTK_GRID (grid),TRUE);
 
-    activateInputs ();
-    activateStacks ();
-    activateLables ();
+  activateInputs ();
+  activateStacks ();
+  activateLables ();
 
-    gtk_widget_show_all (window);
+  gtk_widget_show_all (window);
 }
 
 //-----------------------------------------------------------------------------//
 
 int main (int argc, char **argv) {
-    gtk_init (&argc, &argv);
+  gtk_init (&argc, &argv);
 
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(window), 800, 400);
-    gtk_window_set_title (GTK_WINDOW (window), "VMS-Projeto");
-    gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_default_size(GTK_WINDOW(window), 800, 400);
+  gtk_window_set_title (GTK_WINDOW (window), "VMS-Projeto");
+  gtk_container_set_border_width (GTK_CONTAINER (window), 10);
 
-    g_signal_connect (window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect (window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-    activate();
+  activate();
 
-    gtk_widget_show (window);
-    gtk_main ();
-    return 0;
+  gtk_widget_show (window);
+  gtk_main ();
+  return 0;
 }
