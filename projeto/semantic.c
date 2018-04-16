@@ -13,8 +13,6 @@ extern GHashTable* labels;
 extern Code code;
 extern OpStack opstack;
 extern Heap heap;
-extern FILE* io;
-extern FILE* extra;
 
 void try(int);
 
@@ -37,11 +35,11 @@ int semWrite() {
     try(OpStack_pop(&oe));
 
     switch(oe->val.type){
-        case T_int    : printf("OUTPUT:\t%d\n", oe->val.val.i); break;
-        case T_float  : printf("OUTPUT:\t%f\n", oe->val.val.f); break;
-        case T_codePt : printf("OUTPUT:\t%d\n", oe->val.val.c); break;
-        case T_opPt   : printf("OUTPUT:\t%d\n", oe->val.val.o); break;
-        case T_heapPt : printf("OUTPUT:\t%d\n", oe->val.val.h); break;
+        case T_int    : printf("OUTPUT:%d\n", oe->val.val.i); break;
+        case T_float  : printf("OUTPUT:%f\n", oe->val.val.f); break;
+        case T_codePt : printf("OUTPUT:%d\n", oe->val.val.c); break;
+        case T_opPt   : printf("OUTPUT:%d\n", oe->val.val.o); break;
+        case T_heapPt : printf("OUTPUT:%d\n", oe->val.val.h); break;
         default: return -1;
     }
     return 0;
@@ -243,29 +241,31 @@ int semPadd() {
 }
 
 int semConcat() {
-    int i;
     Uvalue uv;
+    char *first, *second, *res;
+    int len;
     OperandElem top, other;
-    char* s[3];
-    for(i=0; i<3; i++) s[i] = (char*)malloc(sizeof(char) * MAX_LINE);
     try(OpStack_pop(&top));
     try(OpStack_pop(&other));
     if(top->val.type != other->val.type || top->val.type != T_heapPt) return -1;
-    Heap_getBlock(top->val.val.h, s[0]);
-    Heap_getBlock(other->val.val.h, s[1]);
-    snprintf(s[2], MAX_LINE, "%s%s", s[0], s[1]);
-    uv.h = Heap_alloc(s[2], MAX_LINE);
+    first = Heap_getBlock(top->val.val.h);
+    second = Heap_getBlock(other->val.val.h);
+    len = strlen(first);
+    len += strlen(second);
+    res = (char*)malloc(len*sizeof(char));
+    snprintf(res, len, "%s%s", first, second);
+    uv.h = Heap_alloc(res, len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
+    free(first); free(second); free(res);
  	return 0;
 }
 
 int semAlloc(Value f) {
     Uvalue uv;
     int i, len;
-    len = (f.val.i) + 1;
+    len = f.val.i;
     char* s = (char*)malloc(sizeof(char) * len);
-    for(i=0; i < f.val.i; i++) s[i] = '0';
-    s[i] = '\0';
+    for(i=0; i < len; i++) s[i] = '0';
     uv.h = Heap_alloc(s, len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
@@ -278,10 +278,9 @@ int semAllocn() {
     char* s;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) return -1;
-    len = (oe->val.val.i) + 1;
+    len = oe->val.val.i;
     s = (char*)malloc(sizeof(char) * len);
     for(i=0; i < oe->val.val.i; i++) s[i] = '0';
-    s[i] = '\0';
     uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
@@ -296,22 +295,28 @@ int semFree() {
 }
 
 int semAtoi() {
+    char* s;
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_heapPt) return -1;
-    uv.i = atoi(&(heap.h->str[oe->val.val.h]));
+    s = Heap_getBlock(oe->val.val.h);
+    uv.i = atoi(s);
     OpStack_push(newOperandElem(newValue(uv, T_int)));
+    free(s);
  	return 0;
 }
 
 int semAtof() {
+    char* s;
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_heapPt) return -1;
-    uv.i = atof(&(heap.h->str[oe->val.val.h]));
+    s = Heap_getBlock(oe->val.val.h);
+    uv.i = atof(s);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
+    free(s);
  	return 0;
 }
 
@@ -338,35 +343,36 @@ int semFtoi() {
 int semStri() {
     Uvalue uv;
     OperandElem oe;
-    char *s = (char*)malloc(sizeof(char) * MAX_LINE);
+    char *s = (char*)malloc(sizeof(char) * 15);
     int len;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) return -1;
-    snprintf(s, MAX_LINE, "%d", oe->val.val.i);
-    len = strnlen(s, MAX_LINE);
+    snprintf(s, 15, "%d", oe->val.val.i);
+    len = strnlen(s, 15);
     uv.h = Heap_alloc(s, len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
+    free(s);
  	return 0;
 }
 
 int semStrf() {
     Uvalue uv;
     OperandElem oe;
-    char *s = (char*)malloc(sizeof(char) * MAX_LINE);
+    char *s = (char*)malloc(sizeof(char) * 15);
     int len;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_float) return -1;
-    snprintf(s, MAX_LINE, "%f", oe->val.val.f);
-    len = strnlen(s, MAX_LINE);
+    snprintf(s, 15, "%f", oe->val.val.f);
+    len = strnlen(s, 15);
     uv.h = Heap_alloc(s, len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
+    free(s);
  	return 0;
 }
 
 int semPushn(Value f) {
     int i, n = f.val.i;
     for(i=0; i<n; i++) OpStack_push(newOperandElem(newValue((Uvalue)0, T_int)));
-
  	return 0;
 }
 

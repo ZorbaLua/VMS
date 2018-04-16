@@ -4,7 +4,7 @@
 
 typedef struct array {
     int len;
-    int size;
+    int allocSize;
     void** array;
 } Array;
 

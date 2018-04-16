@@ -32,12 +32,8 @@ CallElem newCallElem(codePt pc, opPt fp){
     return ce;
 }
 
-char* Call_toString(CallElem ce) {
-    char* ret = (char*)malloc(MAX_LINE*sizeof(char));
-    snprintf(ret, MAX_LINE, "(%d:%d)", ce->pc, ce->fp);
-    return ret;
-}
 
 void printCallStack(CallElem ce, char signal) {
-    printf("CallStack\t\t()\t\t-%s\n", Call_toString(ce));
+    fprintf(stdout, "CALLSTACK %c %d %d %d\n", signal, callstack.stack.len , ce->pc, ce->fp);
+    fflush(stdout);
 }

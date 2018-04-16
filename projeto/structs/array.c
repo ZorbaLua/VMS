@@ -24,9 +24,9 @@ int Array_addPos(Array* self, int index, void* pt){
 }
 
 void Array_add(Array* self, void* pt){
-    if(self->len == self->size){
-        self->size *= 2;
-        self->array = (void**)realloc(self->array, self->size*sizeof(void*) );
+    if(self->len == self->allocSize){
+        self->allocSize *= 2;
+        self->array = (void**)realloc(self->array, self->allocSize*sizeof(void*) );
     }
     self->array[self->len] = pt;
     self->len += 1;
@@ -34,6 +34,6 @@ void Array_add(Array* self, void* pt){
 
 void Array_init(Array* self, int size) {
     (*self).len = 0;
-    (*self).size = size;
+    (*self).allocSize = size;
     (*self).array = (void**)malloc(sizeof(void*) * size);
 }

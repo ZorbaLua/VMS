@@ -1,4 +1,3 @@
-
 #ifndef CODE_H
 #define CODE_H
 
@@ -22,6 +21,6 @@ char* Code_toString(CodeElem);
 
 void Code_init(int);
 CodeElem newCodeElem(Einst, Value, Value);
-void printCode(CodeElem, char);
+void printCode(CodeElem ce, char signal, int index);
 
 #endif
