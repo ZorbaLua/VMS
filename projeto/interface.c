@@ -2,6 +2,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "structs/types.h"
 
 //-Globais-//
@@ -10,23 +11,19 @@ GtkWidget *window;
 GtkWidget *grid;
 GtkEntryBuffer *bufferS, *bufferConsole, *bufferInput;
 GtkWidget *viewC;
+GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
+GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
+GtkWidget *buttonR, *button1, *buttonN;
 
 #define PC 0
 #define FP 1
 #define SP 2
 #define GP 3
 
-GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
-GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
-GtkWidget *buttonR, *button1, *buttonN;
-
 void insCode(char*);
 void insCall(char*);
 void insOP(char*);
 void insHeap(char*);
-
-int ii = 0;  // mais tarde substituido pelo indicador do num de linhas em cada stack
-int n = 0;
 
 //-----------------------------------------------------------------------------//
 
@@ -39,7 +36,6 @@ void initLine(char** line, int t) {
 }
 
 void parseLine(char* line) {
-
     if(!strncmp(line, "CO", 2)) insCode(line);
     else if(!strncmp(line, "CA", 2)) insCall(line);
     else if(!strncmp(line, "OP", 2)) insOP(line);
@@ -90,6 +86,13 @@ static void turnButtons (_Bool b) {
   gtk_widget_set_sensitive (buttonN, b);
 }
 
+static void limpaStacks() {
+  gtk_list_store_clear (storeCode);
+  gtk_list_store_clear (storeHeap);
+  gtk_list_store_clear (storeOP);
+  gtk_list_store_clear (storeCall);
+}
+
     //-----------------------------------------//
 
 static void exeInst (const char* nvezes) {
@@ -98,7 +101,7 @@ static void exeInst (const char* nvezes) {
   // escrever n de instrucoes a executar
   fprintf(stdout, "%s\n", nvezes); fflush(stdout);
   // receber alteraçoes a fazer nas stacks
-  do{
+  do {
     fgets(line, MAX_LINE, stdin);
     parseLine(line);
   }
@@ -118,6 +121,9 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
 
   int len;
   char* filename = GtkFileOpen();
+
+  limpaStacks();
+
   if (filename != NULL) {
     char line[MAX_LINE];
     len = strnlen(filename ,MAX_LINE-1);
@@ -179,30 +185,30 @@ static void activateLables () {
   GtkWidget *label;
 
   label = gtk_label_new ("Code");
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
 
   label = gtk_label_new ("Heap");
-  gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
 
   label = gtk_label_new ("OPStack");
-  gtk_grid_attach (GTK_GRID (grid), label, 6, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
 
   label = gtk_label_new ("Call Stack");
-  gtk_grid_attach (GTK_GRID (grid), label, 9, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 10, 1, 1);
 
   //-------------------------------------------//
 
-  labelPC = gtk_label_new ("PC:...");
-  gtk_grid_attach (GTK_GRID (grid), labelPC, 12, 0, 1, 1);
+  labelPC = gtk_label_new ("PC:0");
+  gtk_grid_attach (GTK_GRID (grid), labelPC, 3, 0, 1, 1);
 
-  labelFP = gtk_label_new ("FP:...");
-  gtk_grid_attach (GTK_GRID (grid), labelFP, 13, 0, 1, 1);
+  labelFP = gtk_label_new ("FP:0");
+  gtk_grid_attach (GTK_GRID (grid), labelFP, 4, 0, 1, 1);
 
-  labelSP = gtk_label_new ("SP:...");
-  gtk_grid_attach (GTK_GRID (grid), labelSP, 14, 0, 1, 1);
+  labelSP = gtk_label_new ("SP:0");
+  gtk_grid_attach (GTK_GRID (grid), labelSP, 5, 0, 1, 1);
 
-  labelGP = gtk_label_new ("GP:...");
-  gtk_grid_attach (GTK_GRID (grid), labelGP, 15, 0, 1, 1);
+  labelGP = gtk_label_new ("GP:0");
+  gtk_grid_attach (GTK_GRID (grid), labelGP, 6, 0, 1, 1);
 }
 
 //-----------------------------------------------------------------------------//
@@ -217,7 +223,7 @@ static void activateInputs () {
   bufferS = gtk_entry_buffer_new ("1", 1);
   entry = gtk_entry_new_with_buffer (bufferS);
   gtk_entry_set_max_length (GTK_ENTRY (entry), 5);
-  gtk_grid_attach (GTK_GRID (grid), entry, 14, 2, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), entry, 5, 2, 2, 1);
 
     //-----------------------------------------//
 
@@ -226,25 +232,25 @@ static void activateInputs () {
   button1 = gtk_button_new_with_label ("Execute 1");
   g_signal_connect (button1, "clicked", G_CALLBACK (bExe), NULL);
   gtk_widget_set_sensitive (button1, FALSE);
-  gtk_grid_attach (GTK_GRID (grid), button1, 12, 1, 4, 1);
+  gtk_grid_attach (GTK_GRID (grid), button1, 3, 1, 4, 1);
 
   buttonN = gtk_button_new_with_label ("Execute N:");
   g_signal_connect (buttonN, "clicked", G_CALLBACK (bExeT), NULL);
   gtk_widget_set_sensitive (buttonN, FALSE);
-  gtk_grid_attach (GTK_GRID (grid), buttonN, 12, 2, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), buttonN, 3, 2, 2, 1);
 
   button = gtk_button_new_with_label ("Load Program File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadPFile), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 3, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 3, 3, 2, 1);
 
   buttonR = gtk_button_new_with_label ("Reload File?");
   g_signal_connect (buttonR, "clicked", G_CALLBACK (bReloadFile), NULL);
   gtk_widget_set_sensitive (buttonR, FALSE);
-  gtk_grid_attach (GTK_GRID (grid), buttonR, 14, 3, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), buttonR, 5, 3, 2, 1);
 
   button = gtk_button_new_with_label ("Load Input File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadIFile), NULL);
-  gtk_grid_attach (GTK_GRID (grid), button, 12, 4, 4, 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 3, 4, 4, 1);
 
     //-----------------------------------------//
 
@@ -263,7 +269,7 @@ static void activateInputs () {
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 9, 4, 3);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 3, 13, 4, 7);
 
     //-----------------------------------------//
 
@@ -279,7 +285,7 @@ static void activateInputs () {
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 12, 5, 4, 4);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_window, 3, 5, 4, 8);
 }
 
 //-----------------------------------------------------------------------------//
@@ -295,6 +301,7 @@ void remLinha(char *i, GtkListStore* a) {
   //-----------------------------------------//
 
 void insCode(char *line) {
+
     GtkTreeIter iter;
     enum stack {Index, Instruction, ValueA, TypeA, ValueB, TypeB, NUM_COLS };
     char* arr[NUM_COLS];
@@ -319,6 +326,7 @@ void insCode(char *line) {
 }
 
 void insOP(char *line) {
+
     GtkTreeIter iter;
     enum stack {Index, Value, Type, NUM_COLS };
     char* arr[NUM_COLS];
@@ -326,7 +334,7 @@ void insOP(char *line) {
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[1], arr[2], &sp, &fp, &gp);
+    sscanf(line, "OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
     if(signal == '+'){
         gtk_list_store_append(storeOP, &iter);
         gtk_list_store_set (storeOP, &iter, Index, arr[0],
@@ -351,6 +359,7 @@ void insHeap(char *line) {
 }
 
 void insCall(char *line) {
+
     GtkTreeIter iter;
     enum stack {Index, PcValue, FpValue , NUM_COLS };
     char* arr[NUM_COLS];
@@ -358,7 +367,7 @@ void insCall(char *line) {
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "CALLSTACK %c %s %s %s", &signal, arr[0], arr[1], arr[2]);
+    sscanf(line, "CALLSTACK %c %s %s %s", &signal, arr[0], arr[2], arr[1]);
     if(signal == '+'){
         gtk_list_store_append(storeCall, &iter);
         gtk_list_store_set (storeCall, &iter, Index,    arr[0],
@@ -392,7 +401,7 @@ static void activateSCode (int x, int y, int xx, int yy) {
   renderer = gtk_cell_renderer_text_new ();\
 
   enum stack {Index, Instruction, ValueA, TypeA, ValueB, TypeB, NUM_COLS };
-  static const char *nomes[] = {"Index", "Instruction", "ValueA", "TypeA", "ValueB", "TypeB"};
+  static const char *nomes[] = {"#--", "Instruction", "ValueA", "TypeA", "ValueB", "TypeB"};
   storeCode = gtk_list_store_new (NUM_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
@@ -417,7 +426,7 @@ static void activateSHeap (int x, int y, int xx, int yy) {
   renderer = gtk_cell_renderer_text_new ();\
 
   enum stack {Index, Value, Type, NUM_COLS };
-  static const char *nomes[] = {"Index", "Value", "Type"};
+  static const char *nomes[] = {"#--", "Value", "Type"};
   storeHeap = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
@@ -442,7 +451,7 @@ static void activateSOP (int x, int y, int xx, int yy) {
   renderer = gtk_cell_renderer_text_new ();\
 
   enum stack {Index, PcValue, FpValue, NUM_COLS };
-  static const char *nomes[] = {"Index", "Value", "Type"};
+  static const char *nomes[] = {"#--", "Value", "Type"};
   storeOP = gtk_list_store_new (NUM_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
@@ -467,7 +476,7 @@ static void activateSCall (int x, int y, int xx, int yy) {
   renderer = gtk_cell_renderer_text_new ();
 
   enum stack {Index, Value, Type, NUM_COLS };
-  static const char *nomes[] = {"Index", "PcValue", "FpValue"};
+  static const char *nomes[] = {"#--", "PcValue", "FpValue"};
   storeCall= gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
@@ -483,10 +492,10 @@ static void activateSCall (int x, int y, int xx, int yy) {
 //-----------------------------------------------------------------------------//
 
 void activateStacks () {
-  activateSCode (0, 1, 3, 11);
-  activateSHeap (3, 1, 3, 11);
-  activateSOP   (6, 1, 3, 11);
-  activateSCall (9, 1, 3, 11);
+  activateSCode (0, 1, 1, 19);
+  activateSHeap (2, 1, 1, 9);
+  activateSCall (2, 11, 1, 9);
+  activateSOP   (1, 1, 1, 19);
 
   GtkTreeSelection x;
 }

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "semantic.h"
 #include "structs/code.h"

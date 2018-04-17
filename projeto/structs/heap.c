@@ -1,4 +1,6 @@
+
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "heap.h"
 
@@ -18,7 +20,7 @@ char* Heap_getBlock(heapPt pt){
     while(prox){
         if(i<len-1) ret = (char*)realloc(&ret, len*sizeof(char));
         he = prox;
-        ret[i] = he->c; 
+        ret[i] = he->c;
         prox = get(he->next);
         i++;
     }
@@ -31,7 +33,7 @@ void Heap_free(heapPt pt){
     if( (he = get(pt)) == NULL ) return;
     while(prox){
         he = prox;
-        he->c = '\0'; 
+        he->c = '\0';
         prox = get(he->next);
     }
     (heap.mem)[he->next].next = heap.first;
@@ -78,4 +80,3 @@ void Heap_init(int size){
         i++;
     }
 }
-
