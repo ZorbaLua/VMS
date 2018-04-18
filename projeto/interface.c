@@ -290,10 +290,10 @@ static void activateInputs () {
 
 //-----------------------------------------------------------------------------//
 
-void remLinha(char *i, GtkListStore* a) {
+void remLinha(int i, GtkListStore* a) {
   GtkTreeIter iter;
   GtkTreePath *path;
-  path = gtk_tree_path_new_from_string (i);
+  path = gtk_tree_path_new_from_indices (i, -1);
   gtk_tree_model_get_iter(GTK_TREE_MODEL(a), &iter, path);
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
@@ -342,7 +342,7 @@ void insOP(char *line) {
                                             Type,  arr[2],
                                             -1);
     }
-    else if(signal == '-') gtk_list_store_remove (storeOP, &iter);
+    else if(signal == '-') remLinha(sp,storeOP);
     actLabel(SP, sp);
     actLabel(FP, fp);
     actLabel(GP, gp);

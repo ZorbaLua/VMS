@@ -10,7 +10,7 @@ GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 all: main interface
 
 main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
-	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) $(GTK_LIBS) -o main
+	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GTK_LIBS) -o main
 
 interface: interface.c
 	$(CC) interface.c $(GTK_LIBS) -o interface

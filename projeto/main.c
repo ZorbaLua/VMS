@@ -157,8 +157,8 @@ void runProgram(){
             nInst = atoi(str);
             while( i<nInst && !Code_get(&ce) && !stop ){
                 if(ce->inst == STOP) stop = 1;
-                printCode(ce, '_', code.pc);
                 runInst(ce);
+                printCode(ce, '_', code.pc);
                 i++;
             }
         }
