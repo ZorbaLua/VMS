@@ -15,6 +15,8 @@ GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
 GtkWidget *buttonR, *button1, *buttonN;
 
+char* lastfile;
+
 #define PC 0
 #define FP 1
 #define SP 2
@@ -60,6 +62,7 @@ static char* GtkFileOpen () {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
       filename = gtk_file_chooser_get_filename (chooser);
       gtk_widget_destroy (dialog);
+      lastfile = filename;
       return(filename);
     }
   gtk_widget_destroy (dialog);
@@ -78,7 +81,6 @@ static void selecionar (gchar *i) {
 
   gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
 }
-
 
 static void turnButtons (_Bool b) {
   gtk_widget_set_sensitive (buttonR, b);
@@ -117,40 +119,41 @@ static void bExeT (GtkWidget *widget, gpointer data) {
   exeInst(n);
 }
 
-static void bLoadPFile (GtkWidget *widget, gpointer data) {
+static void loadficheiro(char *filename) {
 
   int len;
-  char* filename = GtkFileOpen();
+  char line[MAX_LINE];
+  len = strnlen(filename ,MAX_LINE-1);
+  filename[len++] = '\n';
 
+  turnButtons(TRUE);
+
+  write(1, filename, len);
+  do{
+   fgets(line, MAX_LINE, stdin);
+   parseLine(line);
+  } while(line[0] == 'C');
+    free(filename);
+}
+
+static void bLoadPFile (GtkWidget *widget, gpointer data) {
+
+  char* filename = GtkFileOpen();
   limpaStacks();
 
   if (filename != NULL) {
-    char line[MAX_LINE];
-    len = strnlen(filename ,MAX_LINE-1);
-    filename[len++] = '\n';
-    turnButtons(TRUE);
-
-    write(1, filename, len);
-    do{
-     fgets(line, MAX_LINE, stdin);
-     parseLine(line);
-    } while(line[0] == 'C');
-      free(filename);
+    loadficheiro(filename);
   }
   else { turnButtons(FALSE); }
 }
 
 static void bReloadFile (GtkWidget *widget, gpointer data) { // POR ISTO DIREITO
-
-  //mainVMS(filename);
-  g_print ("Click Reload File\n");
+  loadficheiro(lastfile);
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-
   char* filename = GtkFileOpen ();
   g_free (filename);
-  g_print ("Click Load Input\n");
 }
 
 //-----------------------------------------------------------------------------//
