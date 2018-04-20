@@ -4,6 +4,7 @@
 #include "code.h"
 
 extern Code code;
+extern FILE *dbout;
 extern int try(int);
 
 char* Code_toString(CodeElem ce){
@@ -18,12 +19,16 @@ void Code_add(CodeElem ce){
 }
 
 int Code_get(CodeElem* ret){
-    return Array_getPos(&code.array, code.pc++, (void**)ret);
+    return Array_getPos(&code.array, code.pc, (void**)ret);
 }
 
 void Code_init(int size){
     Array_init(&code.array, size);
     code.pc = 0;
+}
+
+void Code_free(){
+    Array_free(&code.array);
 }
 
 CodeElem newCodeElem(Einst inst, Value v1, Value v2){
@@ -38,6 +43,6 @@ CodeElem newCodeElem(Einst inst, Value v1, Value v2){
 
 
 void printCode(CodeElem ce, char signal, int index){
-    fprintf(stdout, "CODE %c %d %s %d\n", signal, index, Code_toString(ce), code.pc);
-    fflush(stdout);
+    fprintf(dbout, "> CODE %c %d %s %d\n", signal, index, Code_toString(ce), code.pc);
+    fflush(dbout);
 }

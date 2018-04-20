@@ -26,6 +26,7 @@ void OpStack_push(OperandElem);
 
 OperandElem newOperandElem(Value);
 void OpStack_init(int);
+void OpStack_free();
 void printOpStack(OperandElem oe, char signal);
 
 #endif

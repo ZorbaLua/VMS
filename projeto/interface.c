@@ -38,12 +38,12 @@ void initLine(char** line, int t) {
 }
 
 void parseLine(char* line) {
-    if(!strncmp(line, "CO", 2)) insCode(line);
-    else if(!strncmp(line, "CA", 2)) insCall(line);
-    else if(!strncmp(line, "OP", 2)) insOP(line);
-    else if(!strncmp(line, "HE", 2)) insHeap(line);
+    if(!strncmp(line, "> CO", 3)) insCode(line);
+    else if(!strncmp(line, "> CA", 3)) insCall(line);
+    else if(!strncmp(line, "> OP", 3)) insOP(line);
+    else if(!strncmp(line, "> HE", 3)) insHeap(line);
     //else if(!strncmp(line, "\e[", 2)) {;}
-    //else if(strncmp(line, "OU", 2)){ }
+    //else { }
 }
 
 //-----------------------------------------------------------------------------//
@@ -71,11 +71,11 @@ static char* GtkFileOpen () {
 
 //-----------------------------------------------------------------------------//
 
-static void selecionar (gchar *i) {
+static void selecionar (const gchar *i) {
 
   GtkTreeIter iter;
   GtkTreePath *path;
-  gchar *b = i + 3;
+  const gchar *b = i + 3;
   path = gtk_tree_path_new_from_string (b);
   gtk_tree_model_get_iter(GTK_TREE_MODEL(storeCode), &iter, path);
 
@@ -100,14 +100,13 @@ static void limpaStacks() {
 static void exeInst (const char* nvezes) {
 
   char line[MAX_LINE];
-  // escrever n de instrucoes a executar
-  fprintf(stdout, "%s\n", nvezes); fflush(stdout);
-  // receber alteraçoes a fazer nas stacks
-  do {
+  if(nvezes[0] == '0'){ fprintf(stdout, "run \n"); fflush(stdout); }
+  else { fprintf(stdout, "next %s\n", nvezes); fflush(stdout); }
+  line[0]='>';
+  while(line[0] == '>'){
     fgets(line, MAX_LINE, stdin);
     parseLine(line);
   }
-  while(line[0] != 'i' && line[0] != '\e');
 }
 
 static void bExe (GtkWidget *widget, gpointer data) {
@@ -123,17 +122,17 @@ static void loadficheiro(char *filename) {
 
   int len;
   char line[MAX_LINE];
-  len = strnlen(filename ,MAX_LINE-1);
-  filename[len++] = '\n';
 
+  fprintf(stdout, "file %s\n", filename); fflush(stdout);
   turnButtons(TRUE);
+//  read(fileno(stdin), line, 7);
 
-  write(1, filename, len);
-  do{
-   fgets(line, MAX_LINE, stdin);
-   parseLine(line);
-  } while(line[0] == 'C');
-    free(filename);
+  line[0]='>';
+  while(line[0] == '>'){
+    fgets(line, MAX_LINE, stdin);
+    parseLine(line);
+  }
+  free(filename);
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
@@ -312,7 +311,7 @@ void insCode(char *line) {
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "CODE %c %s %s %s %s %s %s %d\n", &signal, arr[0], arr[1], arr[3], arr[2], arr[5], arr[4], &codePC);
+    sscanf(line, "> CODE %c %s %s %s %s %s %s %d\n", &signal, arr[0], arr[1], arr[3], arr[2], arr[5], arr[4], &codePC);
     if(signal == '+'){
         gtk_list_store_append(storeCode, &iter);
         gtk_list_store_set (storeCode, &iter,   Index,          arr[0],
@@ -337,7 +336,7 @@ void insOP(char *line) {
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
+    sscanf(line, "> OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
     if(signal == '+'){
         gtk_list_store_append(storeOP, &iter);
         gtk_list_store_set (storeOP, &iter, Index, arr[0],
@@ -370,7 +369,7 @@ void insCall(char *line) {
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "CALLSTACK %c %s %s %s", &signal, arr[0], arr[2], arr[1]);
+    sscanf(line, "> CALLSTACK %c %s %s %s", &signal, arr[0], arr[2], arr[1]);
     if(signal == '+'){
         gtk_list_store_append(storeCall, &iter);
         gtk_list_store_set (storeCall, &iter, Index,    arr[0],

@@ -15,5 +15,6 @@ int  Array_addPos(Array*, int, void*);
 void Array_add(Array*, void*);
 
 void Array_init(Array*, int);
+void Array_free(Array*);
 
 #endif

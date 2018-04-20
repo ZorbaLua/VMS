@@ -18,6 +18,7 @@ typedef struct code{
 void Code_add(CodeElem);
 int  Code_get(CodeElem*);
 char* Code_toString(CodeElem);
+void Code_free();
 
 void Code_init(int);
 CodeElem newCodeElem(Einst, Value, Value);

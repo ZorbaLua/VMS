@@ -222,7 +222,7 @@ int semPadd() {
     Uvalue uv;
     try(OpStack_pop(&pt));
     try(OpStack_pop(&integer));
-    if( integer->val.type != T_int ) return -1;
+    if( integer->val.type != T_int ) try(-1);
     switch(pt->val.type){
         case T_codePt:
             uv.c = pt->val.val.c + integer->val.val.i;
@@ -236,7 +236,7 @@ int semPadd() {
             uv.h = pt->val.val.h + integer->val.val.i;
             OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
             break;
-        default: return -1;
+        default: try(-1);
     }
  	return 0;
 }
@@ -261,10 +261,9 @@ int semConcat() {
  	return 0;
 }
 
-int semAlloc(Value f) {
+int semAlloc(int len) {
     Uvalue uv;
-    int i, len;
-    len = f.val.i;
+    int i;
     char* s = (char*)malloc(sizeof(char) * len);
     for(i=0; i < len; i++) s[i] = '0';
     uv.h = Heap_alloc(s, len);
@@ -278,7 +277,7 @@ int semAllocn() {
     int i, len;
     char* s;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) return -1;
+    if(oe->val.type != T_int) try(-1);
     len = oe->val.val.i;
     s = (char*)malloc(sizeof(char) * len);
     for(i=0; i < oe->val.val.i; i++) s[i] = '0';
@@ -290,7 +289,7 @@ int semAllocn() {
 int semFree() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_heapPt) return -1;
+    if(oe->val.type != T_heapPt) try(-1);
     Heap_free(oe->val.val.h);
  	return 0;
 }
@@ -300,7 +299,7 @@ int semAtoi() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_heapPt) return -1;
+    if(oe->val.type != T_heapPt) try(-1);
     s = Heap_getBlock(oe->val.val.h);
     uv.i = atoi(s);
     OpStack_push(newOperandElem(newValue(uv, T_int)));
@@ -313,7 +312,7 @@ int semAtof() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_heapPt) return -1;
+    if(oe->val.type != T_heapPt) try(-1);
     s = Heap_getBlock(oe->val.val.h);
     uv.i = atof(s);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
@@ -325,7 +324,7 @@ int semItof() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) return -1;
+    if(oe->val.type != T_int) try(-1);
     uv.f = (float)1.0 * (oe->val.val.i);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
  	return 0;
@@ -335,7 +334,7 @@ int semFtoi() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_float) return -1;
+    if(oe->val.type != T_float) try(-1);
     uv.i = (int)(oe->val.val.f);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
  	return 0;
@@ -347,7 +346,7 @@ int semStri() {
     char *s = (char*)malloc(sizeof(char) * 15);
     int len;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) return -1;
+    if(oe->val.type != T_int) try(-1);
     snprintf(s, 15, "%d", oe->val.val.i);
     len = strnlen(s, 15);
     uv.h = Heap_alloc(s, len);
@@ -362,7 +361,7 @@ int semStrf() {
     char *s = (char*)malloc(sizeof(char) * 15);
     int len;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_float) return -1;
+    if(oe->val.type != T_float) try(-1);
     snprintf(s, 15, "%f", oe->val.val.f);
     len = strnlen(s, 15);
     uv.h = Heap_alloc(s, len);
@@ -371,29 +370,27 @@ int semStrf() {
  	return 0;
 }
 
-int semPushn(Value f) {
-    int i, n = f.val.i;
+int semPushn(int n) {
+    int i;
     for(i=0; i<n; i++) OpStack_push(newOperandElem(newValue((Uvalue)0, T_int)));
  	return 0;
 }
 
-int semPushs(Value f) {
+int semPushs(GString* s) {
     Uvalue uv;
-    uv.h = Heap_alloc(f.val.s->str, f.val.s->len);
+    uv.h = Heap_alloc(s->str, s->len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
  	return 0;
 }
 
-int semPushg(Value f) {
-    int index = f.val.i;
+int semPushg(int index) {
     OperandElem oe;
     try(OpStack_getPos(0+index, &oe));
     OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
  	return 0;
 }
 
-int semPushl(Value f) {
-    int index = f.val.i;
+int semPushl(int index) {
     OperandElem oe;
     try(OpStack_getPos(opstack.fp+index, &oe));
     OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
@@ -416,6 +413,7 @@ int semPushgp() {
 }
 
 int semLoad() {
+
  	return 0;
 }
 
@@ -423,9 +421,8 @@ int semLoadn() {
  	return 0;
 }
 
-int semDup(Value f) {
-    int i, topo;
-    i = f.val.i;
+int semDup(int i) {
+    int topo;
     OperandElem oe;
     if(opstack.flagGlobal) topo = opstack.gp;
     else topo = opstack.sp;
@@ -454,8 +451,8 @@ int semDupn() {
  	return 0;
 }
 
-int semPop(Value f) {
-    int i, n = f.val.i;
+int semPop(int n) {
+    int i;
     OperandElem oe;
     for(i=0; i<n; i++) try(OpStack_pop(&oe));
  	return 0;
@@ -471,17 +468,17 @@ int semPopn() {
  	return 0;
 }
 
-int semStorel(Value f) {
+int semStorel(int index) {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    try( OpStack_addPos(opstack.fp + f.val.i, newOperandElem(newValue(oe->val.val, oe->val.type))) );
+    try( OpStack_addPos(opstack.fp + index, newOperandElem(newValue(oe->val.val, oe->val.type))) );
  	return 0;
 }
 
-int semStoreg(Value f) {
+int semStoreg(int index) {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    try( OpStack_addPos(opstack.gp + f.val.i, newOperandElem(newValue(oe->val.val, oe->val.type))) );
+    try( OpStack_addPos(opstack.gp + index, newOperandElem(newValue(oe->val.val, oe->val.type))) );
  	return 0;
 }
 
@@ -524,26 +521,26 @@ int semRead() {
  	return 0;
 }
 
-int semJump(Value f) {
-    HashData hd = g_hash_table_lookup(labels, f.val.s->str);
+int semJump(GString* s) {
+    HashData hd = g_hash_table_lookup(labels, s->str);
     code.pc = hd->line;
  	return 0;
 }
 
-int semJz(Value f) {
+int semJz(GString* s) {
     OperandElem oe;
     HashData hd;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) return -1;
     if(oe->val.val.i == 0){
-        hd = g_hash_table_lookup(labels, f.val.s->str);
+        hd = g_hash_table_lookup(labels, s->str);
         code.pc = hd->line;
     }
  	return 0;
 }
 
-int semPusha(Value f) {
-    HashData hd = g_hash_table_lookup(labels, f.val.s->str);
+int semPusha(GString* s) {
+    HashData hd = g_hash_table_lookup(labels, s->str);
     OpStack_push( newOperandElem(newValue((Uvalue)hd->line, T_codePt)) );
  	return 0;
 }

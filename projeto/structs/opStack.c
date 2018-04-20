@@ -5,6 +5,7 @@
 
 
 extern OpStack opstack;
+extern FILE* dbout;
 
 extern void try(int);
 
@@ -43,6 +44,9 @@ void OpStack_init(int size){
     opstack.gp = 0;
     opstack.flagGlobal = 1;
 }
+void OpStack_free(){
+    Array_free(&opstack.stack);
+}
 
 
 OperandElem newOperandElem(Value v){
@@ -52,6 +56,6 @@ OperandElem newOperandElem(Value v){
 }
 
 void printOpStack(OperandElem oe, char signal){
-    fprintf(stdout, "OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
-    fflush(stdout);
+    fprintf(dbout, "> OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
+    fflush(dbout);
 }

@@ -5,6 +5,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #include "semantic.h"
 #include "structs/code.h"
@@ -15,6 +17,7 @@
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
 extern FILE* yyin;
+FILE *dbout;
 GHashTable* labels = NULL;
 Code code;
 OpStack opstack;
@@ -24,8 +27,15 @@ int codeSize = 10000;
 int opSize   = 1000;
 int callSize = 100;
 int heapSize = 1000;
-int gui = 0;
+int debug = 0;
 pid_t pidGui;
+char *debuggerFunctionNames[] = {
+    "file",
+    "run",
+    "next",
+    "quit",
+    NULL
+};
 
 
 int yyparse();
@@ -41,7 +51,7 @@ void try(int erro) {
 
 void runInst(CodeElem ce){
     Value f = ce->first;
-    //Value s = ce->second;
+    Value s = ce->second;
 
     switch(ce->inst){
 
@@ -75,38 +85,38 @@ void runInst(CodeElem ce){
         case PADD   : semPadd();  	break;//v
 
       //-Operacoes Sobre Cadeias de Caracteres---------//
-        case CONCAT : semConcat();  break;//x
+        case CONCAT : semConcat();  break;//v
 
       //-Operacoes Sobre Heap--------------------------//
-        case ALLOC  : semAlloc(f);  break;//v
+        case ALLOC  : semAlloc(f.val.i);break;//v
         case ALLOCN : semAllocn();  break;//v
-        case FREE   : semFree();  	break;//x
+        case FREE   : semFree();  	break;//v
 
       //-Conversoes------------------------------------//
-        case ATOI   : semAtoi();  	break;//x
-        case ATOF   : semAtof();  	break;//x
-        case ITOF   : semItof();  	break;//x
-        case FTOI   : semFtoi();  	break;//x
-        case STRI   : semStri();  	break;//x
-        case STRF   : semStrf();  	break;//x
+        case ATOI   : semAtoi();  	break;//v
+        case ATOF   : semAtof();  	break;//v
+        case ITOF   : semItof();  	break;//v
+        case FTOI   : semFtoi();  	break;//v
+        case STRI   : semStri();  	break;//v
+        case STRF   : semStrf();  	break;//v
 
       //-Empilhar--------------------------------------//
-        case PUSHI  : semPushi(f);  break;//v
-        case PUSHN  : semPushn(f);  break;//v
-        case PUSHF  : semPushf(f);  break;//v
-        case PUSHS  : semPushs();   break;//x
-        case PUSHG  : semPushg(f);  break;//v~
-        case PUSHL  : semPushl(f);  break;//v
+        case PUSHI  : semPushi(f);break;//v
+        case PUSHN  : semPushn(f.val.i);break;//v
+        case PUSHF  : semPushf(f);break;//v
+        case PUSHS  : semPushs(f.val.s);break;//v
+        case PUSHG  : semPushg(f.val.i);break;//v
+        case PUSHL  : semPushl(f.val.i);break;//v
         case PUSHSP : semPushsp();  break;//v
         case PUSHFP : semPushfp();  break;//v
         case PUSHGP : semPushgp();  break;//v
         case LOAD   : semLoad();  	break;//x
         case LOADN  : semLoadn();   break;//x
-        case DUP    : semDup(f);  	break;//v
+        case DUP    : semDup(f.val.i);  break;//v
         case DUPN   : semDupn();  	break;//v
 
       //-Retirar---------------------------------------//
-        case POP    : semPop(f);   	break;//v
+        case POP    : semPop(f.val.i);  break;//v
         case POPN   : semPopn();  	break;//v
 
       //-Arquivar--------------------------------------//
@@ -116,7 +126,7 @@ void runInst(CodeElem ce){
         case STOREN : semStoren();  break;//x
 
       //-Diversos--------------------------------------//
-        case CHECK  : semCheck();   break;//x
+        case CHECK  : semCheck(f.val.i, s.val.s);   break;//x
         case SWAP   : semSwap();  	break;//v
 
       //-Input/Output----------------------------------//
@@ -124,9 +134,9 @@ void runInst(CodeElem ce){
         case READ   : semRead();  	break;//x
 
       //-Registo PC------------------------------------//
-        case JUMP   : semJump(f);  	break;//v
-        case JZ     : semJz(f);    	break;//v
-        case PUSHA  : semPusha(f);  break;//v
+        case JUMP   : semJump(f.val.s); break;//v
+        case JZ     : semJz(f.val.s);   break;//v
+        case PUSHA  : semPusha(f.val.s);break;//v
 
       //-Procedimentos---------------------------------//
         case CALL   : semCall();  	break;//v
@@ -138,55 +148,92 @@ void runInst(CodeElem ce){
         case NOP    : semNop();   	break;//v
         case ERR    : semErr();   	break;//x
     }
+    code.pc++;
 }
 
-void runProgram(){
+void freeStructs(){
+    Code_free();
+    OpStack_free();
+
+    Code_init(codeSize);
+    OpStack_init(opSize);
+}
+void runDebug(){
     CodeElem ce;
-    char str[MAX_LINE];
+    char *input;
     int stop = 0, nInst=0, i=0;
     while(1){
-        write(1, "inst:\n", 6);
-        fgets(str, MAX_LINE, stdin);
-        if(str[0]<'0' || str[0]>'9'){
-            // limpar estruturas
-            if((yyin = fopen(str, "r"))<0) try(1);
+        input = readline("(VMDB) "); 
+        if( !strncmp(input, "file ", 5) ){
+            freeStructs();
+            if((yyin = fopen(&input[5], "r"))<0) try(1); // input "file /*****/****/"
             yyparse();
+            fprintf(stdout, "\n"); fflush(stdout);
+
         }
-        else{
+        else if( !strncmp(input,"next ", 5) ){
             i=0;
-            nInst = atoi(str);
+            sscanf(input, "next %d", &nInst);
             while( i<nInst && !Code_get(&ce) && !stop ){
                 if(ce->inst == STOP) stop = 1;
                 runInst(ce);
                 printCode(ce, '_', code.pc);
                 i++;
             }
+            fprintf(stdout, "\n"); fflush(stdout);
         }
+        else if( !strncmp(input,"run", 3) ){
+            while( !Code_get(&ce) && !stop ){
+                if(ce->inst == STOP) stop = 1;
+                runInst(ce);
+                printCode(ce, '_', code.pc);
+            }
+            fprintf(stdout, "\n"); fflush(stdout);
+        }
+        else if( !strncmp(input,"quit", 4) ){
+            _exit(0);
+        }
+        add_history(input);
+        free(input);
     }
 }
 
+void runProgram(){
+    CodeElem ce;
+    int stop = 0;
+    while( !Code_get(&ce) && !stop ){
+        if(ce->inst == STOP) stop = 1;
+        runInst(ce);
+    }
+
+}
+
+void prepareDebug(){
+   int fd = dup(1);
+   dbout = fdopen(fd, "w");
+}
+
 void execGui(){
-    int wp[2], rp[2], len;
-    char filename[MAX_LINE];
+    int wp[2], rp[2];
+    
     if (pipe(wp)<0 || pipe(rp)<0) try(1);
     if( (pidGui=fork()) ){//parent
-        close(wp[0]);
         close(rp[1]);
-        dup2(wp[1], 1);
+        close(wp[0]);
         dup2(rp[0], 0);
-        fgets(filename, MAX_LINE, stdin);
-        len = strnlen(filename, MAX_LINE);
-        filename[len-1] = '\0';
-        if((yyin = fopen(filename, "r"))<0) try(1);
+        dup2(wp[1], 1);
     }
     else{//child
-        close(wp[1]);
         close(rp[0]);
-        dup2(wp[0], 0);
+        close(wp[1]);
         dup2(rp[1], 1);
+        dup2(wp[0], 0);
         execlp("./interface", "./interface", NULL);
     }
+    prepareDebug();
 }
+
+
 
 void options(int argc, char** argv){// debug
     int i, j, k;
@@ -196,17 +243,17 @@ void options(int argc, char** argv){// debug
             k=1;
             for(j=1; argv[i][j] != '\0'; j++){
                 switch(argv[i][j]){
-                    case 's': break;
-                    case 'c': codeSize = atoi(argv[i+k]);k++; break;
-                    case 'o': opSize   = atoi(argv[i+k]);k++; break;
-                    case 'C': callSize = atoi(argv[i+k]);k++; break;
-                    case 'h': heapSize = atoi(argv[i+k]);k++; break;
-                    case 'g': execGui(); gui = 1;           break;
+                    case 'c': codeSize = atoi(argv[i+k]); k++;  break;
+                    case 'o': opSize   = atoi(argv[i+k]); k++;  break;
+                    case 'C': callSize = atoi(argv[i+k]); k++;  break;
+                    case 'h': heapSize = atoi(argv[i+k]); k++;  break;
+                    case 'g': execGui();        debug = 1;      break;
+                    case 'd': prepareDebug();   debug = 1;      break;
                 }
-                i += k-1;
             }
+                i += k-1;
         }
-        else if(!gui) if((yyin = fopen(argv[i], "r"))<0) try(1);
+        else if((yyin = fopen(argv[i], "r"))<0) try(1);
     }
 }
 
@@ -222,7 +269,32 @@ void signals(){
     signal(SIGSEGV, finish);
 }
 
+char* debuggerFunctionNames_generator(const char *text, int state){
+    static int list_index, len;
+    char *name;
+
+    if (!state) {
+        list_index = 0;
+        len = strlen(text);
+    }
+
+    while ((name = debuggerFunctionNames[list_index++])) {
+        if (strncmp(name, text, len) == 0) {
+            return strdup(name);
+        }
+    }
+
+    return NULL;
+}
+
+char** debuggerFunctionNames_completion(const char *text, int start, int end){
+    rl_attempted_completion_over = 1;
+    return rl_completion_matches(text, debuggerFunctionNames_generator);
+}
+
 int main(int argc, char** argv){
+    rl_attempted_completion_function = debuggerFunctionNames_completion;
+    dbout = fopen("/dev/null", "w");
     signals();
     options(argc, argv);
     Code_init(codeSize);
@@ -231,8 +303,12 @@ int main(int argc, char** argv){
     Heap_init(heapSize);
     labels = g_hash_table_new(g_str_hash, g_str_equal);
 
-    yyparse();
-    runProgram();
+    if(debug) runDebug();
+    else{
+        yyparse();
+        runProgram();
+    }
+
 
     return 0;
 }
