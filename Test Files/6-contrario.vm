@@ -41,7 +41,7 @@ pushg 6	// fim de get variavel "i"
 pushi 1
 add
 storeg 6
-jump FOR0:          
+jump FOR0
 ENDFOR0:            
 	// atribuicoes iniciais for
 	// inicio de get variavel "n"
@@ -68,13 +68,13 @@ add
 loadn       
 	// fim de get variavel "v"
                   
-writei             
+write             
 	// incremento das variaveis
 	// inicio de get variavel "i"
 pushg 6	// fim de get variavel "i"
 pushi 1
 sub
 storeg 6
-jump FOR1:          
+jump FOR1
 ENDFOR1:            
 stop

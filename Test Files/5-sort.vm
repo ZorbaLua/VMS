@@ -30,7 +30,7 @@ sup
 	// comeca bloco THEN  
 jz ELSE1
 pushs "demasiados numeros"            
-writes             
+write             
 jump ENDIF1
 	// comeca bloco ELSE  
 ELSE1:
@@ -62,7 +62,7 @@ pushg 6	// fim de get variavel "i"
 pushi 1
 add
 storeg 6
-jump FOR0:          
+jump FOR0
 ENDFOR0:            
 
 	// inicio do ciclo while

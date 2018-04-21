@@ -92,10 +92,10 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $
         | _CONCAT           { Code_add( newCodeElem( CONCAT, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _FREE             { Code_add( newCodeElem( FREE  , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHS    _STRING { Code_add( newCodeElem( PUSHS , newValue((Uvalue) $2, T_string), newValue((Uvalue) -1, NOTHING) ) ); }
-        | _LOAD             { Code_add( newCodeElem( LOAD  , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }            
-        | _LOADN    _INT    { Code_add( newCodeElem( LOADN , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }  
-        | _STORE            { Code_add( newCodeElem( STORE , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
-        | _STOREN   _INT    { Code_add( newCodeElem( STOREN, newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _LOAD     _INT    { Code_add( newCodeElem( LOAD  , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }            
+        | _LOADN            { Code_add( newCodeElem( LOADN , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }  
+        | _STORE    _INT    { Code_add( newCodeElem( STORE , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _STOREN           { Code_add( newCodeElem( STOREN, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _CHECK _INT _INT  { Code_add( newCodeElem( CHECK , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) $3, T_int  ) ) ); }
         | _ERR ;
         ;

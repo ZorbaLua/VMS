@@ -38,7 +38,7 @@ pushg 5	// fim de get variavel "i"
 pushi 1
 add
 storeg 5
-jump FOR0:          
+jump FOR0
 ENDFOR0:            
 	// preparar funcao
 pushi 0 // return  
@@ -95,12 +95,12 @@ equal
 	// comeca bloco THEN  
 jz ELSE0
 pushs "pode ser quadrado\n"            
-writes             
+write             
 jump ENDIF0
 	// comeca bloco ELSE  
 ELSE0:
 pushs "nao pode ser quadrado\n"            
-writes             
+write             
 ENDIF0:
 	// fim de ite         
 stop

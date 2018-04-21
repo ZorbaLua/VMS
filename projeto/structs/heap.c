@@ -5,9 +5,11 @@
 #include "heap.h"
 
 extern Heap heap;
+extern FILE* dbout;
 
 HeapElem* get(heapPt pt){
-    if((heap.mem)[pt].c == '\0' || pt<0 || pt>heap.size) return NULL;
+//((heap.mem)[pt]).c == '\0' || 
+    if( pt<0 || pt>heap.size) return NULL;
     return &(heap.mem[pt]);
 }
 
@@ -15,14 +17,10 @@ char* Heap_getBlock(heapPt pt){
     HeapElem *he=NULL, *prox=NULL;
     int i, len = 100;
     char* ret = (char*)malloc(len*sizeof(char));
-    if( !(he = get(pt)) ) return "\0";
-    i=0;
-    while(prox){
-        if(i<len-1) ret = (char*)realloc(&ret, len*sizeof(char));
+    for(i=0, prox=&(heap.mem[pt]); (prox->c)!='\0'; prox = get(he->next), i++){
+        if(i<len-1){ len*=2; ret = (char*)realloc(ret, len*sizeof(char)); }
         he = prox;
         ret[i] = he->c;
-        prox = get(he->next);
-        i++;
     }
     ret[i] = '\0';
     return ret;
@@ -45,7 +43,8 @@ void alloc(char c){
     HeapElem* he;
     if(heap.first == size){
         heap.size *= 2;
-        heap.mem = (HeapElem*)realloc( &(heap.mem), (heap.size)*sizeof(HeapElem) );
+        heap.mem = (HeapElem*)realloc( heap.mem, (heap.size)*sizeof(HeapElem) );
+        //inizializar nova heap com \0 e a apontar pra o prox
         while(size < heap.size){
             he = get(size);
             he->c = '\0';
@@ -53,6 +52,7 @@ void alloc(char c){
             size++;
         }
     }
+    printHeap('+', heap.first, c);
     he = get(heap.first);
     he->c = c;
     heap.first = he->next;
@@ -61,7 +61,7 @@ void alloc(char c){
 heapPt Heap_alloc(char* s, int len){
     heapPt ret = heap.first;
     int i=0;
-    while(i<len) alloc(s[i]);
+    while(i<len) alloc(s[i++]);
     alloc('\0');
     return ret;
 }
@@ -79,4 +79,9 @@ void Heap_init(int size){
         he->next = i+1;
         i++;
     }
+}
+
+void printHeap(char signal, int index, char c){
+    fprintf(dbout, "> HEAP %c %d %c\n", signal, index, c);
+    fflush(dbout);
 }

@@ -4,7 +4,7 @@
 #include "array.h"
 
 int Array_remove(Array* self, int index, void** ret) {
-    if(index>=self->len || index<0) return -1;
+    if(index>=self->len || index<0) return -2;
     if(index+1 == self->len) self->len--;
     *ret = self->array[index];
     self->array[index] = NULL;
@@ -12,13 +12,13 @@ int Array_remove(Array* self, int index, void** ret) {
 }
 
 int Array_getPos(Array* self, int index, void** ret) {
-    if(index>=self->len || index<0) return -1;
+    if(index>=self->len || index<0) return -2;
     *ret = self->array[index];
     return 0;
 }
 
 int Array_addPos(Array* self, int index, void* pt){
-    if(index>=self->len || index<0) return -1;
+    if(index>=self->len || index<0) return -2;
     self->array[index] = pt; 
     return 0;
 }

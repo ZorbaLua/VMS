@@ -1,5 +1,6 @@
 
 #include <signal.h>
+#include <sys/param.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -28,7 +29,7 @@ int opSize   = 1000;
 int callSize = 100;
 int heapSize = 1000;
 int debug = 0;
-pid_t pidGui;
+pid_t pidGui=0;
 char *debuggerFunctionNames[] = {
     "file",
     "run",
@@ -43,8 +44,11 @@ int yyparse();
 void try(int erro) {
     switch (erro) {
         case  0: return;
-        case -1: eprintf("Missing input file\n");                           break;
-        case -2: eprintf("Aritmetic operation mod only defined to int\n");  break;
+        case -1: eprintf("error: opening file\n");          break;
+        case -2: eprintf("error: index out of array\n");    break;
+        case -3: eprintf("error: fp == sp\n");              break;
+        case -4: eprintf("error: opning file\n");           break;
+        case -5: eprintf("error: invalid args\n");          break;
     }
     _exit(erro);
 }
@@ -126,7 +130,7 @@ void runInst(CodeElem ce){
         case STOREN : semStoren();  break;//x
 
       //-Diversos--------------------------------------//
-        case CHECK  : semCheck(f.val.i, s.val.s);   break;//x
+        case CHECK  : semCheck(f.val.i, s.val.i);   break;//x
         case SWAP   : semSwap();  	break;//v
 
       //-Input/Output----------------------------------//
@@ -160,13 +164,17 @@ void freeStructs(){
 }
 void runDebug(){
     CodeElem ce;
-    char *input;
+    char *input, *filename, path[MAXPATHLEN];
     int stop = 0, nInst=0, i=0;
     while(1){
         input = readline("(VMDB) "); 
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
-            if((yyin = fopen(&input[5], "r"))<0) try(1); // input "file /*****/****/"
+            if(input[5] != '/'){ getwd(path); asprintf(&filename, "%s/%s", path, &input[5]); }
+            else{ asprintf(&filename, "%s", &input[5]); }
+            //fprintf(stderr, "%s\n", filename);
+            if((yyin = fopen(filename, "r"))<0) try(-1);
+            free(filename);
             yyparse();
             fprintf(stdout, "\n"); fflush(stdout);
 
@@ -216,7 +224,7 @@ void prepareDebug(){
 void execGui(){
     int wp[2], rp[2];
     
-    if (pipe(wp)<0 || pipe(rp)<0) try(1);
+    if (pipe(wp)<0 || pipe(rp)<0) try(-4);
     if( (pidGui=fork()) ){//parent
         close(rp[1]);
         close(wp[0]);
@@ -237,7 +245,7 @@ void execGui(){
 
 void options(int argc, char** argv){// debug
     int i, j, k;
-    if(argc < 2) try(-1);
+    if(argc < 2) try(-5);
     for(i=1; i<argc; i++){
         if(argv[i][0] == '-'){
             k=1;
@@ -253,14 +261,17 @@ void options(int argc, char** argv){// debug
             }
                 i += k-1;
         }
-        else if((yyin = fopen(argv[i], "r"))<0) try(1);
+        else if((yyin = fopen(argv[i], "r"))<0) try(-1);
     }
 }
 
 void finish(){
-    close(0);
-    close(1);
-    kill(pidGui, SIGKILL);
+    if(pidGui){
+        close(0);
+        close(1);
+        kill(pidGui, SIGKILL);
+    }
+    _exit(-1);
 }
 
 void signals(){

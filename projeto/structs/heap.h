@@ -19,6 +19,7 @@ typedef struct heap{
 void Heap_free(heapPt);
 char* Heap_getBlock(heapPt);
 heapPt Heap_alloc(char*, int);
+void printHeap(char,int,char);
 
 void Heap_init(int);
 

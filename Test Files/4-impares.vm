@@ -37,9 +37,9 @@ storeg 1
 	// inicio de get variavel "b"
 pushg 2	// fim de get variavel "b"
                   
-writei             
+write             
 pushs " \n"            
-writes             
+write             
 jump ENDIF0
 	// comeca bloco ELSE  
 ELSE0:
@@ -55,9 +55,9 @@ ENDWHILE0:
 	// fim do ciclo while
 
 pushs "Numero de numeros impares:"            
-writes             
+write             
 	// inicio de get variavel "x"
 pushg 1	// fim de get variavel "x"
                   
-writei             
+write             
 stop

@@ -10,7 +10,7 @@ extern FILE* dbout;
 extern void try(int);
 
 int OpStack_pop(OperandElem* ret){
-    if(opstack.sp == opstack.fp) return -1;
+    if(opstack.sp == opstack.fp) return -3;
     opstack.sp -= 1;
     try(Array_remove(&(opstack.stack), opstack.sp, (void**)ret));
     printOpStack(*ret, '-');
@@ -32,7 +32,7 @@ int OpStack_addPos(int index, OperandElem oe){
 void OpStack_push(OperandElem oe){
     Array_add(&(opstack.stack), oe);
     if(opstack.flagGlobal)  opstack.gp += 1;
-    else                    opstack.sp += 1;
+    opstack.sp += 1;
     printOpStack(oe, '+');
 }
 

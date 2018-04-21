@@ -5,6 +5,7 @@
 
 
 extern CallStack callstack;
+extern FILE* dbout;
 
 int CallStack_pop(CallElem* ret) {
     int erro;
@@ -12,7 +13,6 @@ int CallStack_pop(CallElem* ret) {
     printCallStack(*ret, '-');
     return erro;
 }
-
 
 void CallStack_push(CallElem oe){
     Array_add(&(callstack.stack), oe);
@@ -23,17 +23,14 @@ void CallStack_init(int size) {
     Array_init(&(callstack.stack), size);
 }
 
-
 CallElem newCallElem(codePt pc, opPt fp){
     CallElem ce = (CallElem)malloc(sizeof(struct callElem));
     ce->pc = pc;
     ce->fp = fp;
-
     return ce;
 }
 
-
 void printCallStack(CallElem ce, char signal) {
-    fprintf(stdout, "CALLSTACK %c %d %d %d\n", signal, callstack.stack.len , ce->pc, ce->fp);
-    fflush(stdout);
+    fprintf(dbout, "CALLSTACK %c %d %d %d\n", signal, callstack.stack.len , ce->pc, ce->fp);
+    fflush(dbout);
 }
