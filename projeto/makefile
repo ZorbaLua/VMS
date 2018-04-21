@@ -1,99 +1,31 @@
-CC=cc -g
-CFLAGS=-Wall
-STRUCTS=structs
-GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
-GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
-GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
-GLIB_FLAGS=`pkg-config --cflags glib-2.0`
-
-
-all: main interface
 
 install: main
 	cp main /usr/local/bin/vms
 
-main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
-	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o -lreadline $(GLIB_LIBS) -o main
+# ---------------------------------------------------------------------------- #
 
-interface: interface.c
-	$(CC) interface.c $(GTK_LIBS) -o interface
+TARGET := interface
 
-####################################################################################################
+CFLAGS := -g #-std=c99 -Wall -Wextra -pedantic-errors -O2 -g
+CFLAGS += $(shell pkg-config --cflags --libs glib-2.0 gtk+-3.0)
+CFLAGS += -L/usr/local/lib -I/usr/local/include -lreadline
 
-semantic.o: semantic.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c semantic.c
+SRCS   := $(shell find . -name '*.c' ! -name 'y.tab.c' ! -name 'lex.yy.c')
 
-####################################################################################################
+.PHONY: $(TARGET)
+$(TARGET): y.tab.c lex.yy.c
+	$(CC) $(SRCS) $^ $(CFLAGS) -o $@
 
-array.o: $(STRUCTS)/array.c
-	$(CC) $(CFLAGS) -c $(STRUCTS)/array.c
-
-####################################################################################################
-
-types.o: $(STRUCTS)/types.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/types.c
-
-code.o: $(STRUCTS)/code.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/code.c
-
-opStack.o: $(STRUCTS)/opStack.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/opStack.c
-
-heap.o: $(STRUCTS)/heap.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/heap.c
-
-callStack.o: $(STRUCTS)/callStack.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c $(STRUCTS)/callStack.c
-
-####################################################################################################
-
-y.tab.o: y.tab.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c y.tab.c
-
+.PHONY: y.tab.c
 y.tab.c: syntax.y
-	yacc -d syntax.y
+	yacc -d $<
 
-lex.yy.o: lex.yy.c
-	$(CC) $(CFLAGS) $(GLIB_FLAGS) -c lex.yy.c
-
+.PHONY: lex.yy.c
 lex.yy.c: lex.l
-	flex lex.l
+	flex $<
 
-####################################################################################################
+.PHONY: clean
 clean:
-	rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
-
-
-	# ---------------------------------------------------------------------------- #
-
-#	all: y.tab.c lex.yy.c main interface
-
-#	y.tab.c: syntax.y
-#		yacc -d syntax.y
-
-#	lex.yy.c: lex.l
-#		flex lex.l
-
-	#FLAGS := -std=c99 -Wall -Wextra -pedantic-errors -O2 -g
-#	FLAGS := -g
-#	FLAGS += $(shell pkg-config --cflags --libs glib-2.0 gtk+-3.0)
-#	GLIB_FLAGS= `pkg-config --cflags glib-2.0`
-
-	  # ----------------------------- #
-#	interface:
-#		$(CC) $(SRCS) $(GLIB_FLAGS) $(FLAGS) -o interface
-
-#	SRCS   := $(shell find . -name '*.c' ! -name 'interface.c')
-
-#	.PHONY: main
-#	$(TARGET):
-#		$(CC) $(SRCS) $(GLIB_FLAGS) $(FLAGS) -o $@
-
-	#.PHONY: clean
-	#clean:
-	#	rm -f $(TARGET)
-
-#	clean:
-#		rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
+	rm -f $(TARGET) y.tab.c lex.yy.c
 
 	# ---------------------------------------------------------------------------- #

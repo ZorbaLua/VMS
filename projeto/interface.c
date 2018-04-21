@@ -9,7 +9,8 @@
 
 GtkWidget *window;
 GtkWidget *grid;
-GtkEntryBuffer *bufferS, *bufferConsole, *bufferInput;
+GtkEntryBuffer *bufferS;
+GtkTextBuffer *bufferConsole, *bufferInput;
 GtkWidget *viewC;
 GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
@@ -259,14 +260,12 @@ static void activateInputs () {
   GtkWidget *view;
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-
   gtk_widget_set_hexpand (scrolled_window, FALSE);
   gtk_widget_set_vexpand (scrolled_window, FALSE);
 
-  bufferInput = gtk_entry_buffer_new ("Input", 25);
+  view = gtk_text_view_new();
+  bufferInput = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
 
-  view = gtk_text_view_new ();
-  //view = gtk_text_view_new_with_buffer (GTK_TEXT_BUFFER(bufferInput)); // <- CORRIGIR
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
@@ -275,18 +274,17 @@ static void activateInputs () {
     //-----------------------------------------//
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-
   gtk_widget_set_hexpand (scrolled_window, FALSE);
   gtk_widget_set_vexpand (scrolled_window, FALSE);
 
-  bufferConsole = gtk_entry_buffer_new ("Consola", 25);
+  view = gtk_text_view_new();
+  bufferConsole = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
 
-  view = gtk_text_view_new ();
-  //view = gtk_text_view_new_with_buffer (GTK_TEXT_BUFFER(bufferConsole));  // <- CORRIGIR
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_grid_attach (GTK_GRID (grid), scrolled_window, 3, 5, 4, 8);
+
 }
 
 //-----------------------------------------------------------------------------//
