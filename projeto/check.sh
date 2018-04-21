@@ -3,13 +3,13 @@
 cd "../Test Files"
 for file in `ls *.vm`
 do
-    vms $file 
+    echo $file
+    vms $file 2>/dev/null
     if [ $? -eq 0 ]; then
         perl -C -e 'print chr 0x2713'
-        echo " " $file
     else
         perl -C -e 'print chr 0x2717'
-        echo " " $file
     fi
+    echo ""
 done
 

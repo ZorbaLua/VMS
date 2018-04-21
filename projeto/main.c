@@ -29,6 +29,7 @@ int opSize   = 1000;
 int callSize = 100;
 int heapSize = 1000;
 int debug = 0;
+int parseInitial = 0;
 pid_t pidGui=0;
 char *debuggerFunctionNames[] = {
     "file",
@@ -166,13 +167,14 @@ void runDebug(){
     CodeElem ce;
     char *input, *filename, path[MAXPATHLEN];
     int stop = 0, nInst=0, i=0;
+
+    fprintf(dbout, "\n"); fflush(dbout);
     while(1){
         input = readline("(VMDB) "); 
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
             if(input[5] != '/'){ getwd(path); asprintf(&filename, "%s/%s", path, &input[5]); }
             else{ asprintf(&filename, "%s", &input[5]); }
-            //fprintf(stderr, "%s\n", filename);
             if((yyin = fopen(filename, "r"))<0) try(-1);
             free(filename);
             yyparse();
@@ -261,7 +263,10 @@ void options(int argc, char** argv){// debug
             }
                 i += k-1;
         }
-        else if((yyin = fopen(argv[i], "r"))<0) try(-1);
+        else{
+            if((yyin = fopen(argv[i], "r"))<0) try(-1);
+            if(debug) parseInitial=1;
+        }
     }
 }
 
@@ -314,7 +319,10 @@ int main(int argc, char** argv){
     Heap_init(heapSize);
     labels = g_hash_table_new(g_str_hash, g_str_equal);
 
-    if(debug) runDebug();
+    if(debug){
+        if(parseInitial) yyparse();
+        runDebug();
+    }
     else{
         yyparse();
         runProgram();

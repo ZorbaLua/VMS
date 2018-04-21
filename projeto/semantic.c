@@ -38,7 +38,7 @@ void semWrite() {
     OperandElem oe = NULL;
     char *s;
     try(OpStack_pop(&oe));
-    fprintf(dbout, "OUTPUT:");
+    fprintf(dbout, "OUTPUT:"); fflush(dbout);
     switch(oe->val.type){
         case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
         case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
@@ -465,9 +465,6 @@ void semStoren() {
     semStore(oe->val.val.i);
 }
 
-void semCheck() {
-}
-
 void semSwap() {
     OperandElem top, other;
     try(OpStack_pop(&top));
@@ -480,7 +477,7 @@ void semRead() {
     int len;
     Uvalue uv;
     char s[100];
-    fscanf(stdin, "%s", s);
+    gets(s);
     len = strlen(s);
     uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
@@ -536,4 +533,7 @@ void semNop() {
 }
 
 void semErr() {
+}
+
+void semCheck() {
 }

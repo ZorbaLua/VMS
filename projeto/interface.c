@@ -125,7 +125,6 @@ static void loadficheiro(char *filename) {
 
   fprintf(stdout, "file %s\n", filename); fflush(stdout);
   turnButtons(TRUE);
-//  read(fileno(stdin), line, 7);
 
   line[0]='>';
   while(line[0] == '>'){
@@ -519,6 +518,14 @@ static void activate () {
 }
 
 //-----------------------------------------------------------------------------//
+void loadInitial(){
+  char line[MAX_LINE];
+  line[0]='>';
+  while(line[0] == '>'){
+    fgets(line, MAX_LINE, stdin);
+    parseLine(line);
+  }
+}
 
 int main (int argc, char **argv) {
   gtk_init (&argc, &argv);
@@ -533,6 +540,7 @@ int main (int argc, char **argv) {
   activate();
 
   gtk_widget_show (window);
+  loadInitial();
   gtk_main ();
   return 0;
 }
