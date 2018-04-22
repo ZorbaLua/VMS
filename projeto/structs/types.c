@@ -90,7 +90,7 @@ char* Inst_toString(Einst i){
         case JZ     : snprintf(ret, MAX_LINE, "JZ"); break;
         case PUSHA  : snprintf(ret, MAX_LINE, "PUSHA"); break;
         case CALL   : snprintf(ret, MAX_LINE, "CALL"); break;
-        case RETURN : snprintf(ret, MAX_LINE, "RETURN"); break;
+        case ARETURN: snprintf(ret, MAX_LINE, "RETURN"); break;
         case START  : snprintf(ret, MAX_LINE, "START"); break;
         case NOP    : snprintf(ret, MAX_LINE, "NOP"); break;
         case ERR    : snprintf(ret, MAX_LINE, "ERR"); break;

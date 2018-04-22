@@ -149,7 +149,7 @@ void runInst(CodeElem ce){
 
       //-Procedimentos---------------------------------//
         case CALL   : semCall();  	break;//v
-        case RETURN : semReturn();  break;//v
+        case ARETURN : semReturn();  break;//v
 
       //-Inicializacao e Fim---------------------------//
         case START  : semStart();   break;//v

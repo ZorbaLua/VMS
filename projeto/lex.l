@@ -99,7 +99,7 @@
 
 
 "call"   { return _CALL;   }
-"return" { return _RETURN; }
+"return" { return _ARETURN; }
 
 
 "start"  { return _START; }
@@ -109,7 +109,7 @@
 
 
 -?[0-9]+"."[0-9]+   { yylval.f = atof(yytext);          return _FLOAT; }
--?[0-9]+		    { yylval.i = atoi(yytext);          return _INT; }
+-?[0-9]+		        { yylval.i = atoi(yytext);          return _INT; }
 \"(\\.|[^"\\])*\"   { yylval.s = g_string_new(yytext);  return _STRING; }
 
 [A-Z][A-Z0-9]*      { yylval.s = g_string_new(yytext);  return _LABEL; }

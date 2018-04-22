@@ -148,7 +148,7 @@ void operationsFloat(char op) {
 }
 
 void semFadd()   { operationsFloat('+'); }
-void semFsub()   { operationsFloat('-') }
+void semFsub()   { operationsFloat('-'); }
 void semFmul()   { operationsFloat('*'); }
 void semFdiv()   { operationsFloat('/'); }
 
@@ -187,27 +187,6 @@ void semFinf()   { operationsFloat('i'); }
 void semFinfeq() { operationsFloat('I'); }
 void semFsup()   { operationsFloat('s'); }
 void semFsupeq() { operationsFloat('S'); }
-
-void operationsInt(char op) {
-    OperandElem top, other;
-    Uvalue uv;
-    Value v;
-    try(OpStack_pop(&top));
-    try(OpStack_pop(&other));
-    switch(op) {
-        case '+': uv.i = other->val.val.i +  top->val.val.i;    break;
-        case '-': uv.i = other->val.val.i -  top->val.val.i;    break;
-        case '*': uv.i = other->val.val.i *  top->val.val.i;    break;
-        case '/': uv.i = other->val.val.i /  top->val.val.i;    break;
-        case '%': uv.i = other->val.val.i %  top->val.val.i;    break;
-        case 's': uv.i = other->val.val.i >  top->val.val.i;    break;
-        case 'S': uv.i = other->val.val.i >= top->val.val.i;    break;
-        case 'i': uv.i = other->val.val.i <  top->val.val.i;    break;
-        case 'I': uv.i = other->val.val.i <= top->val.val.i;    break;
-    }
-    v = newValue(uv, T_int);
-    OpStack_push(newOperandElem(v));
-}
 
 void semPadd() {
     OperandElem pt, integer;

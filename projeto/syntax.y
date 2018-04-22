@@ -21,7 +21,7 @@ int yylex();
 }
 
 
-%token _ADD _SUB _MUL _DIV _MOD _NOT _INF _INFEQ _SUP _SUPEQ _FADD _FSUB _FSIN _FCOS _FTAN _FMUL _FDIV _FINF _FINFEQ _FSUP _FSUPEQ _PADD _CONCAT _ALLOC _ALLOCN _FREE _EQUAL _ATOI _ATOF _ITOF _FTOI _STRI _STRF _PUSHI _PUSHN _PUSHF _PUSHS _PUSHG _PUSHL _PUSHSP _PUSHFP _PUSHGP _LOAD _LOADN _DUP _DUPN _POP _POPN _STOREL _STOREG _STORE _STOREN _CHECK _SWAP _WRITE _READ _READI _READF _READS _JUMP _JZ _PUSHA _CALL _RETURN _START _NOP _ERR _STOP
+%token _ADD _SUB _MUL _DIV _MOD _NOT _INF _INFEQ _SUP _SUPEQ _FADD _FSUB _FSIN _FCOS _FTAN _FMUL _FDIV _FINF _FINFEQ _FSUP _FSUPEQ _PADD _CONCAT _ALLOC _ALLOCN _FREE _EQUAL _ATOI _ATOF _ITOF _FTOI _STRI _STRF _PUSHI _PUSHN _PUSHF _PUSHS _PUSHG _PUSHL _PUSHSP _PUSHFP _PUSHGP _LOAD _LOADN _DUP _DUPN _POP _POPN _STOREL _STOREG _STORE _STOREN _CHECK _SWAP _WRITE _READ _READI _READF _READS _JUMP _JZ _PUSHA _CALL _ARETURN _START _NOP _ERR _STOP
 %token<i> _INT
 %token<f> _FLOAT
 %token<s> _STRING _LABEL
@@ -69,7 +69,7 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $
         | _DUP	    _INT    { Code_add( newCodeElem( DUP   , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _DUPN             { Code_add( newCodeElem( DUPN  , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHG    _INT    { Code_add( newCodeElem( PUSHG , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
-        | _PUSHL	_INT    { Code_add( newCodeElem( PUSHL , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _PUSHL  	_INT    { Code_add( newCodeElem( PUSHL , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHSP           { Code_add( newCodeElem( PUSHSP, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHFP           { Code_add( newCodeElem( PUSHFP, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHGP           { Code_add( newCodeElem( PUSHGP, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
@@ -79,7 +79,7 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $
         | _JZ       _LABEL  { Code_add( newCodeElem( JZ    , newValue((Uvalue) $2, T_string), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHA    _LABEL  { Code_add( newCodeElem( PUSHA , newValue((Uvalue) $2, T_string), newValue((Uvalue) -1, NOTHING) ) ); }
         | _CALL             { Code_add( newCodeElem( CALL  , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
-        | _RETURN           { Code_add( newCodeElem( RETURN, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _ARETURN           { Code_add( newCodeElem( ARETURN, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _STOREL   _INT    { Code_add( newCodeElem( STOREL, newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _STOREG   _INT    { Code_add( newCodeElem( STOREG, newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _NOP              { Code_add( newCodeElem( NOP   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }

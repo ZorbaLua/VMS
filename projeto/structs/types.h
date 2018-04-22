@@ -33,7 +33,6 @@ typedef struct value{
     Etype type;
 } Value;
 
-
 typedef enum inst {
     ADD,
     SUB,
@@ -95,7 +94,7 @@ typedef enum inst {
     JZ,
     PUSHA,
     CALL,
-    RETURN,
+    ARETURN,
     START,
     NOP,
     ERR,
