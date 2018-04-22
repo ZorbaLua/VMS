@@ -21,12 +21,12 @@ typedef int codePt, opPt, heapPt;
 
 typedef union uvalue{
     int i;
-    float f;   
+    float f;
     GString* s;
     codePt c;
-    opPt o;  
+    opPt o;
     heapPt h;
-} Uvalue; 
+} Uvalue;
 
 typedef struct value{
     Uvalue val;
@@ -49,6 +49,9 @@ typedef enum inst {
     FSUB,
     FMUL,
     FDIV,
+    FCOS,
+    FSIN,
+    FTAN,
     FINF,
     FINFEQ,
     FSUP,
@@ -102,7 +105,6 @@ typedef enum inst {
 typedef struct hashData{
     codePt line;
 } *HashData;
-
 
 HashData newHashData(codePt);
 Value newValue(Uvalue,Etype);

@@ -81,6 +81,10 @@ void runInst(CodeElem ce){
         case FMUL   : semFmul();  	break;//v
         case FDIV   : semFdiv();  	break;//v
 
+        case FSIN   : semFsin();  	break;//v
+        case FCOS   : semFcos();  	break;//v
+        case FTAN   : semFcos();  	break;//v
+
         case FINF   : semFinf();  	break;//v
         case FINFEQ : semFinfeq();  break;//v
         case FSUP   : semFsup();  	break;//v
@@ -170,7 +174,7 @@ void runDebug(){
 
     fprintf(dbout, "\n"); fflush(dbout);
     while(1){
-        input = readline("(VMDB) "); 
+        input = readline("(VMDB) ");
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
             if(input[5] != '/'){ getwd(path); asprintf(&filename, "%s/%s", path, &input[5]); }
@@ -225,7 +229,7 @@ void prepareDebug(){
 
 void execGui(){
     int wp[2], rp[2];
-    
+
     if (pipe(wp)<0 || pipe(rp)<0) try(-4);
     if( (pidGui=fork()) ){//parent
         close(rp[1]);

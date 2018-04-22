@@ -34,6 +34,10 @@
 "fmul"   { return _FMUL; }
 "fdiv"   { return _FDIV; }
 
+"fcos"   { return _FCOS; }
+"fsin"   { return _FSIN; }
+"ftan"   { return _FTAN; }
+
 "finf"   { return _FINF;   }
 "finfeq" { return _FINFEQ; }
 "fsup"   { return _FSUP;   }
@@ -114,6 +118,7 @@
 
 [ \t\n]*            { ; }
 "//".*              { ; }
+"#".*               { ; }
 .                   { _exit(0);}
 
 %%

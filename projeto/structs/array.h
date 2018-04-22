@@ -1,13 +1,12 @@
+
 #ifndef ARRAY_H
 #define ARRAY_H
-
 
 typedef struct array {
     int len;
     int allocSize;
     void** array;
 } Array;
-
 
 int  Array_remove(Array*, int, void**);
 int  Array_getPos(Array*, int, void**);
