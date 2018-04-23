@@ -167,6 +167,7 @@ void freeStructs(){
     Code_init(codeSize);
     OpStack_init(opSize);
 }
+
 void runDebug(){
     CodeElem ce;
     char *input, *filename, path[MAXPATHLEN];

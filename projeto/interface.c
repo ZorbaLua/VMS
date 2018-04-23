@@ -151,8 +151,17 @@ static void bReloadFile (GtkWidget *widget, gpointer data) { // POR ISTO DIREITO
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-  char* filename = GtkFileOpen ();
-  g_free (filename);
+  char* filename = GtkFileOpen();
+  limpaStacks();
+
+  if (filename != NULL) {
+    GError *err = NULL;
+    gchar *contents;
+
+    g_file_get_contents (filename, &contents, NULL, &err);
+    gtk_text_buffer_set_text (bufferInput, contents, strlen(contents));
+  }
+  else { turnButtons(FALSE); }
 }
 
 //-----------------------------------------------------------------------------//
@@ -307,7 +316,6 @@ char treatInput() {
   char *teste;
   teste = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
   //gtk_text_buffer_set_text (bufferConsole, teste, strlen(teste));
-
   gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000); // 1000 LINHAS DE INPUT MAXIMO DEVEM CHEGAR
 
   char *tudo;

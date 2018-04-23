@@ -63,17 +63,14 @@ lex.yy.c: lex.l
 clean:
 	rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
 
-
-
-
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
 
 #TARGET := interface
 
 #CFLAGS := -g #-std=c99 -Wall -Wextra -pedantic-errors -O2 -g
-#CFLAGS += -L/usr/local/lib -I/usr/local/include -lreadline -lm
-#CFLAGS += $(shell pkg-config --cflags --libs glib-2.0 gtk+-3.0)
+#CFLAGS += -L/usr/local/lib -I/usr/local/include -lreadline
+#CFLAGS += $(shell pkg-config --cflags --libs glib-2.0 gtk+-3.0) -lm
 
 #SRCS   := $(shell find . -name '*.c' ! -name 'y.tab.c' ! -name 'lex.yy.c')
 
