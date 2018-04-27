@@ -306,7 +306,7 @@ void remLinha(int i, GtkListStore* a) {
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
 
-void treatOutput() {
+void treatOutput(char extension) {
 
   GtkTextIter inicio, fim;
   gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
@@ -314,6 +314,15 @@ void treatOutput() {
 
   char *tudo;
   tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+
+  char* tudoMaisExtension;
+  tudoMaisExtension = malloc(strlen(tudo)+strlen(extension));
+  strcpy(tudoMaisExtension, tudo);
+  strcat(tudoMaisExtension, extension);
+  free(tudo);
+
+  gtk_text_buffer_set_text (bufferConsole, tudoMaisExtension, strlen(tudoMaisExtension));
+
 }
 
 
@@ -553,6 +562,8 @@ static void activate () {
   activateInputs ();
   activateStacks ();
   activateLables ();
+
+  turnButtons(TRUE);
 
   gtk_widget_show_all (window);
 }
