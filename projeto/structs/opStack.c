@@ -56,6 +56,6 @@ OperandElem newOperandElem(Value v){
 }
 
 void printOpStack(OperandElem oe, char signal){
-    fprintf(dbout, "> OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
+    fprintf(dbout, "> OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len-1, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
     fflush(dbout);
 }

@@ -130,5 +130,6 @@ add
 pushi 2
 equal
           
+pushi 0
 storel 0 
 return          

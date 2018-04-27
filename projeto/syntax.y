@@ -38,7 +38,7 @@ Elem    : Instr
 
 Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _PUSHF    _FLOAT  { Code_add( newCodeElem( PUSHF , newValue((Uvalue) $2, T_float ), newValue((Uvalue) -1, NOTHING) ) ); }
-        | _PUSHN    _FLOAT  { Code_add( newCodeElem( PUSHN , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _PUSHN    _INT    { Code_add( newCodeElem( PUSHN , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _START            { Code_add( newCodeElem( START , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _ADD              { Code_add( newCodeElem( ADD   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _WRITE            { Code_add( newCodeElem( WRITE , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }

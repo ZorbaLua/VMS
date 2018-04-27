@@ -143,7 +143,7 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
   if (filename != NULL) {
     loadficheiro(filename);
   }
-  else { turnButtons(FALSE); }
+  //else { turnButtons(FALSE); }
 }
 
 static void bReloadFile (GtkWidget *widget, gpointer data) { // POR ISTO DIREITO
@@ -161,7 +161,7 @@ static void bLoadIFile (GtkWidget *widget, gpointer data) {
     g_file_get_contents (filename, &contents, NULL, &err);
     gtk_text_buffer_set_text (bufferInput, contents, strlen(contents));
   }
-  else { turnButtons(FALSE); }
+  //else { turnButtons(FALSE); }
 }
 
 //-----------------------------------------------------------------------------//
