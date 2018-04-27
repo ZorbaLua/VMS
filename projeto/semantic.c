@@ -35,24 +35,42 @@ void semPushf(Value v) {
     OpStack_push(oe);
 }
 
-void semWrite() {
+void semWrite(int tipo) {    // POR ISTO MELHOR (ver erros)
     OperandElem oe = NULL;
     char *s;
     try(OpStack_pop(&oe));
     fprintf(dbout, "OUTPUT:"); fflush(dbout);
-    switch(oe->val.type) {
-        case T_int    : fprintf(stdout, "%d", oe->val.val.i); break;
-        case T_float  : fprintf(stdout, "%f", oe->val.val.f); break;
-        case T_codePt : fprintf(stdout, "%d", oe->val.val.c); break;
-        case T_opPt   : fprintf(stdout, "%d", oe->val.val.o); break;
-        case T_heapPt :
-            s = Heap_getBlock(oe->val.val.h);
-            fprintf(stdout, "%s\n", s);
-            free(s);
-            break;
-        default: try(-1);
+    if (tipo != NULL) {
+        switch(tipo) {
+            case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
+            case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
+            case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
+            case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
+            case T_heapPt :
+                s = Heap_getBlock(oe->val.val.h);
+                fprintf(stdout, "%s\n", s);
+                free(s);
+                break;
+            default: try(-1);
+        }
+    }
+    else{
+        switch(oe->val.type) {
+            case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
+            case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
+            case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
+            case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
+            case T_heapPt :
+                s = Heap_getBlock(oe->val.val.h);
+                fprintf(stdout, "%s\n", s);
+                free(s);
+                break;
+            default: try(-1);
+        }
     }
 }
+
+
 
 void semNot() {
     OperandElem oe = NULL;

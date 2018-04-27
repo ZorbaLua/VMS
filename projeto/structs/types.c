@@ -85,6 +85,9 @@ char* Inst_toString(Einst i){
         case CHECK  : snprintf(ret, MAX_LINE, "CHECK"); break;
         case SWAP   : snprintf(ret, MAX_LINE, "SWAP"); break;
         case WRITE  : snprintf(ret, MAX_LINE, "WRITE"); break;
+        case WRITEI : snprintf(ret, MAX_LINE, "WRITEI"); break;
+        case WRITES : snprintf(ret, MAX_LINE, "WRITES"); break;
+        case WRITEF : snprintf(ret, MAX_LINE, "WRITEF"); break;
         case READ   : snprintf(ret, MAX_LINE, "READ"); break;
         case JUMP   : snprintf(ret, MAX_LINE, "JUMP"); break;
         case JZ     : snprintf(ret, MAX_LINE, "JZ"); break;
