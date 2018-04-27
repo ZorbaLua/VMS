@@ -306,7 +306,7 @@ void remLinha(int i, GtkListStore* a) {
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
 
-char treatInput() {
+char* treatInput() {
 
   GtkTextIter inicio, fim;
 

@@ -1,18 +1,18 @@
 	// inicio declaracao da variavel "q"
-pushi 0
-pushi 0
-pushi 0
-pushi 0
+pushi 1
+pushi 22
+pushi 333
+pushi 4444
 	// fim declaracao da variavel "q"
 	// inicio declaracao da variavel "res"
-pushi 0
+pushi 5555
 	// fim declaracao da variavel "res"
 	// inicio declaracao da variavel "i"
-pushi 0
+pushi 66666
 	// fim declaracao da variavel "i"
 start
 	// atribuicoes iniciais for
-pushi 0
+pushi 7
 storeg 5
 FOR0:               
 	// cond de permanencia
@@ -130,5 +130,5 @@ add
 pushi 2
 equal
           
-storel -5 
+storel 0 
 return          

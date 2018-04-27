@@ -119,7 +119,7 @@ void runInst(CodeElem ce){
         case PUSHSP : semPushsp();  break;//v
         case PUSHFP : semPushfp();  break;//v
         case PUSHGP : semPushgp();  break;//v
-        case LOAD   : semLoad();  	break;//x
+        case LOAD   : semLoad(f.val.i);  	break;//x
         case LOADN  : semLoadn();   break;//x
         case DUP    : semDup(f.val.i);  break;//v
         case DUPN   : semDupn();  	break;//v
@@ -129,9 +129,9 @@ void runInst(CodeElem ce){
         case POPN   : semPopn();  	break;//v
 
       //-Arquivar--------------------------------------//
-        case STOREL : semStorel();  break;//x
-        case STOREG : semStoreg();  break;//x
-        case STORE  : semStore();   break;//x
+        case STOREL : semStorel(f.val.i);  break;//x
+        case STOREG : semStoreg(f.val.i);  break;//x
+        case STORE  : semStore(f.val.i);   break;//x
         case STOREN : semStoren();  break;//x
 
       //-Diversos--------------------------------------//
