@@ -139,7 +139,11 @@ void runInst(CodeElem ce){
         case SWAP   : semSwap();  	break;//v
 
       //-Input/Output----------------------------------//
-        case WRITE  : semWrite();   break;//x
+        case WRITE  : semWrite(NULL);     break;//x
+        case WRITEI : semWrite(T_int);    break;//x
+        case WRITES : semWrite(T_heapPt); break;//x
+        case WRITEF : semWrite(T_float);  break;//x
+
         case READ   : semRead();  	break;//x
 
       //-Registo PC------------------------------------//

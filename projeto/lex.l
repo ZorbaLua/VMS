@@ -90,7 +90,11 @@
 "swap"   { return _SWAP;  }
 
 
-"write"  { return _WRITE; }
+"write"   { return _WRITE;  }
+"writei"  { return _WRITEI; }
+"writes"  { return _WRITES; }
+"writef"  { return _WRITEF; }
+
 "read"   { return _READ;   }
 
 "jump"   { return _JUMP;  }

@@ -21,7 +21,7 @@ int yylex();
 }
 
 
-%token _ADD _SUB _MUL _DIV _MOD _NOT _INF _INFEQ _SUP _SUPEQ _FADD _FSUB _FSIN _FCOS _FTAN _FMUL _FDIV _FINF _FINFEQ _FSUP _FSUPEQ _PADD _CONCAT _ALLOC _ALLOCN _FREE _EQUAL _ATOI _ATOF _ITOF _FTOI _STRI _STRF _PUSHI _PUSHN _PUSHF _PUSHS _PUSHG _PUSHL _PUSHSP _PUSHFP _PUSHGP _LOAD _LOADN _DUP _DUPN _POP _POPN _STOREL _STOREG _STORE _STOREN _CHECK _SWAP _WRITE _READ _READI _READF _READS _JUMP _JZ _PUSHA _CALL _ARETURN _START _NOP _ERR _STOP
+%token _ADD _SUB _MUL _DIV _MOD _NOT _INF _INFEQ _SUP _SUPEQ _FADD _FSUB _FSIN _FCOS _FTAN _FMUL _FDIV _FINF _FINFEQ _FSUP _FSUPEQ _PADD _CONCAT _ALLOC _ALLOCN _FREE _EQUAL _ATOI _ATOF _ITOF _FTOI _STRI _STRF _PUSHI _PUSHN _PUSHF _PUSHS _PUSHG _PUSHL _PUSHSP _PUSHFP _PUSHGP _LOAD _LOADN _DUP _DUPN _POP _POPN _STOREL _STOREG _STORE _STOREN _CHECK _SWAP _WRITE _WRITEI _WRITEF _WRITES _READ _READI _READF _READS _JUMP _JZ _PUSHA _CALL _ARETURN _START _NOP _ERR _STOP
 %token<i> _INT
 %token<f> _FLOAT
 %token<s> _STRING _LABEL
@@ -42,6 +42,9 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $
         | _START            { Code_add( newCodeElem( START , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _ADD              { Code_add( newCodeElem( ADD   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _WRITE            { Code_add( newCodeElem( WRITE , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _WRITEI           { Code_add( newCodeElem( WRITEI, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _WRITEF           { Code_add( newCodeElem( WRITEF, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
+        | _WRITES           { Code_add( newCodeElem( WRITES, newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _NOT              { Code_add( newCodeElem( NOT   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _SUB              { Code_add( newCodeElem( SUB   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _MUL              { Code_add( newCodeElem( MUL   , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }

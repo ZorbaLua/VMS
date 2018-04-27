@@ -306,6 +306,17 @@ void remLinha(int i, GtkListStore* a) {
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
 
+void treatOutput() {
+
+  GtkTextIter inicio, fim;
+  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
+  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000);
+
+  char *tudo;
+  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+}
+
+
 char* treatInput() {
 
   GtkTextIter inicio, fim;
@@ -316,13 +327,15 @@ char* treatInput() {
   char *teste;
   teste = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
   //gtk_text_buffer_set_text (bufferConsole, teste, strlen(teste));
-  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000); // 1000 LINHAS DE INPUT MAXIMO DEVEM CHEGAR
+  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000); // 1000 LINHAS DE INPUT DEVEM CHEGAR
 
-  char *tudo;
-  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-  tudo += strlen(teste);
-  gtk_text_buffer_set_text (bufferInput, tudo, strlen(tudo));
-
+  if (strlen(teste) == 0) {return "FALTA DE INPUT";}
+  else {
+    char *tudo;
+    tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+    tudo += strlen(teste);
+    gtk_text_buffer_set_text (bufferInput, tudo, strlen(tudo));
+  }
   return teste;
 }
 
