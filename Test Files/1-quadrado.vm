@@ -95,12 +95,12 @@ equal
 	// comeca bloco THEN  
 jz ELSE0
 pushs "pode ser quadrado\n"            
-write             
+writes
 jump ENDIF0
 	// comeca bloco ELSE  
 ELSE0:
 pushs "nao pode ser quadrado\n"            
-write             
+writes             
 ENDIF0:
 	// fim de ite         
 stop
@@ -131,5 +131,5 @@ pushi 2
 equal
           
 pushi 0
-storel 0 
+storel -1 
 return          

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "../Test Files"
+cd "./testFiles"
 for file in `ls *.vm`
 do
     echo $file

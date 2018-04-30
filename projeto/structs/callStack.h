@@ -14,7 +14,7 @@ typedef struct callStack{
     Array stack;
 } CallStack;
 
-int CallStack_pop(CallElem*);
+void CallStack_pop(CallElem*);
 void CallStack_push(CallElem);
 
 CallElem newCallElem(codePt, opPt);

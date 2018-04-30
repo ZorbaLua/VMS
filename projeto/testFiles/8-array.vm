@@ -11,7 +11,8 @@ padd
 pushi 1
 pushi 10
 storen
-writes "x[1]...="
+pushs "x[1]...="
+writes 
 pushi 1
 stop
 

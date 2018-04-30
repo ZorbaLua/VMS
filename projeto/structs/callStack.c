@@ -8,11 +8,11 @@
 extern CallStack callstack;
 extern FILE* dbout;
 
-int CallStack_pop(CallElem* ret) {
-    int erro;
-    erro = Array_remove(&(callstack.stack), callstack.stack.len, (void**)ret);
+extern void try(int);
+
+void CallStack_pop(CallElem* ret) {
+    try(Array_remove(&(callstack.stack), callstack.stack.len-1, (void**)ret));
     printCallStack(*ret, '-');
-    return erro;
 }
 
 void CallStack_push(CallElem oe){

@@ -55,10 +55,6 @@ void freeLine(char** line, int t) {
     for(int i=0; i<t; i++) free(line[i]);
 }
 
-void initLine(char** line, int t) {
-    for(int i=0; i<t; i++) line[i] = (char*)malloc(10 * sizeof(char));
-}
-
 void parseLine(char* line) {
     char* input;
 
@@ -329,25 +325,6 @@ void remLinha(int i, GtkListStore* a) {
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
 
-//void treatOutput(char extension) {
-//
-//  GtkTextIter inicio, fim;
-//  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
-//  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000);
-//
-//  char *tudo;
-//  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-//
-//  char* tudoMaisExtension;
-//  tudoMaisExtension = malloc(strlen(tudo)+strlen(extension));
-//  strcpy(tudoMaisExtension, tudo);
-//  strcat(tudoMaisExtension, extension);
-//  free(tudo);
-//
-//  gtk_text_buffer_set_text (bufferConsole, tudoMaisExtension, strlen(tudoMaisExtension));
-//
-//}
-
 
 void getGroups(char* line, regex_t *regex , char** arr, regmatch_t* gr, int NUM_COLS){
 	regexec(regex, line, NUM_COLS, gr, 0);
@@ -356,8 +333,7 @@ void getGroups(char* line, regex_t *regex , char** arr, regmatch_t* gr, int NUM_
         arr[i] = (char*)malloc(len+1);
         strncpy(arr[i], &line[gr[i].rm_so], len);	
         arr[i][len] = '\0';
-        //cursorCopy[groupArray[g].rm_eo] = 0;
-        g_message("Group %u: [%lld-%lld]: %s\n", i, gr[i].rm_so, gr[i].rm_eo, arr[i]);
+        //g_message("Group %u: [%lld-%lld]: %s\n", i, gr[i].rm_so, gr[i].rm_eo, arr[i]);
     }
 }
   //-----------------------------------------//
@@ -413,39 +389,39 @@ void insHeap(char *line) {
 
     GtkTreeIter iter;
     enum stack {Index, Value, NUM_COLS };
-    char* arr[NUM_COLS];
-    char signal;
+    int nGroups = NUM_COLS+1+1;
+    char* arr[nGroups];
+    regmatch_t gr[nGroups];
     
-    initLine(arr, NUM_COLS);
-    sscanf(line, "> HEAP %c %s %s\n", &signal, arr[0], arr[1]);
-    if(signal == '+'){
+    getGroups(line, &regexHeap, arr, gr, nGroups);
+    if(arr[1][0] == '+'){
         gtk_list_store_append(storeHeap, &iter);
-        gtk_list_store_set (storeHeap, &iter, Index, arr[0],
-                                              Value, arr[1],
+        gtk_list_store_set (storeHeap, &iter, Index, arr[2],
+                                              Value, arr[3],
                                               -1);
     }
-    else if(signal == '-') remLinha(atoi(arr[0]),storeHeap);
-    freeLine(arr, NUM_COLS);
+    else if(arr[1][0] == '-') remLinha(atoi(arr[2]),storeHeap);
+    freeLine(arr, nGroups);
 }
 
 void insCall(char *line) {
 
     GtkTreeIter iter;
     enum stack {Index, PcValue, FpValue , NUM_COLS };
-    char* arr[NUM_COLS];
-    char signal;
+    int nGroups = NUM_COLS+1+1;
+    char* arr[nGroups];
+    regmatch_t gr[nGroups];
 
-    initLine(arr, NUM_COLS);
-    sscanf(line, "> CALLSTACK %c %s %s %s\n", &signal, arr[0], arr[1], arr[2]);
-    if(signal == '+'){
+    getGroups(line, &regexCall, arr, gr, nGroups);
+    if(arr[1][0] == '+'){
         gtk_list_store_append(storeCall, &iter);
-        gtk_list_store_set (storeCall, &iter, Index,    arr[0],
-                                              PcValue,  arr[1],
-                                              FpValue,  arr[2],
+        gtk_list_store_set (storeCall, &iter, Index,    arr[2],
+                                              PcValue,  arr[3],
+                                              FpValue,  arr[4],
                                               -1);
     }
-    else if(signal == '-')remLinha(atoi(arr[0]), storeCall);
-    freeLine(arr, NUM_COLS);
+    else if(arr[1][0] == '-')remLinha(atoi(arr[2]), storeCall);
+    freeLine(arr, nGroups);
 }
 
 //-----------------------------------------------------------------------------//
@@ -593,15 +569,12 @@ void initRegex(){
 	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
          *regexStringOp   = "> OPSTACK ([-+_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
          *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
-         *regexStringHeap = "> HEAP ([-+_]) ([0-9]+) (.)";
+         *regexStringHeap = "> HEAP ([-+_]) ([0-9]+) (.*)";
 
     if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
     if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }
     if (regcomp(&regexHeap, regexStringHeap, REG_EXTENDED)) { g_message("Could not compile regular expression: Heap.\n"); exit(-1); }
     if (regcomp(&regexCall, regexStringCall, REG_EXTENDED)) { g_message("Could not compile regular expression: Call.\n"); exit(-1); }
-    //sscanf(line, "> OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
-    //sscanf(line, "> CALLSTACK %c %s %s %s\n", &signal, arr[0], arr[1], arr[2]);
-    //sscanf(line, "> HEAP %c %s %s\n", &signal, arr[0], arr[1]);
 }
 
 int main (int argc, char **argv) {
