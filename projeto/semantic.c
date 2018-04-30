@@ -35,40 +35,40 @@ void semPushf(Value v) {
     OpStack_push(oe);
 }
 
-void semWrite(int tipo) {    // POR ISTO MELHOR (ver erros)
+void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
     OperandElem oe = NULL;
     char *s;
     try(OpStack_pop(&oe));
-    fprintf(dbout, "OUTPUT:"); fflush(dbout);
-    if (tipo != NULL) {
-        switch(tipo) {
-            case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
-            case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
-            case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
-            case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
-            case T_heapPt :
-                s = Heap_getBlock(oe->val.val.h);
-                fprintf(stdout, "%s\n", s);
-                free(s);
-                break;
-            default: try(-1);
-        }
-    }
-    else{
-        switch(oe->val.type) {
-            case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
-            case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
-            case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
-            case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
-            case T_heapPt :
-                s = Heap_getBlock(oe->val.val.h);
-                fprintf(stdout, "%s\n", s);
-                free(s);
-                break;
-            default: try(-1);
-        }
-    }
+    fprintf(dbout, "> OUTPUT: "); fflush(dbout);
+    switch(type) {
+        case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
+        case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
+        case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
+        case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
+        case T_heapPt :
+            s = Heap_getBlock(oe->val.val.h);
+            fprintf(stdout, "%s\n", s);
+            free(s);
+            break;
+        default: try(-6);
+    } 
+    fflush(stdout);
+    //    switch(oe->val.type) {
+    //        case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
+    //        case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
+    //        case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
+    //        case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
+    //        case T_heapPt :
+    //            s = Heap_getBlock(oe->val.val.h);
+    //            fprintf(stdout, "%s\n", s);
+    //            free(s);
+    //            break;
+    //        default: try(-1);
+    //    }
 }
+void semWritei() { semWrite(T_int);     }
+void semWritef() { semWrite(T_float);   }
+void semWrites() { semWrite(T_heapPt);     }
 
 
 
@@ -78,12 +78,12 @@ void semNot() {
     Value v;
     try(OpStack_pop(&oe));
     switch(oe->val.type) {
-        case T_int      : uv.i = oe->val.val.i == 0; break;
-        case T_float    : uv.i = oe->val.val.f == 0; break;
-        case T_codePt   : uv.i = oe->val.val.c == 0; break;
-        case T_opPt     : uv.i = oe->val.val.o == 0; break;
-        case T_heapPt   : uv.i = oe->val.val.h == 0; break;
-        default: try(-1);
+        case T_int      : uv.i = (oe->val.val.i == 0); break;
+        case T_float    : uv.i = (oe->val.val.f == 0); break;
+        case T_codePt   : uv.i = (oe->val.val.c == 0); break;
+        case T_opPt     : uv.i = (oe->val.val.o == 0); break;
+        case T_heapPt   : uv.i = (oe->val.val.h == 0); break;
+        default: try(-7);
     }
     v = newValue(uv, T_int);
     OpStack_push(newOperandElem(v));
@@ -107,7 +107,7 @@ void semEqual() {
             case T_codePt   : uv.i = top->val.val.c == other->val.val.c; break;
             case T_opPt     : uv.i = top->val.val.o == other->val.val.o; break;
             case T_heapPt   : uv.i = top->val.val.h == other->val.val.h; break;
-            default: try(-1);
+            default: try(-8);
         }
         v = newValue(uv, T_int);
         OpStack_push(newOperandElem(v));
@@ -209,9 +209,9 @@ void semFsupeq() { operationsFloat('S'); }
 void semPadd() {
     OperandElem pt, integer;
     Uvalue uv;
-    try(OpStack_pop(&pt));
     try(OpStack_pop(&integer));
-    if( integer->val.type != T_int ) try(-1);
+    try(OpStack_pop(&pt));
+    if( integer->val.type != T_int ) try(-9);
     switch(pt->val.type) {
         case T_codePt:
             uv.c = pt->val.val.c + integer->val.val.i;
@@ -225,7 +225,7 @@ void semPadd() {
             uv.h = pt->val.val.h + integer->val.val.i;
             OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
             break;
-        default: try(-1);
+        default: try(-10);
     }
 }
 
@@ -260,14 +260,14 @@ void semAlloc(int len) {
 void semAllocn() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-11);
     semAlloc(oe->val.val.i);
 }
 
 void semFree() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_heapPt) try(-1);
+    if(oe->val.type != T_heapPt) try(-12);
     Heap_free(oe->val.val.h);
 }
 
@@ -276,7 +276,7 @@ void auxAtox(char x) {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_heapPt) try(-1);
+    if(oe->val.type != T_heapPt) try(-13);
     switch(x) {
         case 'i':
             s = Heap_getBlock(oe->val.val.h);
@@ -299,7 +299,7 @@ void semItof() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-14);
     uv.f = (float)1.0 * (oe->val.val.i);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
 }
@@ -308,7 +308,7 @@ void semFtoi() {
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_float) try(-1);
+    if(oe->val.type != T_float) try(-15);
     uv.i = (int)(oe->val.val.f);
     OpStack_push(newOperandElem(newValue(uv, T_float)));
 }
@@ -321,11 +321,11 @@ void auxStrx(char x) {
     try(OpStack_pop(&oe));
     switch(x) {
         case 'i':
-            if(oe->val.type != T_int) try(-1);
+            if(oe->val.type != T_int) try(-16);
             snprintf(s, 15, "%d", oe->val.val.i);
             break;
         case 'f':
-            if(oe->val.type != T_float) try(-1);
+            if(oe->val.type != T_float) try(-17);
             snprintf(s, 15, "%f", oe->val.val.f);
             break;
     }
@@ -347,7 +347,7 @@ void semPushs(GString* s) {
 
 void semPushg(int index) {
     OperandElem oe;
-    try(OpStack_getPos(0+index, &oe));
+    try(OpStack_getPos(opstack.gp+index, &oe));
     OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
 }
 
@@ -366,7 +366,7 @@ void semPushfp() {
 }
 
 void semPushgp() {
-    OpStack_push(newOperandElem(newValue((Uvalue)0, T_opPt)));
+    OpStack_push(newOperandElem(newValue((Uvalue)opstack.gp, T_opPt)));
 }
 
 void semLoad(int index) {
@@ -382,23 +382,20 @@ void semLoad(int index) {
             try( OpStack_getPos(oe->val.val.o + index, &loadOE) );
             OpStack_push(newOperandElem(newValue(loadOE->val.val, loadOE->val.type)));
         break;
-        default: try(-1);
+        default: try(-18);
     }
 }
 
 void semLoadn() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-19);
     semLoad(oe->val.val.i);
 }
 
 void semDup(int i) {
-    int topo;
+    int topo = opstack.sp - 1;
     OperandElem oe;
-    if(opstack.flagGlobal) topo = opstack.gp;
-    else topo = opstack.sp;
-    topo -= 1;
     while( i++ >= 0 ) {
         try(OpStack_getPos(topo-i, &oe));
         OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
@@ -408,7 +405,7 @@ void semDup(int i) {
 void semDupn() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-20);
     semDup(oe->val.val.i);
 }
 
@@ -421,7 +418,7 @@ void semPop(int n) {
 void semPopn() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-21);
     semPop(oe->val.val.i);
 }
 
@@ -448,14 +445,14 @@ void semStore(int index) {
         case T_opPt:
             OpStack_addPos(pt->val.val.o + index, newOperandElem(newValue(v->val.val, v->val.type)));
             break;
-        default: try(-1);
+        default: try(-22);
     }
 }
 
 void semStoren() {
     OperandElem oe;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-23);
     semStore(oe->val.val.i);
 }
 
@@ -471,6 +468,7 @@ void semRead() {
     int len;
     Uvalue uv;
     char s[100];
+    fprintf(dbout, "> INPUT\n"); fflush(dbout);
     gets(s);
     len = strlen(s);
     uv.h = Heap_alloc(s,len);
@@ -487,7 +485,7 @@ void semJz(GString* s) {
     OperandElem oe;
     HashData hd;
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_int) try(-1);
+    if(oe->val.type != T_int) try(-24);
     if(oe->val.val.i == 0) {
         hd = g_hash_table_lookup(labels, s->str);
         code.pc = hd->line;
@@ -503,7 +501,7 @@ void semCall() {
     OperandElem oe;
     CallStack_push(newCallElem(code.pc, opstack.fp));
     try(OpStack_pop(&oe));
-    if(oe->val.type != T_codePt) try(-1);
+    if(oe->val.type != T_codePt) try(-25);
     code.pc = oe->val.val.c;
     opstack.fp = opstack.sp;
 }
@@ -517,12 +515,10 @@ void semReturn() {
 }
 
 void semStart() {
-    opstack.flagGlobal = 0;
-    opstack.fp = opstack.gp;
-    opstack.sp = opstack.gp;
+    opstack.fp = opstack.sp;
 }
 
-void semNop() { code.pc -= 1; }
+void semNop() {}
 
 void semErr() { }
 

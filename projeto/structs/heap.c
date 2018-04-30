@@ -18,7 +18,6 @@ char* Heap_getBlock(heapPt pt){
     int i, len = 100;
     char* ret = (char*)malloc(len*sizeof(char));
     for(i=0, prox=&(heap.mem[pt]); (prox->c)!='\0'; prox = get(he->next), i++){
-        if(i<len-1){ len*=2; ret = (char*)realloc(ret, len*sizeof(char)); }
         he = prox;
         ret[i] = he->c;
     }

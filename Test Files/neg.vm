@@ -2,9 +2,9 @@ start
 pushi 10
 pushi 7
 add
-write   // expected:  17
+writei   // expected:  17
 pushi -10
 pushi 7
 add
-write   // expected:  -3
+writei   // expected:  -3
 stop

@@ -3,8 +3,8 @@ pushi 3
 pushi 9 
 mul
 pushs "3 vezes 9 ="
-write
-write
+writes
+writei
 pushs " \n"
-write
+writes
 stop

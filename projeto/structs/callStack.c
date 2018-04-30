@@ -32,6 +32,6 @@ CallElem newCallElem(codePt pc, opPt fp){
 }
 
 void printCallStack(CallElem ce, char signal) {
-    fprintf(dbout, "CALLSTACK %c %d %d %d\n", signal, callstack.stack.len , ce->pc, ce->fp);
+    fprintf(dbout, "> CALLSTACK %c %d %d %d\n", signal, callstack.stack.len , ce->pc, ce->fp);
     fflush(dbout);
 }

@@ -31,7 +31,6 @@ int OpStack_addPos(int index, OperandElem oe){
 
 void OpStack_push(OperandElem oe){
     Array_add(&(opstack.stack), oe);
-    if(opstack.flagGlobal)  opstack.gp += 1;
     opstack.sp += 1;
     printOpStack(oe, '+');
 }
@@ -42,7 +41,6 @@ void OpStack_init(int size){
     opstack.sp = 0;
     opstack.fp = 0;
     opstack.gp = 0;
-    opstack.flagGlobal = 1;
 }
 void OpStack_free(){
     Array_free(&opstack.stack);

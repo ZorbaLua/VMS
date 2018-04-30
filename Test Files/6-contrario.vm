@@ -68,7 +68,7 @@ add
 loadn       
 	// fim de get variavel "v"
                   
-write             
+writei
 	// incremento das variaveis
 	// inicio de get variavel "i"
 pushg 6	// fim de get variavel "i"

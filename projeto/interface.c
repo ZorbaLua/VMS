@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <regex.h>
 #include "structs/types.h"
 
 //-Globais-//
@@ -16,7 +17,10 @@ GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
 GtkWidget *buttonR, *button1, *buttonN;
 
-char* lastfile;
+char* lastfile=NULL;
+
+regex_t regexCode, regexCall, regexHeap, regexOp;
+
 
 #define PC 0
 #define FP 1
@@ -30,6 +34,23 @@ void insHeap(char*);
 
 //-----------------------------------------------------------------------------//
 
+
+void getInput(char **input) {
+
+  GtkTextIter inicio, fim;
+
+  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
+  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1);
+
+  *input = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 100); // 1000 LINHAS DE INPUT DEVEM CHEGAR
+
+  char *tudo;
+  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+  tudo += strlen(*input);
+  gtk_text_buffer_set_text (bufferInput, tudo, strlen(tudo));
+}
+
 void freeLine(char** line, int t) {
     for(int i=0; i<t; i++) free(line[i]);
 }
@@ -39,17 +60,36 @@ void initLine(char** line, int t) {
 }
 
 void parseLine(char* line) {
-    if(!strncmp(line, "> CO", 3)) insCode(line);
-    else if(!strncmp(line, "> CA", 3)) insCall(line);
-    else if(!strncmp(line, "> OP", 3)) insOP(line);
-    else if(!strncmp(line, "> HE", 3)) insHeap(line);
+    char* input;
+
+    if(!strncmp(line, "> CO", 4)) insCode(line);
+    else if(!strncmp(line, "> CA", 4)) insCall(line);
+    else if(!strncmp(line, "> OP", 4)) insOP(line);
+    else if(!strncmp(line, "> HE", 4)) insHeap(line);
+    else if(!strncmp(line, "> IN", 4)){
+        getInput(&input);
+        fprintf(stdout, "%s\n", input); fflush(stdout);
+        free(input);
+    }
+    else if(!strncmp(line, "> OU", 4)) {
+        gtk_text_buffer_set_text (bufferConsole, &line[9], strlen(&line[9]));
+    }
     //else if(!strncmp(line, "\e[", 2)) {;}
     //else { }
 }
 
+void loopTranformations(){
+  char line[MAX_LINE];
+  line[0]='>';
+  while(line[0] == '>'){
+    fgets(line, MAX_LINE, stdin);
+    parseLine(line);
+  }
+}
+
 //-----------------------------------------------------------------------------//
 
-static char* GtkFileOpen () {
+void GtkFileOpen (char **retFilename) {
 
   GtkWidget *dialog;
   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
@@ -59,15 +99,11 @@ static char* GtkFileOpen () {
 
   res = gtk_dialog_run (GTK_DIALOG (dialog));
   if (res == GTK_RESPONSE_ACCEPT) {
-      char *filename;
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
-      filename = gtk_file_chooser_get_filename (chooser);
+      *retFilename = gtk_file_chooser_get_filename (chooser);
       gtk_widget_destroy (dialog);
-      lastfile = filename;
-      return(filename);
     }
   gtk_widget_destroy (dialog);
-  return NULL;
 }
 
 //-----------------------------------------------------------------------------//
@@ -99,15 +135,10 @@ static void limpaStacks() {
     //-----------------------------------------//
 
 static void exeInst (const char* nvezes) {
-
-  char line[MAX_LINE];
-  if(nvezes[0] == '0'){ fprintf(stdout, "run \n"); fflush(stdout); }
-  else { fprintf(stdout, "next %s\n", nvezes); fflush(stdout); }
-  line[0]='>';
-  while(line[0] == '>'){
-    fgets(line, MAX_LINE, stdin);
-    parseLine(line);
-  }
+  if(nvezes[0] == '0') fprintf(stdout, "run \n");
+  else                 fprintf(stdout, "next %s\n", nvezes);
+  fflush(stdout); 
+  loopTranformations();
 }
 
 static void bExe (GtkWidget *widget, gpointer data) {
@@ -119,46 +150,39 @@ static void bExeT (GtkWidget *widget, gpointer data) {
   exeInst(n);
 }
 
-static void loadficheiro(char *filename) {
-
-  int len;
-  char line[MAX_LINE];
-
-  fprintf(stdout, "file %s\n", filename); fflush(stdout);
-  turnButtons(TRUE);
-
-  line[0]='>';
-  while(line[0] == '>'){
-    fgets(line, MAX_LINE, stdin);
-    parseLine(line);
-  }
-  free(filename);
-}
-
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
+    
+    if(lastfile != NULL) {
+        free(lastfile);
+    }
+    limpaStacks();
 
-  char* filename = GtkFileOpen();
-  limpaStacks();
-
-  if (filename != NULL) {
-    loadficheiro(filename);
-  }
+    GtkFileOpen(&lastfile);
+    if (lastfile != NULL) {
+        fprintf(stdout, "file %s\n", lastfile); fflush(stdout);
+        turnButtons(TRUE);
+        loopTranformations();
+    }
   //else { turnButtons(FALSE); }
 }
 
-static void bReloadFile (GtkWidget *widget, gpointer data) { // POR ISTO DIREITO
-  loadficheiro(lastfile);
+static void bReloadFile (GtkWidget *widget, gpointer data) { 
+    limpaStacks();
+    fprintf(stdout, "file %s\n", lastfile); fflush(stdout);
+    turnButtons(TRUE);
+    loopTranformations();
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
-  char* filename = GtkFileOpen();
+  char* inputFile=NULL;
+  GtkFileOpen(&inputFile);
   limpaStacks();
 
-  if (filename != NULL) {
+  if (inputFile != NULL) {
     GError *err = NULL;
     gchar *contents;
 
-    g_file_get_contents (filename, &contents, NULL, &err);
+    g_file_get_contents (inputFile, &contents, NULL, &err);
     gtk_text_buffer_set_text (bufferInput, contents, strlen(contents));
   }
   //else { turnButtons(FALSE); }
@@ -168,7 +192,6 @@ static void bLoadIFile (GtkWidget *widget, gpointer data) {
 
 void actLabel (int lab, int value) {
 
-  GtkWidget *label;
   char l[10], b[5];
   sprintf(b, "%d", value);
   switch (lab) {
@@ -306,106 +329,103 @@ void remLinha(int i, GtkListStore* a) {
   gtk_list_store_remove (GTK_LIST_STORE(a), &iter);
 }
 
-void treatOutput(char extension) {
+//void treatOutput(char extension) {
+//
+//  GtkTextIter inicio, fim;
+//  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
+//  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000);
+//
+//  char *tudo;
+//  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+//
+//  char* tudoMaisExtension;
+//  tudoMaisExtension = malloc(strlen(tudo)+strlen(extension));
+//  strcpy(tudoMaisExtension, tudo);
+//  strcat(tudoMaisExtension, extension);
+//  free(tudo);
+//
+//  gtk_text_buffer_set_text (bufferConsole, tudoMaisExtension, strlen(tudoMaisExtension));
+//
+//}
 
-  GtkTextIter inicio, fim;
-  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
-  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000);
 
-  char *tudo;
-  tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-
-  char* tudoMaisExtension;
-  tudoMaisExtension = malloc(strlen(tudo)+strlen(extension));
-  strcpy(tudoMaisExtension, tudo);
-  strcat(tudoMaisExtension, extension);
-  free(tudo);
-
-  gtk_text_buffer_set_text (bufferConsole, tudoMaisExtension, strlen(tudoMaisExtension));
-
+void getGroups(char* line, regex_t *regex , char** arr, regmatch_t* gr, int NUM_COLS){
+	regexec(regex, line, NUM_COLS, gr, 0);
+    for (int i = 0; i < NUM_COLS; i++) {
+        int len = gr[i].rm_eo - gr[i].rm_so;
+        arr[i] = (char*)malloc(len+1);
+        strncpy(arr[i], &line[gr[i].rm_so], len);	
+        arr[i][len] = '\0';
+        //cursorCopy[groupArray[g].rm_eo] = 0;
+        g_message("Group %u: [%lld-%lld]: %s\n", i, gr[i].rm_so, gr[i].rm_eo, arr[i]);
+    }
 }
-
-
-char* treatInput() {
-
-  GtkTextIter inicio, fim;
-
-  gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
-  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1);
-
-  char *teste;
-  teste = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-  //gtk_text_buffer_set_text (bufferConsole, teste, strlen(teste));
-  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1000); // 1000 LINHAS DE INPUT DEVEM CHEGAR
-
-  if (strlen(teste) == 0) {return "FALTA DE INPUT";}
-  else {
-    char *tudo;
-    tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-    tudo += strlen(teste);
-    gtk_text_buffer_set_text (bufferInput, tudo, strlen(tudo));
-  }
-  return teste;
-}
-
   //-----------------------------------------//
 
 void insCode(char *line) {
 
     GtkTreeIter iter;
     enum stack {Index, Instruction, ValueA, TypeA, ValueB, TypeB, NUM_COLS };
-    char* arr[NUM_COLS];
-    int codePC;
-    char signal;
+    int nGroups = NUM_COLS+2+1; //signal, pc, tudo
+    char* arr[nGroups];
+	regmatch_t gr[nGroups];
 
-    initLine(arr, NUM_COLS);
-    sscanf(line, "> CODE %c %s %s %s %s %s %s %d\n", &signal, arr[0], arr[1], arr[3], arr[2], arr[5], arr[4], &codePC);
-    if(signal == '+'){
+    getGroups(line, &regexCode, arr, gr, nGroups);
+    if(arr[1][0] == '+'){
         gtk_list_store_append(storeCode, &iter);
-        gtk_list_store_set (storeCode, &iter,   Index,          arr[0],
-                                                Instruction,    arr[1],
-                                                ValueA,         arr[2],
-                                                TypeA,          arr[3],
-                                                ValueB,         arr[4],
-                                                TypeB,          arr[5],
+        gtk_list_store_set (storeCode, &iter,   Index,          arr[2],
+                                                Instruction,    arr[3],
+                                                ValueA,         arr[4],
+                                                TypeA,          arr[5],
+                                                ValueB,         arr[6],
+                                                TypeB,          arr[7],
                                                 -1);
     }
-    actLabel(PC, codePC);
+    actLabel(PC, atoi(arr[8]));
     selecionar( gtk_label_get_text (labelPC) );
-    freeLine(arr, NUM_COLS);
+    freeLine(arr, nGroups);
 }
 
 void insOP(char *line) {
 
     GtkTreeIter iter;
     enum stack {Index, Value, Type, NUM_COLS };
-    char* arr[NUM_COLS];
-    int sp, fp, gp;
-    char signal;
+    int nGroups = NUM_COLS+4+1;
+    char* arr[nGroups];
+    regmatch_t gr[nGroups];
 
-    initLine(arr, NUM_COLS);
-    sscanf(line, "> OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
-    if(signal == '+'){
+    getGroups(line, &regexOp, arr, gr, nGroups);
+    if(arr[1][0] == '+'){
         gtk_list_store_append(storeOP, &iter);
-        gtk_list_store_set (storeOP, &iter, Index, arr[0],
-                                            Value, arr[1],
-                                            Type,  arr[2],
+        gtk_list_store_set (storeOP, &iter, Index, arr[2],
+                                            Value, arr[3],
+                                            Type,  arr[4],
                                             -1);
     }
-    else if(signal == '-') remLinha(sp,storeOP);
-    actLabel(SP, sp);
-    actLabel(FP, fp);
-    actLabel(GP, gp);
-    freeLine(arr, NUM_COLS);
+    else if(arr[1][0] == '-') remLinha(atoi(arr[5]),storeOP);
+    actLabel(SP, atoi(arr[5]));
+    actLabel(FP, atoi(arr[6]));
+    actLabel(GP, atoi(arr[7]));
+    freeLine(arr, nGroups);
 }
 
 void insHeap(char *line) {
-  /*
+
     GtkTreeIter iter;
-    enum stack {Index, Value, Type, NUM_COLS };
-    gtk_list_store_append(storeHeap, &iter);
-    gtk_list_store_set (storeHeap, &iter, Index, idx, Value, val, Type, tp, -1);
-    */
+    enum stack {Index, Value, NUM_COLS };
+    char* arr[NUM_COLS];
+    char signal;
+    
+    initLine(arr, NUM_COLS);
+    sscanf(line, "> HEAP %c %s %s\n", &signal, arr[0], arr[1]);
+    if(signal == '+'){
+        gtk_list_store_append(storeHeap, &iter);
+        gtk_list_store_set (storeHeap, &iter, Index, arr[0],
+                                              Value, arr[1],
+                                              -1);
+    }
+    else if(signal == '-') remLinha(atoi(arr[0]),storeHeap);
+    freeLine(arr, NUM_COLS);
 }
 
 void insCall(char *line) {
@@ -413,11 +433,10 @@ void insCall(char *line) {
     GtkTreeIter iter;
     enum stack {Index, PcValue, FpValue , NUM_COLS };
     char* arr[NUM_COLS];
-    int pc, fp;
     char signal;
 
     initLine(arr, NUM_COLS);
-    sscanf(line, "> CALLSTACK %c %s %s %s", &signal, arr[0], arr[2], arr[1]);
+    sscanf(line, "> CALLSTACK %c %s %s %s\n", &signal, arr[0], arr[1], arr[2]);
     if(signal == '+'){
         gtk_list_store_append(storeCall, &iter);
         gtk_list_store_set (storeCall, &iter, Index,    arr[0],
@@ -425,7 +444,7 @@ void insCall(char *line) {
                                               FpValue,  arr[2],
                                               -1);
     }
-    else if(signal == '-') gtk_list_store_remove(storeCall, &iter);
+    else if(signal == '-')remLinha(atoi(arr[0]), storeCall);
     freeLine(arr, NUM_COLS);
 }
 
@@ -475,9 +494,9 @@ static void activateSHeap (int x, int y, int xx, int yy) {
   view = gtk_tree_view_new ();
   renderer = gtk_cell_renderer_text_new ();\
 
-  enum stack {Index, Value, Type, NUM_COLS };
+  enum stack {Index, Value, NUM_COLS };
   static const char *nomes[] = {"#--", "Value", "Type"};
-  storeHeap = gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
+  storeHeap = gtk_list_store_new (NUM_COLS, G_TYPE_STRING, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
@@ -525,9 +544,9 @@ static void activateSCall (int x, int y, int xx, int yy) {
   view = gtk_tree_view_new ();
   renderer = gtk_cell_renderer_text_new ();
 
-  enum stack {Index, Value, Type, NUM_COLS };
+  enum stack {Index, PcValue, FpValue, NUM_COLS };
   static const char *nomes[] = {"#--", "PcValue", "FpValue"};
-  storeCall= gtk_list_store_new (NUM_COLS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING);
+  storeCall= gtk_list_store_new (NUM_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   for (int coluna = Index; coluna < NUM_COLS; coluna++) {
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), -1, nomes[coluna], renderer, "text", coluna, NULL);
@@ -547,7 +566,7 @@ void activateStacks () {
   activateSCall (2, 11, 1, 9);
   activateSOP   (1, 1, 1, 19);
 
-  GtkTreeSelection x;
+  //GtkTreeSelection x;
 }
 
 //-----------------------------------------------------------------------------//
@@ -569,13 +588,20 @@ static void activate () {
 }
 
 //-----------------------------------------------------------------------------//
-void loadInitial(){
-  char line[MAX_LINE];
-  line[0]='>';
-  while(line[0] == '>'){
-    fgets(line, MAX_LINE, stdin);
-    parseLine(line);
-  }
+
+void initRegex(){
+	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
+         *regexStringOp   = "> OPSTACK ([-+_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
+         *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
+         *regexStringHeap = "> HEAP ([-+_]) ([0-9]+) (.)";
+
+    if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
+    if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }
+    if (regcomp(&regexHeap, regexStringHeap, REG_EXTENDED)) { g_message("Could not compile regular expression: Heap.\n"); exit(-1); }
+    if (regcomp(&regexCall, regexStringCall, REG_EXTENDED)) { g_message("Could not compile regular expression: Call.\n"); exit(-1); }
+    //sscanf(line, "> OPSTACK %c %s %s %s %d %d %d\n", &signal, arr[0], arr[2], arr[1], &sp, &fp, &gp);
+    //sscanf(line, "> CALLSTACK %c %s %s %s\n", &signal, arr[0], arr[1], arr[2]);
+    //sscanf(line, "> HEAP %c %s %s\n", &signal, arr[0], arr[1]);
 }
 
 int main (int argc, char **argv) {
@@ -588,10 +614,11 @@ int main (int argc, char **argv) {
 
   g_signal_connect (window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
+  initRegex();
   activate();
 
   gtk_widget_show (window);
-  loadInitial();
+  loopTranformations();
   gtk_main ();
   return 0;
 }

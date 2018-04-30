@@ -9,14 +9,14 @@ GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 
 all: main interface
 
-install: main
+install: main interface
 	cp main /usr/local/bin/vms
 
 main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
 	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o main -L/usr/local/lib -I/usr/local/include -lreadline
 
 interface: interface.c
-	$(CC) interface.c $(GTK_LIBS) -o interface
+	$(CC) $(CFLAGS) interface.c $(GTK_LIBS) -o interface
 
 ####################################################################################################
 

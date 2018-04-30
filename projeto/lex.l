@@ -114,7 +114,7 @@
 
 -?[0-9]+"."[0-9]+   { yylval.f = atof(yytext);          return _FLOAT; }
 -?[0-9]+		        { yylval.i = atoi(yytext);          return _INT; }
-\"(\\.|[^"\\])*\"   { yylval.s = g_string_new(yytext);  return _STRING; }
+\"(\\.|[^"\\])*\"   { yytext[yyleng-1]='\0'; yylval.s = g_string_new(&yytext[1]);  return _STRING; }
 
 [A-Z][A-Z0-9]*      { yylval.s = g_string_new(yytext);  return _LABEL; }
 

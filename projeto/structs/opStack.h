@@ -14,7 +14,6 @@ typedef struct opStack{
     opPt sp;
     opPt fp;
     opPt gp;
-    int flagGlobal;
 } OpStack;
 
 
