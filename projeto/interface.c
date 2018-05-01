@@ -64,7 +64,7 @@ void parseLine(char* line) {
     else if(!strncmp(line, "> HE", 4)) insHeap(line);
     else if(!strncmp(line, "> IN", 4)){
         getInput(&input);
-        fprintf(stdout, "%s\n", input); fflush(stdout);
+        fprintf(stdout, "%s", input); fflush(stdout);
         free(input);
     }
     else if(!strncmp(line, "> OU", 4)) {

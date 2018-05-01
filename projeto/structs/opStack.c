@@ -13,7 +13,7 @@ int OpStack_pop(OperandElem* ret){
     if(opstack.sp == opstack.fp) return -3;
     opstack.sp -= 1;
     try(Array_remove(&(opstack.stack), opstack.sp, (void**)ret));
-    printOpStack(*ret, '-');
+    printOpStack(*ret, '-', opstack.sp);
     return 0;
 }
 
@@ -26,14 +26,14 @@ int OpStack_getPos(int index, OperandElem* ret){
 }
 
 int OpStack_addPos(int index, OperandElem oe){
-    printOpStack(oe, '~');
+    printOpStack(oe, '~', index);
     return Array_addPos(&(opstack.stack), index, oe);
 }
 
 void OpStack_push(OperandElem oe){
     Array_add(&(opstack.stack), oe);
+    printOpStack(oe, '+', opstack.sp);
     opstack.sp += 1;
-    printOpStack(oe, '+');
 }
 
 
@@ -54,7 +54,7 @@ OperandElem newOperandElem(Value v){
     return oe;
 }
 
-void printOpStack(OperandElem oe, char signal){
-    fprintf(dbout, "> OPSTACK %c %d %s %d %d %d\n", signal, opstack.stack.len-1, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
+void printOpStack(OperandElem oe, char signal, int index){
+    fprintf(dbout, "> OPSTACK %c %d %s %d %d %d\n", signal, index, Value_toString(oe->val), opstack.sp, opstack.fp, opstack.gp);
     fflush(dbout);
 }

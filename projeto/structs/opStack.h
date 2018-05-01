@@ -20,13 +20,13 @@ typedef struct opStack{
 
 int OpStack_pop(OperandElem*);
 int OpStack_top(OperandElem*);
-int OpStack_getPos(int, OperandElem*);
-int OpStack_addPos(int, OperandElem);
+int OpStack_getPos(int,OperandElem*);
+int OpStack_addPos(int,OperandElem);
 void OpStack_push(OperandElem);
 
 OperandElem newOperandElem(Value);
 void OpStack_init(int);
 void OpStack_free();
-void printOpStack(OperandElem oe, char signal);
+void printOpStack(OperandElem,char,int);
 
 #endif
