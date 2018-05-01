@@ -1,4 +1,6 @@
 
+#define _GNU_SOURCE
+
 #include <signal.h>
 #include <sys/param.h>
 #include <stdio.h>
@@ -45,31 +47,31 @@ int yyparse();
 void try(int erro) {
     switch (erro) {
         case  0 : return;
-        case -1 : eprintf("error:\n");          break;
-        case -2 : eprintf("error: index out of array\n");    break;
-        case -3 : eprintf("error: fp == sp\n");              break;
-        case -4 : eprintf("error: opning file\n");           break;
-        case -5 : eprintf("error: invalid args\n");          break;
-        case -6 : eprintf("error: invalid type write\n");          break;
-        case -7 : eprintf("error: invalid type not\n");          break;
-        case -8 : eprintf("error: invalid type equal\n");          break;
-        case -9 : eprintf("error: invalid type padd second arg not int\n");          break;
-        case -10: eprintf("error: invalid type padd first argument not adress\n");          break;
-        case -11: eprintf("error: invalid type alocn\n");          break;
-        case -12: eprintf("error: invalid type free\n");          break;
-        case -13: eprintf("error: invalid type atox arg is not heap adress\n");          break;
-        case -14: eprintf("error: invalid type itof\n");          break;
-        case -15: eprintf("error: invalid type ftoi\n");          break;
-        case -16: eprintf("error: invalid type stri\n");          break;
-        case -17: eprintf("error: invalid type strf\n");          break;
-        case -18: eprintf("error: invalid type loadn\n");          break;
-        case -19: eprintf("error: invalid type load\n");          break;
-        case -20: eprintf("error: invalid type dupn\n");          break;
-        case -21: eprintf("error: invalid type popn\n");          break;
-        case -22: eprintf("error: invalid type pon\n");          break;
-        case -23: eprintf("error: invalid type storen\n");          break;
-        case -24: eprintf("error: invalid type jz\n");          break;
-        case -25: eprintf("error: invalid type call\n");          break;
+        case -1 : eprintf("error:\n");                                             break;
+        case -2 : eprintf("error: index out of array\n");                          break;
+        case -3 : eprintf("error: fp == sp\n");                                    break;
+        case -4 : eprintf("error: opning file\n");                                 break;
+        case -5 : eprintf("error: invalid args\n");                                break;
+        case -6 : eprintf("error: invalid type write\n");                          break;
+        case -7 : eprintf("error: invalid type not\n");                            break;
+        case -8 : eprintf("error: invalid type equal\n");                          break;
+        case -9 : eprintf("error: invalid type padd second arg not int\n");        break;
+        case -10: eprintf("error: invalid type padd first argument not adress\n"); break;
+        case -11: eprintf("error: invalid type alocn\n");                          break;
+        case -12: eprintf("error: invalid type free\n");                           break;
+        case -13: eprintf("error: invalid type atox arg is not heap adress\n");    break;
+        case -14: eprintf("error: invalid type itof\n");                           break;
+        case -15: eprintf("error: invalid type ftoi\n");                           break;
+        case -16: eprintf("error: invalid type stri\n");                           break;
+        case -17: eprintf("error: invalid type strf\n");                           break;
+        case -18: eprintf("error: invalid type loadn\n");                          break;
+        case -19: eprintf("error: invalid type load\n");                           break;
+        case -20: eprintf("error: invalid type dupn\n");                           break;
+        case -21: eprintf("error: invalid type popn\n");                           break;
+        case -22: eprintf("error: invalid type pon\n");                            break;
+        case -23: eprintf("error: invalid type storen\n");                         break;
+        case -24: eprintf("error: invalid type jz\n");                             break;
+        case -25: eprintf("error: invalid type call\n");                           break;
     }
     _exit(erro);
 }
@@ -241,7 +243,6 @@ void runProgram(){
         if(ce->inst == STOP) stop = 1;
         runInst(ce);
     }
-
 }
 
 void prepareDebug(){

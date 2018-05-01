@@ -51,7 +51,7 @@ void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
             free(s);
             break;
         default: try(-6);
-    } 
+    }
     fflush(stdout);
     fprintf(dbout, "\n");
     fflush(dbout);
@@ -459,7 +459,9 @@ void semRead() {
     Uvalue uv;
     char s[100];
     fprintf(dbout, "> INPUT\n"); fflush(dbout);
-    gets(s);
+    //gets(s);
+    fgets(s,1024,stdin);
+    s[strcspn(s, "\n")] = '\0';
     len = strlen(s);
     uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
