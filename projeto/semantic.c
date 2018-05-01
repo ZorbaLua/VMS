@@ -455,17 +455,15 @@ void semSwap() {
 }
 
 void semRead() {
-    int len;
+    size_t len;
     Uvalue uv;
-    char s[100];
+    char *s=NULL;
     fprintf(dbout, "> INPUT\n"); fflush(dbout);
-    //gets(s);
-    fgets(s,1024,stdin);
-    s[strcspn(s, "\n")] = '\0';
-    len = strlen(s);
+    len = getline(&s, &len, stdin);
+    s[len-1] = '\0';
     uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
-    //free(s);
+    free(s);
 }
 
 void semJump(GString* s) {
