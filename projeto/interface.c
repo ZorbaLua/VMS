@@ -21,7 +21,6 @@ char* lastfile=NULL;
 
 regex_t regexCode, regexCall, regexHeap, regexOp;
 
-
 #define PC 0
 #define FP 1
 #define SP 2
@@ -43,7 +42,7 @@ void getInput(char **input) {
   gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1);
 
   *input = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
-  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 100); // 1000 LINHAS DE INPUT DEVEM CHEGAR
+  gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 100); // 100 LINHAS DE INPUT DEVEM CHEGAR
 
   char *tudo;
   tudo = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
@@ -57,6 +56,10 @@ void freeLine(char** line, int t) {
 
 void parseLine(char* line) {
     char* input;
+
+    GtkTextIter fim;
+    gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, 200);
+    gtk_text_buffer_insert (bufferConsole, &fim, line, strlen(line));
 
     if(!strncmp(line, "> CO", 4)) insCode(line);
     else if(!strncmp(line, "> CA", 4)) insCall(line);
@@ -122,7 +125,7 @@ static void limpaStacks() {
 static void exeInst (const char* nvezes) {
   if(nvezes[0] == '0') fprintf(stdout, "run \n");
   else                 fprintf(stdout, "next %s\n", nvezes);
-  fflush(stdout); 
+  fflush(stdout);
   loopTranformations();
 }
 
@@ -136,7 +139,7 @@ static void bExeT (GtkWidget *widget, gpointer data) {
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
-    
+
     if(lastfile != NULL) {
         free(lastfile);
     }
@@ -151,7 +154,7 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
   //else { turnButtons(FALSE); }
 }
 
-static void bReloadFile (GtkWidget *widget, gpointer data) { 
+static void bReloadFile (GtkWidget *widget, gpointer data) {
     limpaStacks();
     fprintf(stdout, "file %s\n", lastfile); fflush(stdout);
     turnButtons(TRUE);
@@ -320,7 +323,7 @@ void getGroups(char* line, regex_t *regex , char** arr, regmatch_t* gr, int NUM_
     for (int i = 0; i < NUM_COLS; i++) {
         int len = gr[i].rm_eo - gr[i].rm_so;
         arr[i] = (char*)malloc(len+1);
-        strncpy(arr[i], &line[gr[i].rm_so], len);	
+        strncpy(arr[i], &line[gr[i].rm_so], len);
         arr[i][len] = '\0';
         //g_message("Group %u: [%lld-%lld]: %s\n", i, gr[i].rm_so, gr[i].rm_eo, arr[i]);
     }
@@ -349,7 +352,7 @@ void insCode(char *line) {
                                                 -1);
         path = gtk_tree_path_new_from_string ("0");
     }
-    else if(arr[1][0] == '_') path = gtk_tree_path_new_from_string (arr[2]); 
+    else if(arr[1][0] == '_') path = gtk_tree_path_new_from_string (arr[2]);
 
     gtk_tree_model_get_iter(GTK_TREE_MODEL(storeCode), &iter, path);
     gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
@@ -382,9 +385,9 @@ void insOP(char *line) {
         gtk_list_store_set(storeOP, &iter, Index, arr[2],
                                            Value, arr[3],
                                            Type,  arr[4],
-                                           -1);           
-                            
-    } 
+                                           -1);
+
+    }
     actLabel(SP, atoi(arr[5]));
     actLabel(FP, atoi(arr[6]));
     actLabel(GP, atoi(arr[7]));
@@ -399,7 +402,7 @@ void insHeap(char *line) {
     int nGroups = NUM_COLS+1+1;
     char* arr[nGroups];
     regmatch_t gr[nGroups];
-    
+
     getGroups(line, &regexHeap, arr, gr, nGroups);
     if(arr[1][0] == '+'){
         gtk_list_store_append(storeHeap, &iter);
@@ -415,7 +418,7 @@ void insHeap(char *line) {
         gtk_list_store_set(storeOP, &iter, Index, arr[2],
                                            Value, arr[3],
                                            -1);
-    } 
+    }
     freeLine(arr, nGroups);
 }
 
@@ -582,9 +585,9 @@ static void activate () {
 
 void initRegex(){
 	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
-         *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
-         *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
-         *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) (.?)";
+       *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
+       *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
+       *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) (.?)";
 
     if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
     if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }
