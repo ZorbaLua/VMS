@@ -104,17 +104,6 @@ void GtkFileOpen (char **retFilename) {
 
 //-----------------------------------------------------------------------------//
 
-static void selecionar (const gchar *i) {
-
-  GtkTreeIter iter;
-  GtkTreePath *path;
-  const gchar *b = i + 3;
-  path = gtk_tree_path_new_from_string (b);
-  gtk_tree_model_get_iter(GTK_TREE_MODEL(storeCode), &iter, path);
-
-  gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
-}
-
 static void turnButtons (_Bool b) {
   gtk_widget_set_sensitive (buttonR, b);
   gtk_widget_set_sensitive (button1, b);
@@ -338,9 +327,11 @@ void getGroups(char* line, regex_t *regex , char** arr, regmatch_t* gr, int NUM_
 }
   //-----------------------------------------//
 
+
 void insCode(char *line) {
 
     GtkTreeIter iter;
+    GtkTreePath *path=NULL;
     enum stack {Index, Instruction, ValueA, TypeA, ValueB, TypeB, NUM_COLS };
     int nGroups = NUM_COLS+2+1; //signal, pc, tudo
     char* arr[nGroups];
@@ -356,15 +347,20 @@ void insCode(char *line) {
                                                 ValueB,         arr[6],
                                                 TypeB,          arr[7],
                                                 -1);
+        path = gtk_tree_path_new_from_string ("0");
     }
+    else if(arr[1][0] == '_') path = gtk_tree_path_new_from_string (arr[2]); 
+
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(storeCode), &iter, path);
+    gtk_tree_view_set_cursor (GTK_TREE_VIEW (viewC), path, NULL, FALSE);
     actLabel(PC, atoi(arr[8]));
-    selecionar( gtk_label_get_text (labelPC) );
     freeLine(arr, nGroups);
 }
 
 void insOP(char *line) {
 
     GtkTreeIter iter;
+    GtkTreePath *path;
     enum stack {Index, Value, Type, NUM_COLS };
     int nGroups = NUM_COLS+4+1;
     char* arr[nGroups];
@@ -373,12 +369,22 @@ void insOP(char *line) {
     getGroups(line, &regexOp, arr, gr, nGroups);
     if(arr[1][0] == '+'){
         gtk_list_store_append(storeOP, &iter);
-        gtk_list_store_set (storeOP, &iter, Index, arr[2],
-                                            Value, arr[3],
-                                            Type,  arr[4],
-                                            -1);
+        gtk_list_store_set(storeOP, &iter, Index, arr[2],
+                                           Value, arr[3],
+                                           Type,  arr[4],
+                                           -1);
     }
     else if(arr[1][0] == '-') remLinha(atoi(arr[5]),storeOP);
+    else if(arr[1][0] == '~'){
+        path = gtk_tree_path_new_from_string (arr[2]);
+        gtk_tree_model_get_iter(GTK_TREE_MODEL(storeOP), &iter, path);
+        gtk_tree_path_free(path);
+        gtk_list_store_set(storeOP, &iter, Index, arr[2],
+                                           Value, arr[3],
+                                           Type,  arr[4],
+                                           -1);           
+                            
+    } 
     actLabel(SP, atoi(arr[5]));
     actLabel(FP, atoi(arr[6]));
     actLabel(GP, atoi(arr[7]));
@@ -388,6 +394,7 @@ void insOP(char *line) {
 void insHeap(char *line) {
 
     GtkTreeIter iter;
+    GtkTreePath *path;
     enum stack {Index, Value, NUM_COLS };
     int nGroups = NUM_COLS+1+1;
     char* arr[nGroups];
@@ -401,6 +408,14 @@ void insHeap(char *line) {
                                               -1);
     }
     else if(arr[1][0] == '-') remLinha(atoi(arr[2]),storeHeap);
+    else if(arr[1][0] == '~'){
+        path = gtk_tree_path_new_from_string(arr[2]);
+        gtk_tree_model_get_iter(GTK_TREE_MODEL(storeHeap), &iter, path);
+        gtk_tree_path_free(path);
+        gtk_list_store_set(storeOP, &iter, Index, arr[2],
+                                           Value, arr[3],
+                                           -1);
+    } 
     freeLine(arr, nGroups);
 }
 
@@ -567,9 +582,9 @@ static void activate () {
 
 void initRegex(){
 	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
-         *regexStringOp   = "> OPSTACK ([-+_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
+         *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
          *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
-         *regexStringHeap = "> HEAP ([-+_]) ([0-9]+) (.*)";
+         *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) (.?)";
 
     if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
     if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }

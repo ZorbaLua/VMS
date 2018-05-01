@@ -499,7 +499,7 @@ void semCall() {
 void semReturn() {
     CallElem ce;
     CallStack_pop(&ce);
-    opstack.sp = opstack.fp;
+    //opstack.sp = opstack.fp;
     code.pc = ce->pc;
     opstack.fp = ce->fp;
 }
@@ -508,7 +508,7 @@ void semStart() {
     opstack.fp = opstack.sp;
 }
 
-void semNop() {}
+void semNop() { ; }
 
 void semErr() { }
 

@@ -28,11 +28,14 @@ char* Heap_getBlock(heapPt pt){
 void Heap_free(heapPt pt){
     HeapElem *he=NULL, *prox=NULL;
     if( (he = get(pt)) == NULL ) return;
+        printHeap('~', pt, '\0');
     while(prox){
         he = prox;
         he->c = '\0';
+        printHeap('~', he->next, '\0');
         prox = get(he->next);
     }
+
     (heap.mem)[he->next].next = heap.first;
     heap.first = pt;
 }

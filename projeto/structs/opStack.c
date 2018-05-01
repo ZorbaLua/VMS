@@ -26,6 +26,7 @@ int OpStack_getPos(int index, OperandElem* ret){
 }
 
 int OpStack_addPos(int index, OperandElem oe){
+    printOpStack(oe, '~');
     return Array_addPos(&(opstack.stack), index, oe);
 }
 

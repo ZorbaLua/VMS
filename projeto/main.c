@@ -207,8 +207,6 @@ void runDebug(){
             if((yyin = fopen(filename, "r"))<0) try(-1);
             free(filename);
             yyparse();
-            fprintf(stdout, "\n"); fflush(stdout);
-
         }
         else if( !strncmp(input,"next ", 5) ){
             i=0;
@@ -219,7 +217,6 @@ void runDebug(){
                 printCode(ce, '_', code.pc);
                 i++;
             }
-            fprintf(stdout, "\n"); fflush(stdout);
         }
         else if( !strncmp(input,"run", 3) ){
             while( !Code_get(&ce) && !stop ){
@@ -227,11 +224,11 @@ void runDebug(){
                 runInst(ce);
                 printCode(ce, '_', code.pc);
             }
-            fprintf(stdout, "\n"); fflush(stdout);
         }
         else if( !strncmp(input,"quit", 4) ){
             _exit(0);
         }
+        fprintf(stdout, "\n"); fflush(stdout);
         add_history(input);
         free(input);
     }
