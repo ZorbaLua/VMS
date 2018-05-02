@@ -90,5 +90,14 @@ clean:
 #clean:
 #	rm -f $(TARGET) y.tab.c lex.yy.c
 
+#TEST_TARGETS := $(addprefix test_,$(shell ls testFiles))
+
+#.PHONY: $(TEST_TARGETS)
+#$(TEST_TARGETS): test_%.vm: vms
+#		./vms testFiles/$*.vm < testFiles/inOut/$*.in | diff - testFiles/inOut/$*.out
+
+#.PHONY: test
+#test: $(TEST_TARGETS)
+
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
