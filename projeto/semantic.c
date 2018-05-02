@@ -39,7 +39,7 @@ void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
     OperandElem oe = NULL;
     char *s;
     try(OpStack_pop(&oe));
-    fprintf(dbout, "> OUTPUT: "); fflush(dbout);
+    fprintf(dbout, "> OUTPUT: \"\n"); fflush(dbout);
     switch(type) {
         case T_int    : fprintf(stdout, "%d", oe->val.val.i); break;
         case T_float  : fprintf(stdout, "%f", oe->val.val.f); break;
@@ -53,7 +53,7 @@ void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
         default: try(-6);
     }
     fflush(stdout);
-    fprintf(dbout, "\n");
+    fprintf(dbout, "\n\"\n");
     fflush(dbout);
 }
 void semWritei() { semWrite(T_int);     }

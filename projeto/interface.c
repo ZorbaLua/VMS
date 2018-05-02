@@ -57,6 +57,7 @@ void freeLine(char** line, int t) {
 void parseLine(char* line) {
     char* input;
 
+    g_message("parse: %s", line);
     if(!strncmp(line, "> CO", 4)) insCode(line);
     else if(!strncmp(line, "> CA", 4)) insCall(line);
     else if(!strncmp(line, "> OP", 4)) insOP(line);
@@ -74,12 +75,31 @@ void parseLine(char* line) {
 }
 
 void loopTranformations(){
-  char line[MAX_LINE];
-  line[0]='>';
-  while(line[0] == '>'){
-    fgets(line, MAX_LINE, stdin);
-    parseLine(line);
-  }
+    char *buf;
+    size_t cap=0;
+    ssize_t len;
+    char *line=(char*)malloc(1);
+    line[0]='>';
+    while(line[0] == '>'){
+        //fgets(line, MAX_LINE, stdin);
+        free(line); line=NULL; cap=0;
+        len = getline(&line, &cap, stdin);
+        if(line[len-2]=='\"'){
+            asprintf(&buf, "%s", line);
+            len = getdelim(&line, &cap, '\"', stdin);
+            asprintf(&buf, "%s%s", buf, line);
+            len = getline(&line, &cap, stdin);
+            asprintf(&buf, "%s%s", buf, line);
+           // g_message("%s", buf);
+            free(line); line=(char*)malloc(1); line[0]='>';
+            parseLine(buf);
+        }
+        else {
+            parseLine(line);
+        }
+    }
+    free(line);
+    line=NULL;
 }
 
 //-----------------------------------------------------------------------------//
@@ -581,10 +601,10 @@ static void activate () {
 //-----------------------------------------------------------------------------//
 
 void initRegex(){
-	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"\[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
-       *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
-       *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
-       *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) (.?)";
+	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
+         *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
+         *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
+         *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) \"\n(.?|[ \n\t\\])\"|\"\n";
 
     if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
     if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }

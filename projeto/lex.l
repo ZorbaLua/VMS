@@ -120,6 +120,7 @@ GString* buffer;
 \"       {buffer=g_string_new(NULL); BEGIN STR;}
 <STR>{
 "\\n"    {g_string_append_c(buffer, '\n');}
+"\\\""   {g_string_append_c(buffer, '\n');}
 "\\t"    {g_string_append_c(buffer, '\t');}
 "\\\\"   {g_string_append_c(buffer, '\\');}
 \"       {yylval.s = g_string_new(buffer->str); g_string_free(buffer, TRUE); BEGIN 0; return _STRING;}

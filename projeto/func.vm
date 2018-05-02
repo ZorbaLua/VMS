@@ -17,7 +17,7 @@ start
   call
   pop  1    // retira da stack os argumentos(1 parametro)
 
-  pushs "\n\\n a funcao devolveu:"
+  pushs "\n a funcao devolveu:"
   writes
 
   writei // escrever fun1(66);
