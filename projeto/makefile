@@ -7,7 +7,7 @@ GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
 GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
 GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 
-all: main interface 
+all: main interface
 
 install: main interface
 	cp main /usr/local/bin/vms
@@ -91,48 +91,14 @@ clean:
 #	rm -f $(TARGET) y.tab.c lex.yy.c
 
 
-
 TEST_TARGETS := ../testFiles/*.vm
 
 .PHONY: $(TEST_TARGETS)
 $(TEST_TARGETS): %.vm
-		./vms testFiles/$*.vm < testFiles/inOut/$*.in | diff - testFiles/inOut/$*.out
+		./main ../testFiles/$*.vm < ../testFiles/$*.in | diff -b - ../testFiles/$*.exp
+		echo ../testFiles$*.vm
 
-.PHONY: teste
-teste: $(TEST_TARGETS)
+.PHONY: teste2
+teste2: $(TEST_TARGETS)
 
-
-# ---------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------- #
-
-RUN=vms
-
-SRC := $(wildcard ../testFiles/*.vm)
-
-TESTS=$(SRC:=.test)
-OUTPUT=$(SRC:=.out)
-
-test: $(TESTS)
-
-%.vm.test: %.vm
-	@printf 'Testing $<\t'
-	@timeout -k 1 -s 9 1 $(RUN) $< < testFiles/$<.in > testFiles/$<.out
-	@\
-	    (\
-	    diff -q $<.out $<.exp 2>&1 > /dev/null \
-	    && echo 'OK' && touch $<.test         \
-	    ) || (                                \
-	    echo 'FAILED';                        \
-	    echo 'Input: `testFiles/inOut/$<.in`';       \
-	    cat tests/$<.input;                   \
-	    echo 'exp: `testFiles/inOut/$<.exp`'; \
-	    cat tests/$<.exp;                \
-	    echo 'Output: `tests/$<.out`';     \
-	    cat tests/$<.output                   \
-	    )
-
-new_test:
-	touch $(FILE) testFiles/$(FILE).in testFiles/$(FILE).exp
-
-cleanTest:
-	$(RM) $(TESTS) $(OUTPUT)
+#for a in {1..10} ; do ./projeto/main testFiles/t$a.vm < testFiles/t$a.in | diff -b - testFiles/t$a.exp; echo testFiles/t$a.vm; done
