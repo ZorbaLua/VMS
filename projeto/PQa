@@ -1,0 +1,45 @@
+RUN=runhaskell
+
+SRC=\
+    anagrama.hs         \
+    area_interna.hs     \
+    dec2bin.hs          \
+    factorizacao.hs     \
+    frequentes.hs       \
+    ladrao.hs           \
+    mdc.hs              \
+    n-seq_validas.hs    \
+    primeira_classe.hs  \
+    robot.hs            \
+    soma_max.hs         \
+    uniao.hs            \
+#    maior_continente.hs \
+#    rectangulos.hs     \
+
+TESTS=$(SRC:=.test)
+OUTPUT=$(SRC:=.output)
+
+test: $(TESTS)
+
+%.hs.test: %.hs
+	@printf 'Testing $<\t'
+	@timeout -k 1 -s 9 1 $(RUN) $< < tests/$<.input > tests/$<.output
+	@\
+	    (\
+	    diff -q tests/$<.output tests/$<.expected 2>&1 > /dev/null \
+	    && echo 'OK' && touch $<.test         \
+	    ) || (                                \
+	    echo 'FAILED';                        \
+	    echo 'Input: `tests/$<.input`';       \
+	    cat tests/$<.input;                   \
+	    echo 'Expected: `tests/$<.expected`'; \
+	    cat tests/$<.expected;                \
+	    echo 'Output: `tests/$<.output`';     \
+	    cat tests/$<.output                   \
+	    )
+
+new_test:
+	touch $(FILE) tests/$(FILE).input tests/$(FILE).expected
+
+clean:
+	$(RM) $(TESTS) $(OUTPUT)
