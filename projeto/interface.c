@@ -57,7 +57,7 @@ void freeLine(char** line, int t) {
 void parseLine(char* line) {
     char* input;
 
-    g_message("parse: %s", line);
+    //g_message("parse: %s", line);
     if(!strncmp(line, "> CO", 4)) insCode(line);
     else if(!strncmp(line, "> CA", 4)) insCall(line);
     else if(!strncmp(line, "> OP", 4)) insOP(line);
@@ -604,7 +604,7 @@ void initRegex(){
 	char *regexStringCode = "> CODE ([-+_]) ([0-9]+) ([A-Z]+|_) ([A-Z_]+|_) (\"[^\"]*\"|-?[0-9.]+|_) ([A-Z_]+|_) (\"[^\"]*\"|-?[0-9.]+|_) ([0-9]+)",
          *regexStringOp   = "> OPSTACK ([-+~_]) (-?[0-9]+) ([A-Z_]+|_) (-?[0-9.]+|_) ([0-9]+) ([0-9]+) ([0-9]+)",
          *regexStringCall = "> CALLSTACK ([-+_]) ([0-9]+) ([0-9]+) ([0-9]+)",
-         *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) \"\n(.?|[ \n\t\\])\"|\"\n";
+         *regexStringHeap = "> HEAP ([-+~_]) ([0-9]+) \"\n(.?|[ \n\t\\])\n\"|\"\n";
 
     if (regcomp(&regexCode, regexStringCode, REG_EXTENDED)) { g_message("Could not compile regular expression: Code.\n"); exit(-1); }
     if (regcomp(&regexOp  , regexStringOp  , REG_EXTENDED)) { g_message("Could not compile regular expression: Op.\n"  ); exit(-1); }

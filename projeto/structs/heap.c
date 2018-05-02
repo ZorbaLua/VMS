@@ -84,6 +84,6 @@ void Heap_init(int size){
 }
 
 void printHeap(char signal, int index, char c){
-    fprintf(dbout, "> HEAP %c %d \"\n%c\"\n", signal, index, c);
+    fprintf(dbout, "> HEAP %c %d \"\n%c\n\"\n", signal, index, c);
     fflush(dbout);
 }
