@@ -375,7 +375,7 @@ void insOP(char *line) {
     }
     else if(arr[1][0] == '-') remLinha(atoi(arr[5]),storeOP);
     else if(arr[1][0] == '~'){
-        path = gtk_tree_path_new_from_string (arr[2]);
+        path = gtk_tree_path_new_from_string(arr[2]);
         gtk_tree_model_get_iter(GTK_TREE_MODEL(storeOP), &iter, path);
         gtk_tree_path_free(path);
         gtk_list_store_set(storeOP, &iter, Index, arr[2],
@@ -408,10 +408,11 @@ void insHeap(char *line) {
     }
     else if(arr[1][0] == '-') remLinha(atoi(arr[2]),storeHeap);
     else if(arr[1][0] == '~'){
+        g_message("%s", arr[2]);
         path = gtk_tree_path_new_from_string(arr[2]);
         gtk_tree_model_get_iter(GTK_TREE_MODEL(storeHeap), &iter, path);
         gtk_tree_path_free(path);
-        gtk_list_store_set(storeOP, &iter, Index, arr[2],
+        gtk_list_store_set(storeHeap, &iter, Index, arr[2],
                                            Value, arr[3],
                                            -1);
     }

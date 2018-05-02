@@ -500,6 +500,8 @@ void semCall() {
 void semReturn() {
     CallElem ce;
     CallStack_pop(&ce);
+    int i = opstack.sp - opstack.fp;
+    semPop(i);
     //opstack.sp = opstack.fp;
     code.pc = ce->pc;
     opstack.fp = ce->fp;

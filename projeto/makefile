@@ -7,7 +7,7 @@ GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
 GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
 GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 
-all: main interface test
+all: main interface 
 
 install: main interface
 	cp main /usr/local/bin/vms
