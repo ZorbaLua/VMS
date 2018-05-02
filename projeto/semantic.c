@@ -455,9 +455,9 @@ void semSwap() {
 }
 
 void semRead() {
-    int len;
+    size_t len;
     Uvalue uv;
-    char s[100];
+    char *s=NULL;
     fprintf(dbout, "> INPUT\n"); fflush(dbout);
     //gets(s);
     fgets(s,1024,stdin);
@@ -465,7 +465,7 @@ void semRead() {
     len = strlen(s);
     uv.h = Heap_alloc(s,len);
     OpStack_push(newOperandElem(newValue(uv, T_heapPt)));
-    //free(s);
+    free(s);
 }
 
 void semJump(GString* s) {

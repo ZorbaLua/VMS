@@ -196,7 +196,7 @@ void freeStructs(){
 
 void runDebug(){
     CodeElem ce;
-    char *input, *filename, path[MAXPATHLEN];
+    char *input, *filename, path[MAXPATHLEN*2];
     int stop = 0, nInst=0, i=0;
 
     fprintf(dbout, "\n"); fflush(dbout);
@@ -204,7 +204,7 @@ void runDebug(){
         input = readline("(VMDB) ");
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
-            if(input[5] != '/'){ getwd(path); asprintf(&filename, "%s/%s", path, &input[5]); }
+            if(input[5] != '/'){ getcwd(path, MAXPATHLEN); asprintf(&filename, "%s/%s", path, &input[5]); }
             else{ asprintf(&filename, "%s", &input[5]); }
             if((yyin = fopen(filename, "r"))<0) try(-1);
             free(filename);
@@ -267,6 +267,7 @@ void execGui(){
         dup2(wp[0], 0);
         execlp("./interface", "./interface", NULL);
     }
+    rl_outstream = fopen("/dev/null", "w");
     prepareDebug();
 }
 
@@ -337,6 +338,7 @@ char** debuggerFunctionNames_completion(const char *text, int start, int end){
 
 int main(int argc, char** argv){
     rl_attempted_completion_function = debuggerFunctionNames_completion;
+    rl_outstream = fdopen(dup(1), "w");
     dbout = fopen("/dev/null", "w");
     signals();
     options(argc, argv);
