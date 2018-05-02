@@ -343,7 +343,7 @@ void semPushg(int index) {
 
 void semPushl(int index) {
     OperandElem oe;
-    try(OpStack_getPos(opstack.fp+index, &oe));
+    try(OpStack_getPos((opstack.fp)+index, &oe));
     OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
 }
 
@@ -384,9 +384,9 @@ void semLoadn() {
 }
 
 void semDup(int i) {
-    int topo = opstack.sp - 1;
+    int topo = opstack.sp-1;
     OperandElem oe;
-    while( i++ >= 0 ) {
+    while( i-- > 0 ) {
         try(OpStack_getPos(topo-i, &oe));
         OpStack_push(newOperandElem(newValue(oe->val.val, oe->val.type)));
     }
@@ -489,11 +489,12 @@ void semPusha(GString* s) {
 
 void semCall() {
     OperandElem oe;
-    CallStack_push(newCallElem(code.pc, opstack.fp));
     try(OpStack_pop(&oe));
+    CallStack_push(newCallElem(code.pc, opstack.fp));
     if(oe->val.type != T_codePt) try(-25);
     code.pc = oe->val.val.c;
     opstack.fp = opstack.sp;
+    printOpStack(oe, '_', opstack.sp);
 }
 
 void semReturn() {

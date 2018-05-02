@@ -27,8 +27,8 @@ char* Heap_getBlock(heapPt pt){
 
 void Heap_free(heapPt pt){
     HeapElem *he=NULL, *prox=NULL;
-    if( (he = get(pt)) == NULL ) return;
-        printHeap('~', pt, '\0');
+    if( (prox = get(pt)) == NULL ) return;
+    printHeap('~', pt, '\0');
     while(prox){
         he = prox;
         he->c = '\0';

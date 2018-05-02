@@ -35,7 +35,7 @@ Program : Program Elem
         ;
 
 Elem    : Instr
-        | _LABEL':'         { g_hash_table_insert(labels, $1->str, newHashData(code.array.len-1)); }
+        | _LABEL':'         { g_hash_table_insert(labels, $1->str, newHashData((code.array.len)-1)); }
         ;
 
 Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }

@@ -57,10 +57,6 @@ void freeLine(char** line, int t) {
 void parseLine(char* line) {
     char* input;
 
-    GtkTextIter fim;
-    gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, 200);
-    gtk_text_buffer_insert (bufferConsole, &fim, line, strlen(line));
-
     if(!strncmp(line, "> CO", 4)) insCode(line);
     else if(!strncmp(line, "> CA", 4)) insCall(line);
     else if(!strncmp(line, "> OP", 4)) insOP(line);

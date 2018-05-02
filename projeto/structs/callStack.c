@@ -15,9 +15,9 @@ void CallStack_pop(CallElem* ret) {
     printCallStack(*ret, '-');
 }
 
-void CallStack_push(CallElem oe){
-    Array_add(&(callstack.stack), oe);
-    printCallStack(oe, '+');
+void CallStack_push(CallElem ce){
+    Array_add(&(callstack.stack), ce);
+    printCallStack(ce, '+');
 }
 
 void CallStack_init(int size) {
