@@ -4,6 +4,8 @@
 #include "structs/types.h"
 #include "structs/code.h"
 #include "y.tab.h"
+
+GString* buffer; 
 %}
 
 %option noyywrap
@@ -12,6 +14,7 @@
 %option yylineno
 %option caseless
 
+%x STR
 %%
 
 "not"    { return _NOT; }
@@ -113,7 +116,15 @@
 
 -?[0-9]+"."[0-9]+   { yylval.f = atof(yytext);          return _FLOAT; }
 -?[0-9]+		    { yylval.i = atoi(yytext);          return _INT; }
-\"(\\.|[^"\\])*\"   { yytext[yyleng-1]='\0'; yylval.s = g_string_new(&yytext[1]);  return _STRING; }
+
+\"       {buffer=g_string_new(NULL); BEGIN STR;}
+<STR>{
+"\\n"    {g_string_append_c(buffer, '\n');}
+"\\t"    {g_string_append_c(buffer, '\t');}
+"\\\\"   {g_string_append_c(buffer, '\\');}
+\"       {yylval.s = g_string_new(buffer->str); g_string_free(buffer, TRUE); BEGIN 0; return _STRING;}
+.        {g_string_append_c(buffer, yytext[0]);}
+}
 
 [A-Z][A-Z0-9]*      { yylval.s = g_string_new(yytext);  return _LABEL; }
 
@@ -125,3 +136,4 @@
 .                   { _exit(0);}
 
 %%
+//\"(\\.|[^"\\])*\"   { yytext[yyleng-1]='\0'; yylval.s = g_string_new(&yytext[1]);  return _STRING; }
