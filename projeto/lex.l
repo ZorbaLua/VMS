@@ -14,6 +14,8 @@ GString* buffer;
 %option yylineno
 %option caseless
 
+%x STR
+
 %%
 
 "not"    { return _NOT; }
@@ -114,16 +116,6 @@ GString* buffer;
 
 -?[0-9]+"."[0-9]+   { yylval.f = atof(yytext);          return _FLOAT; }
 -?[0-9]+		    { yylval.i = atoi(yytext);          return _INT; }
-\"(\\.|[^"\\])*\"   { int ret=0;
-                      for(int i = 0; i<yyleng; i++) {
-                        yytext[i] = yytext[i+ret];
-                        if((yytext[i] == '\\') && (yytext[i+1] == 'n')) { yytext[i] = '\n'; ret++;}
-                        else if((yytext[i] == '\\') && (yytext[i+1] == 't')) { yytext[i] = '\t'; ret++;}
-                      } //DEPOIS MELHORO
-                      if((yytext[yyleng-ret-3] == '\\') && (yytext[yyleng-ret-2] == 'n')) { yytext[yyleng-ret-3] = '\n'; ret++;}
-                      yytext[yyleng-ret-1] = '\0';
-                      yylval.s = g_string_new(&yytext[1]);
-                      return _STRING; }
 
 \"       {buffer=g_string_new(NULL); BEGIN STR;}
 <STR>{
@@ -146,3 +138,15 @@ GString* buffer;
 
 %%
 //\"(\\.|[^"\\])*\"   { yytext[yyleng-1]='\0'; yylval.s = g_string_new(&yytext[1]);  return _STRING; }
+
+/*\"(\\.|[^"\\])*\"   { int ret=0;
+                      for(int i = 0; i<yyleng; i++) {
+                        yytext[i] = yytext[i+ret];
+                        if((yytext[i] == '\\') && (yytext[i+1] == 'n')) { yytext[i] = '\n'; ret++;}
+                        else if((yytext[i] == '\\') && (yytext[i+1] == 't')) { yytext[i] = '\t'; ret++;}
+                      } //DEPOIS MELHORO
+                      if((yytext[yyleng-ret-3] == '\\') && (yytext[yyleng-ret-2] == 'n')) { yytext[yyleng-ret-3] = '\n'; ret++;}
+                      yytext[yyleng-ret-1] = '\0';
+                      yylval.s = g_string_new(&yytext[1]);
+                      return _STRING; }
+*/
