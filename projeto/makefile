@@ -63,6 +63,9 @@ lex.yy.c: lex.l
 clean:
 	rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
 
+test:
+	./check.sh
+
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
 
@@ -89,16 +92,3 @@ clean:
 #.PHONY: clean
 #clean:
 #	rm -f $(TARGET) y.tab.c lex.yy.c
-
-
-TEST_TARGETS := ../testFiles/*.vm
-
-.PHONY: $(TEST_TARGETS)
-$(TEST_TARGETS): %.vm
-		./main ../testFiles/$*.vm < ../testFiles/$*.in | diff -b - ../testFiles/$*.exp
-		echo ../testFiles$*.vm
-
-.PHONY: teste2
-teste2: $(TEST_TARGETS)
-
-#for a in {1..10} ; do ./projeto/main testFiles/t$a.vm < testFiles/t$a.in | diff -b - testFiles/t$a.exp; echo testFiles/t$a.vm; done

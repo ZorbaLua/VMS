@@ -119,9 +119,9 @@ void runInst(CodeElem ce){
         case CONCAT : semConcat();  break;//v
 
       //-Operacoes Sobre Heap--------------------------//
-        case ALLOC  : semAlloc(f.val.i);break;//v
-        case ALLOCN : semAllocn();  break;//v
-        case FREE   : semFree();  	break;//v
+        case ALLOC  : semAlloc(f.val.i); break;//v
+        case ALLOCN : semAllocn();       break;//v
+        case FREE   : semFree();  	     break;//v
 
       //-Conversoes------------------------------------//
         case ATOI   : semAtoi();  	break;//v
@@ -132,56 +132,56 @@ void runInst(CodeElem ce){
         case STRF   : semStrf();  	break;//v
 
       //-Empilhar--------------------------------------//
-        case PUSHI  : semPushi(f);break;//v
-        case PUSHN  : semPushn(f.val.i);break;//v
-        case PUSHF  : semPushf(f);break;//v
-        case PUSHS  : semPushs(f.val.s);break;//v
-        case PUSHG  : semPushg(f.val.i);break;//v
-        case PUSHL  : semPushl(f.val.i);break;//v
-        case PUSHSP : semPushsp();  break;//v
-        case PUSHFP : semPushfp();  break;//v
-        case PUSHGP : semPushgp();  break;//v
-        case LOAD   : semLoad(f.val.i);  	break;//x
-        case LOADN  : semLoadn();   break;//x
-        case DUP    : semDup(f.val.i);  break;//v
-        case DUPN   : semDupn();  	break;//v
+        case PUSHI  : semPushi(f);       break;//v
+        case PUSHN  : semPushn(f.val.i); break;//v
+        case PUSHF  : semPushf(f);       break;//v
+        case PUSHS  : semPushs(f.val.s); break;//v
+        case PUSHG  : semPushg(f.val.i); break;//v
+        case PUSHL  : semPushl(f.val.i); break;//v
+        case PUSHSP : semPushsp();       break;//v
+        case PUSHFP : semPushfp();       break;//v
+        case PUSHGP : semPushgp();       break;//v
+        case LOAD   : semLoad(f.val.i);  break;//x
+        case LOADN  : semLoadn();        break;//x
+        case DUP    : semDup(f.val.i);   break;//v
+        case DUPN   : semDupn();      	 break;//v
 
       //-Retirar---------------------------------------//
-        case POP    : semPop(f.val.i);  break;//v
-        case POPN   : semPopn();  	break;//v
+        case POP    : semPop(f.val.i); break;//v
+        case POPN   : semPopn();       break;//v
 
       //-Arquivar--------------------------------------//
-        case STOREL : semStorel(f.val.i);   break;//x
-        case STOREG : semStoreg(f.val.i);   break;//x
-        case STORE  : semStore(f.val.i);    break;//x
-        case STOREN : semStoren();          break;//x
+        case STOREL : semStorel(f.val.i); break;//x
+        case STOREG : semStoreg(f.val.i); break;//x
+        case STORE  : semStore(f.val.i);  break;//x
+        case STOREN : semStoren();        break;//x
 
       //-Diversos--------------------------------------//
-        case CHECK  : semCheck(f.val.i, s.val.i);   break;//x
-        case SWAP   : semSwap();  	                break;//v
+        case CHECK  : semCheck(f.val.i, s.val.i); break;//x
+        case SWAP   : semSwap();  	              break;//v
 
       //-Input/Output----------------------------------//
-        case WRITE  : semWrite(-1);     break;//x
-        case WRITEI : semWritei();      break;//x
-        case WRITES : semWrites();      break;//x
-        case WRITEF : semWritef();      break;//x
+        case WRITE  : semWrite(-1); break;//x
+        case WRITEI : semWritei();  break;//x
+        case WRITES : semWrites();  break;//x
+        case WRITEF : semWritef();  break;//x
 
-        case READ   : semRead();  	    break;//x
+        case READ   : semRead();  	break;//x
 
       //-Registo PC------------------------------------//
-        case JUMP   : semJump(f.val.s); break;//v
-        case JZ     : semJz(f.val.s);   break;//v
-        case PUSHA  : semPusha(f.val.s);break;//v
+        case JUMP   : semJump(f.val.s);  break;//v
+        case JZ     : semJz(f.val.s);    break;//v
+        case PUSHA  : semPusha(f.val.s); break;//v
 
       //-Procedimentos---------------------------------//
         case CALL   : semCall();  	break;//v
-        case ARETURN : semReturn();  break;//v
+        case ARETURN : semReturn(); break;//v
 
       //-Inicializacao e Fim---------------------------//
-        case START  : semStart();   break;//v
-        case STOP   :               break;//v
-        case NOP    : semNop();   	break;//v
-        case ERR    : semErr();   	break;//x
+        case START  : semStart(); break;//v
+        case STOP   :             break;//v
+        case NOP    : semNop();   break;//v
+        case ERR    : semErr();   break;//x
     }
     code.pc++;
 }
