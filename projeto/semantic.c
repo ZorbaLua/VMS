@@ -41,10 +41,10 @@ void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
     try(OpStack_pop(&oe));
     fprintf(dbout, "> OUTPUT: \"\n"); fflush(dbout);
     switch(type) {
-        case T_int    : fprintf(stdout, "%d\n", oe->val.val.i); break;
-        case T_float  : fprintf(stdout, "%f\n", oe->val.val.f); break;
-        case T_codePt : fprintf(stdout, "%d\n", oe->val.val.c); break;
-        case T_opPt   : fprintf(stdout, "%d\n", oe->val.val.o); break;
+        case T_int    : fprintf(stdout, "%d", oe->val.val.i); break;
+        case T_float  : fprintf(stdout, "%f", oe->val.val.f); break;
+        case T_codePt : fprintf(stdout, "%d", oe->val.val.c); break;
+        case T_opPt   : fprintf(stdout, "%d", oe->val.val.o); break;
         case T_heapPt :
             s = Heap_getBlock(oe->val.val.h);
             fprintf(stdout, "%s", s);
