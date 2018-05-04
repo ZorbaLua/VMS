@@ -7,25 +7,25 @@ pushi 0
 start
 
 	// inicio do ciclo while
-WHILE0:             
-	//condicao de permanencia no ciclo   
+WHILE0:
+	//condicao de permanencia no ciclo
 	// inicio de get variavel "n"
 pushg 0	// fim de get variavel "n"
 pushi 0
 sup
-jz ENDWHILE0        
+jz ENDWHILE0
 	// inicio de get variavel "res"
 pushg 1	// fim de get variavel "res"
-read            
-atoi           
+read
+atoi
 mul
 storeg 1
-jump WHILE0         
-ENDWHILE0:          
+jump WHILE0
+ENDWHILE0:
 	// fim do ciclo while
 
 	// inicio de get variavel "res"
 pushg 1	// fim de get variavel "res"
-                  
-write             
+
+writei          
 stop
