@@ -258,7 +258,7 @@ void semFree() {
     OperandElem oe;
     try(OpStack_pop(&oe));
     if(oe->val.type != T_heapPt) try(-12);
-    Heap_free(oe->val.val.h);
+    Heap_freeBlock(oe->val.val.h);
 }
 
 void auxAtox(char x) {

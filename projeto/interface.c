@@ -119,9 +119,9 @@ static void limpaStacks() {
 void parseLine(char* line) {
   char *input;
 
-  GtkTextIter fim;
-  gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, 500);
-  gtk_text_buffer_insert (bufferConsole, &fim, line, strlen(line));
+  //GtkTextIter fim;
+  //gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, 500);
+  //gtk_text_buffer_insert (bufferConsole, &fim, line, strlen(line));
 
   if      (!strncmp(line, "> CO", 4)) {insCode(line); turnButtons(TRUE);}
   else if (!strncmp(line, "> CA", 4)) insCall(line);

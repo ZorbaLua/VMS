@@ -21,7 +21,7 @@ char* Value_toString(Value v){
         case T_codePt   : snprintf(ret, MAX_LINE, "CODE_PT %d",  v.val.c);   break;
         case T_heapPt   : snprintf(ret, MAX_LINE, "HEAP_PT %d",  v.val.h);   break;
         case T_opPt     : snprintf(ret, MAX_LINE, "OP_PT %d",    v.val.o);   break;
-        case T_string   : snprintf(ret, MAX_LINE, "STRING \"%s\"",   v.val.s->str); break;
+        case T_string   : snprintf(ret, MAX_LINE, "STRING \"\n%s\"",   v.val.s->str); break;
         case NOTHING    : snprintf(ret, MAX_LINE, "_ _");   break;
     }
     return ret;

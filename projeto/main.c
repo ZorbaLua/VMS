@@ -191,14 +191,18 @@ void runInst(CodeElem ce){
 void freeStructs(){
     Code_free();
     OpStack_free();
+    CallStack_free();
+    Heap_free();
 
     Code_init(codeSize);
     OpStack_init(opSize);
+    CallStack_init(callSize);
+    Heap_init(heapSize);
 }
 
 void runDebug(){
     CodeElem ce;
-    char *input, path[MAXPATHLEN*2];
+    char *input, path[MAXPATHLEN];
     int stop = 0, nInst=0, i=0;
 
     fprintf(dbout, "\n"); fflush(dbout);
@@ -271,7 +275,7 @@ void execGui(){
         close(wp[1]);
         dup2(rp[1], 1);
         dup2(wp[0], 0);
-        execlp("./interface", "./interface", NULL);
+        execl("/usr/local/bin/vmsGTK", "/usr/local/bin/vmsGTK", NULL);
     }
     rl_outstream = fopen("/dev/null", "w");
     prepareDebug();

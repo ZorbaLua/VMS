@@ -25,7 +25,7 @@ char* Heap_getBlock(heapPt pt){
     return ret;
 }
 
-void Heap_free(heapPt pt){
+void Heap_freeBlock(heapPt pt){
     HeapElem *he=NULL, *prox=NULL;
     if( (prox = get(pt)) == NULL ) return;
     printHeap('~', pt, '\0');
@@ -83,7 +83,28 @@ void Heap_init(int size){
     }
 }
 
+void Heap_free() {
+    free(heap.mem);
+}
+
 void printHeap(char signal, int index, char c){
     fprintf(dbout, "> HEAP %c %d \"\n%c\n\"\n", signal, index, c);
     fflush(dbout);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

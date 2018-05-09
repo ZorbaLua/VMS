@@ -17,11 +17,12 @@ typedef struct heap{
 } Heap;
 
 
-void Heap_free(heapPt);
+void Heap_freeBlock(heapPt);
 char* Heap_getBlock(heapPt);
 heapPt Heap_alloc(char*, int);
 void printHeap(char,int,char);
 
+void Heap_free();
 void Heap_init(int);
 
 #endif

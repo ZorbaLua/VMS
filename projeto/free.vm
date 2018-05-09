@@ -1,5 +1,0 @@
-pushi 1
-pushs "ola"
-dup 1
-free
-writes

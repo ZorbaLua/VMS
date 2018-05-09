@@ -24,6 +24,11 @@ void CallStack_init(int size) {
     Array_init(&(callstack.stack), size);
 }
 
+void CallStack_free() {
+    Array_free(&callstack.stack);
+}
+
+
 CallElem newCallElem(codePt pc, opPt fp){
     CallElem ce = (CallElem)malloc(sizeof(struct callElem));
     ce->pc = pc;
