@@ -4,6 +4,8 @@ pushi 7
 add
 writei   // expected:  17
 pushi -10
+pushs "\n"
+writes
 pushi 7
 add
 writei   // expected:  -3

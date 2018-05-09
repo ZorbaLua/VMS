@@ -72,7 +72,7 @@ void getInput(char **input) {
       GtkEntryBuffer *bufferLine = gtk_entry_buffer_new ("",0);
       GtkWidget *dialog = gtk_dialog_new ();
       quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine, dialog);
-      *input = gtk_entry_buffer_get_text (bufferLine);
+      *input = (char*)gtk_entry_buffer_get_text (bufferLine);
       //const char *ts = gtk_entry_buffer_get_text (bufferLine);
       //*input = (char*)ts;
     } else { // MEIA

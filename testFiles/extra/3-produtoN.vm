@@ -2,7 +2,7 @@
 pushi 5
 	// fim declaracao da variavel "n"
 	// inicio declaracao da variavel "res"
-pushi 0
+pushi 1
 	// fim declaracao da variavel "res"
 start
 
@@ -20,6 +20,10 @@ read
 atoi
 mul
 storeg 1
+pushg 0
+pushi 1
+sub
+storeg 0
 jump WHILE0
 ENDWHILE0:
 	// fim do ciclo while

@@ -30,7 +30,7 @@ sup
 	// comeca bloco THEN  
 jz ELSE1
 pushs "demasiados numeros"            
-write             
+writes
 jump ENDIF1
 	// comeca bloco ELSE  
 ELSE1:
