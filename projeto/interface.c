@@ -49,6 +49,8 @@ void quickInput (GtkWindow *parent, gchar *message, GtkEntryBuffer *buffer) {
  label = gtk_label_new (message);
  gtk_window_set_deletable (GTK_WINDOW (dialog), FALSE);
 
+ gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+
  gtk_window_set_modal(GTK_WINDOW (dialog), TRUE);
  g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
  gtk_container_add (GTK_CONTAINER (content_area), label);
@@ -119,8 +121,9 @@ static void limpaStacks() {
 void parseLine(char* line) {
   char *input;
 
-  //GtkTextIter fim;
-  //gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, 500);
+  GtkTextIter fim;
+  gtk_text_buffer_get_end_iter (bufferConsole, &fim);
+  //gtk_text_buffer_get_iter_at_line (bufferConsole, &fim, gtk_text_buffer_get_line_count(bufferConsole));
   //gtk_text_buffer_insert (bufferConsole, &fim, line, strlen(line));
 
   if      (!strncmp(line, "> CO", 4)) {insCode(line); turnButtons(TRUE);}
@@ -129,11 +132,14 @@ void parseLine(char* line) {
   else if (!strncmp(line, "> HE", 4)) insHeap(line);
   else if (!strncmp(line, "> IN", 4)) {
     getInput(&input);
+    gtk_text_buffer_insert(bufferConsole, &fim, input, strlen(input));
     fprintf(stdout, "%s", input); fflush(stdout);
     free(input);
   }
   else if(!strncmp(line, "> OU", 4)) {
-    gtk_text_buffer_set_text (bufferConsole, &line[9], strlen(&line[9]));
+    line[12 + strlen(&line[12]) -3] = '\0';
+    gtk_text_buffer_insert(bufferConsole, &fim, &line[12], strlen(&line[12]));
+    //gtk_text_buffer_set_text (bufferConsole, &line[9], strlen(&line[9]));
   }
 }
 

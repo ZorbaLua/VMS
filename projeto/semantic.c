@@ -512,6 +512,14 @@ void semStart() {
 
 void semNop() { ; }
 
-void semErr() { }
+void semErr() {
+  /*
+    Uvalue uv;
+    fprintf(stdout, "%d", uv);
+    fflush(stdout);
+    fprintf(dbout, "\n\"\n");
+    fflush(dbout);
+ */ ;
+}
 
 void semCheck() { }

@@ -10,7 +10,5 @@ do
     else
         perl -C -e 'print chr 0x2717'
     fi
-    echo "
-    
-    "
+    echo ""
 done
