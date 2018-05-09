@@ -35,11 +35,12 @@ void insHeap(char*);
 
 //-----------------------------------------------------------------------------//
 
-void quickInput (GtkWindow *parent, gchar *message, GtkEntryBuffer *buffer, GtkWidget *dialog) {
+void quickInput (GtkWindow *parent, gchar *message, GtkEntryBuffer *buffer) {
 
  GtkWidget *label, *content_area;
  GtkDialogFlags flags;
 
+ GtkWidget *dialog = gtk_dialog_new ();
  GtkWidget *entry;
  entry = gtk_entry_new_with_buffer (buffer);
 
@@ -70,8 +71,7 @@ void getInput(char **input) {
   if ( gtk_text_iter_get_line(&fim) == 0 ) { // ZERO / MEIA
     if (gtk_text_iter_ends_line (&inicio)) { // ZERO
       GtkEntryBuffer *bufferLine = gtk_entry_buffer_new ("",0);
-      GtkWidget *dialog = gtk_dialog_new ();
-      quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine, dialog);
+      quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine);
       *input = gtk_entry_buffer_get_text (bufferLine);
       //const char *ts = gtk_entry_buffer_get_text (bufferLine);
       //*input = (char*)ts;
@@ -82,8 +82,13 @@ void getInput(char **input) {
       *input = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
       gtk_text_buffer_delete (bufferInput, &inicio, &fim);
     }
-  } else { // UMA OU MAIS
+  } else { // UMA OU MAIS / VAZIA
     *input = gtk_text_buffer_get_text (bufferInput, &inicio, &fim, FALSE);
+    if (gtk_text_iter_ends_line (&inicio)) { // VAZIA
+      GtkEntryBuffer *bufferLine = gtk_entry_buffer_new ("",0);
+      quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine);
+      *input = gtk_entry_buffer_get_text (bufferLine);
+    } // UMA
     gtk_text_buffer_delete (bufferInput, &inicio, &fim);
   }
 }
