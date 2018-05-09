@@ -180,10 +180,10 @@ void runInst(CodeElem ce){
         case ARETURN : semReturn(); break;//v
 
       //-Inicializacao e Fim---------------------------//
-        case START  : semStart(); break;//v
-        case STOP   :             break;//v
-        case NOP    : semNop();   break;//v
-        case ERR    : semErr();   break;//x
+        case START  : semStart();      break;//v
+        case STOP   :                  break;//v
+        case NOP    : semNop();        break;//v
+        case ERR    : semErr(f.val.s); break;//x
     }
     code.pc++;
 }

@@ -104,10 +104,8 @@ Instr   : _PUSHI    _INT    { Code_add( newCodeElem( PUSHI  , newValue((Uvalue) 
         | _STORE    _INT    { Code_add( newCodeElem( STORE  , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _STOREN           { Code_add( newCodeElem( STOREN , newValue((Uvalue) -1, NOTHING ), newValue((Uvalue) -1, NOTHING) ) ); }
         | _CHECK _INT _INT  { Code_add( newCodeElem( CHECK  , newValue((Uvalue) $2, T_int   ), newValue((Uvalue) $3, T_int  ) ) ); }
-        | _ERR ;
+        | _ERR      _STRING { Code_add( newCodeElem( PUSHS  , newValue((Uvalue) $2, T_string), newValue((Uvalue) -1, NOTHING) ) ); }
         ;
-
-
 
 %%
 
