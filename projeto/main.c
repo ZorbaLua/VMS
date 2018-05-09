@@ -20,6 +20,7 @@
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
 extern FILE* yyin;
+char* lastfile;
 FILE *dbout;
 GHashTable* labels = NULL;
 Code code;
@@ -35,6 +36,7 @@ int parseInitial = 0;
 pid_t pidGui=0;
 char *debuggerFunctionNames[] = {
     "file",
+    "reload",
     "run",
     "next",
     "quit",
@@ -196,7 +198,7 @@ void freeStructs(){
 
 void runDebug(){
     CodeElem ce;
-    char *input, *filename, path[MAXPATHLEN*2];
+    char *input, path[MAXPATHLEN*2];
     int stop = 0, nInst=0, i=0;
 
     fprintf(dbout, "\n"); fflush(dbout);
@@ -204,10 +206,14 @@ void runDebug(){
         input = readline("(VMDB) ");
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
-            if(input[5] != '/'){ getcwd(path, MAXPATHLEN); asprintf(&filename, "%s/%s", path, &input[5]); }
-            else{ asprintf(&filename, "%s", &input[5]); }
-            if((yyin = fopen(filename, "r"))<0) try(-1);
-            free(filename);
+            if(input[5] != '/'){ getcwd(path, MAXPATHLEN); asprintf(&lastfile, "%s/%s", path, &input[5]); }
+            else{ asprintf(&lastfile, "%s", &input[5]); }
+            if((yyin = fopen(lastfile, "r"))<0) try(-1);
+            yyparse();
+        }
+        if ( !strncmp(input, "reload ", 7)){
+            freeStructs();
+            if((yyin = fopen(lastfile, "r"))<0) try(-1);
             yyparse();
         }
         else if( !strncmp(input,"next ", 5) ){
@@ -275,6 +281,7 @@ void execGui(){
 
 void options(int argc, char** argv){// debug
     int i, j, k;
+    lastfile = (char*)malloc(1);
     if(argc < 2) try(-5);
     for(i=1; i<argc; i++){
         if(argv[i][0] == '-'){
@@ -292,6 +299,8 @@ void options(int argc, char** argv){// debug
                 i += k-1;
         }
         else{
+            free(lastfile);
+            lastfile = strdup(argv[i]);
             if((yyin = fopen(argv[i], "r"))<0) try(-1);
             if(debug) parseInitial=1;
         }

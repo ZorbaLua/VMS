@@ -94,12 +94,12 @@ pushi 1
 equal
 	// comeca bloco THEN  
 jz ELSE0
-pushs "pode ser quadrado\n"            
+pushs "pode ser quadrado\n"        
 writes
 jump ENDIF0
 	// comeca bloco ELSE  
 ELSE0:
-pushs "nao pode ser quadrado\n"            
+pushs "nao pode ser quadrado\n"         
 writes             
 ENDIF0:
 	// fim de ite         

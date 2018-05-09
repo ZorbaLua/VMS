@@ -10,9 +10,13 @@ pushi 0
 padd
 pushi 1
 pushi 10
-storen
-pushs "x[1]...="
+storeg 1
+pushs "x[1]="
 writes 
-pushi 1
+pushgp
+pushi 0
+padd
+pushg 1
+writei
 stop
 

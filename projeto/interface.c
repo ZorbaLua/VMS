@@ -19,7 +19,6 @@ GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
 GtkWidget *buttonR, *button1, *buttonN;
 
-char* lastfile=NULL;
 
 regex_t regexCode, regexCall, regexHeap, regexOp;
 
@@ -203,12 +202,13 @@ static void bExeT (GtkWidget *widget, gpointer data) {
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
 
-  if(lastfile != NULL) { free(lastfile); }
+  //if(lastfile != NULL) { free(lastfile); }
+  char* file;
   limpaStacks();
 
-  GtkFileOpen(&lastfile);
-  if (lastfile != NULL) {
-    fprintf(stdout, "file %s\n", lastfile); fflush(stdout);
+  GtkFileOpen(&file);
+  if (file != NULL) {
+    fprintf(stdout, "file %s\n", file); fflush(stdout);
     turnButtons(TRUE);
     loopTranformations();
   }
@@ -217,7 +217,7 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
 
 static void bReloadFile (GtkWidget *widget, gpointer data) {
   limpaStacks();
-  fprintf(stdout, "file %s\n", lastfile); fflush(stdout);
+  fprintf(stdout, "reload  \n"); fflush(stdout);
   turnButtons(TRUE);
   loopTranformations();
 }
