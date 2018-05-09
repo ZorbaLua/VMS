@@ -64,6 +64,7 @@ void quickInput (GtkWindow *parent, gchar *message, GtkEntryBuffer *buffer) {
 void getInput(char **input) {
 
   GtkTextIter inicio, fim;
+  char *aux;
 
   gtk_text_buffer_get_iter_at_line (bufferInput, &inicio, 0);
   gtk_text_buffer_get_iter_at_line (bufferInput, &fim, 1);
@@ -72,7 +73,8 @@ void getInput(char **input) {
     if (gtk_text_iter_ends_line (&inicio)) { // ZERO
       GtkEntryBuffer *bufferLine = gtk_entry_buffer_new ("",0);
       quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine);
-      *input = gtk_entry_buffer_get_text (bufferLine);
+      aux = (char*)gtk_entry_buffer_get_text (bufferLine);
+      asprintf(input, "%s\n", aux);
       //const char *ts = gtk_entry_buffer_get_text (bufferLine);
       //*input = (char*)ts;
     } else { // MEIA
@@ -87,7 +89,8 @@ void getInput(char **input) {
     if (gtk_text_iter_ends_line (&inicio)) { // VAZIA
       GtkEntryBuffer *bufferLine = gtk_entry_buffer_new ("",0);
       quickInput(GTK_WINDOW (window), "Por favor insira input para continuar a execucao do programa", bufferLine);
-      *input = gtk_entry_buffer_get_text (bufferLine);
+      aux = (char*)gtk_entry_buffer_get_text (bufferLine);
+      asprintf(input, "%s\n", aux);
     } // UMA
     gtk_text_buffer_delete (bufferInput, &inicio, &fim);
   }
@@ -128,6 +131,7 @@ void parseLine(char* line) {
   else if (!strncmp(line, "> IN", 4)) {
     getInput(&input);
     fprintf(stdout, "%s", input); fflush(stdout);
+    free(input);
   }
   else if(!strncmp(line, "> OU", 4)) {
     gtk_text_buffer_set_text (bufferConsole, &line[9], strlen(&line[9]));
