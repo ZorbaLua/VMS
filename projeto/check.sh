@@ -1,7 +1,8 @@
 #!/bin/bash
 
-cd "../testFiles/extra"
-for file in `ls *.vm`
+cd "../testFiles"
+#for file in `ls *.vm`
+for file in `find . -print | grep -i '.*[.]vm$'`
 do
     echo $file
     vms $file < $file.in | diff -y -b - $file.exp 2>/dev/null

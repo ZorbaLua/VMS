@@ -56,11 +56,10 @@ void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
     fprintf(dbout, "\n\"\n");
     fflush(dbout);
 }
+
 void semWritei() { semWrite(T_int);     }
 void semWritef() { semWrite(T_float);   }
-void semWrites() { semWrite(T_heapPt);     }
-
-
+void semWrites() { semWrite(T_heapPt);  }
 
 void semNot() {
     OperandElem oe = NULL;
@@ -512,14 +511,13 @@ void semStart() {
 
 void semNop() { ; }
 
-void semErr() {
-  /*
-    Uvalue uv;
-    fprintf(stdout, "%d", uv);
-    fflush(stdout);
-    fprintf(dbout, "\n\"\n");
-    fflush(dbout);
- */ ;
+void semErr(GString* s) {
+  fprintf(dbout, "> OUTPUT: \"\n"); fflush(dbout);
+  fprintf(stdout, "%s", s->str);
+  fflush(stdout);
+  fprintf(dbout, "\n\"\n");
+  fflush(dbout);
+  code.pc = code.pc-1;
 }
 
 void semCheck() { }

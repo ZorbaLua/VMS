@@ -105,7 +105,7 @@ GString* buffer;
 "pusha"  { return _PUSHA; }
 
 
-"call"   { return _CALL;   }
+"call"   { return _CALL;    }
 "return" { return _ARETURN; }
 
 
@@ -137,16 +137,3 @@ GString* buffer;
 .                   { _exit(0);}
 
 %%
-//\"(\\.|[^"\\])*\"   { yytext[yyleng-1]='\0'; yylval.s = g_string_new(&yytext[1]);  return _STRING; }
-
-/*\"(\\.|[^"\\])*\"   { int ret=0;
-                      for(int i = 0; i<yyleng; i++) {
-                        yytext[i] = yytext[i+ret];
-                        if((yytext[i] == '\\') && (yytext[i+1] == 'n')) { yytext[i] = '\n'; ret++;}
-                        else if((yytext[i] == '\\') && (yytext[i+1] == 't')) { yytext[i] = '\t'; ret++;}
-                      } //DEPOIS MELHORO
-                      if((yytext[yyleng-ret-3] == '\\') && (yytext[yyleng-ret-2] == 'n')) { yytext[yyleng-ret-3] = '\n'; ret++;}
-                      yytext[yyleng-ret-1] = '\0';
-                      yylval.s = g_string_new(&yytext[1]);
-                      return _STRING; }
-*/

@@ -26,7 +26,7 @@ instrf1: nop
 	pushi 0
 	equal
 	jz valid1
-	#err "divisão por zero."
+	err "divisão por zero."
 	stop
 valid1: nop
 	div
