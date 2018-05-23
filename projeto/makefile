@@ -10,6 +10,7 @@ GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 all: main interface
 
 install: main interface
+	cp interface /usr/local/bin/vmsGTK
 	cp main /usr/local/bin/vms
 
 main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o

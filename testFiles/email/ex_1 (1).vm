@@ -18,14 +18,14 @@ start            //inicio
 	pushi 0
 	inf
 	jz valid1
-	#err "índice menor que 0."
+	err "índice menor que 0."
 	stop
 valid1: nop //novo bloco
 	dup 1
 	pushi 2
 	sup
 	jz valid2
-	#err "índice maior que tamanho do array."
+	err "índice maior que tamanho do array."
 	stop
 valid2: nop
 	pushg 0

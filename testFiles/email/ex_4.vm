@@ -16,7 +16,7 @@ start
 	pushi 0
 	equal
 	jz valid1
-	#err "divisão por zero."
+	err "divisão por zero."
 	stop
 valid1: nop
 	div
@@ -34,14 +34,14 @@ valid1: nop
 	pushi 0
 	supeq
 	jz valid2
-	#err "índice menor que 0."
+	err "índice menor que 0."
 	stop
 valid2: nop
 	dup 1
 	pushi 50
 	infeq
 	jz valid3
-	#err "índice maior que tamanho do array."
+	err "índice maior que tamanho do array."
 	stop
 valid3: nop
 	loadn
@@ -56,14 +56,14 @@ valid3: nop
 	pushi 0
 	supeq
 	jz valid4
-	#err "índice menor que 0."
+	err "índice menor que 0."
 	stop
 valid4: nop
 	dup 1
 	pushi 50
 	infeq
 	jz valid5
-	#err "índice maior que tamanho do array."
+	err "índice maior que tamanho do array."
 	stop
 valid5: nop
 	loadn
@@ -82,14 +82,14 @@ valid5: nop
 	pushi 0
 	supeq
 	jz valid6
-	#err "índice menor que 0."
+	err "índice menor que 0."
 	stop
 valid6: nop
 	dup 1
 	pushi 50
 	infeq
 	jz valid7
-	#err "índice maior que tamanho do array."
+	err "índice maior que tamanho do array."
 	stop
 valid7: nop
 	pushgp
@@ -100,14 +100,14 @@ valid7: nop
 	pushi 0
 	supeq
 	jz valid8
-	#err "índice menor que 0."
+	err "índice menor que 0."
 	stop
 valid8: nop
 	dup 1
 	pushi 50
 	infeq
 	jz valid9
-	#err "índice maior que tamanho do array."
+	err "índice maior que tamanho do array."
 	stop
 valid9: nop
 	loadn
