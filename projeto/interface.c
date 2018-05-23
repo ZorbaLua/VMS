@@ -19,7 +19,6 @@ GtkListStore *storeCode, *storeHeap, *storeOP, *storeCall;
 GtkWidget *labelPC, *labelFP, *labelSP, *labelGP;
 GtkWidget *buttonR, *button1, *buttonN;
 
-
 regex_t regexCode, regexCall, regexHeap, regexOp;
 
 #define PC 0
@@ -397,7 +396,7 @@ void insCode(char *line) {
   if(arr[1][0] == '+'){
     gtk_list_store_append(storeCode, &iter);
     gtk_list_store_set (storeCode, &iter, Index, arr[2], Instruction, arr[3],
-       ValueA, arr[4], TypeA, arr[5], ValueB, arr[6], TypeB, arr[7], -1);
+       ValueA, arr[5], TypeA, arr[4], ValueB, arr[7], TypeB, arr[6], -1);
         path = gtk_tree_path_new_from_string ("0");
     }
   else if(arr[1][0] == '_') path = gtk_tree_path_new_from_string (arr[2]);
@@ -421,8 +420,8 @@ void insOP(char *line) {
     if(arr[1][0] == '+'){
         gtk_list_store_append(storeOP, &iter);
         gtk_list_store_set(storeOP, &iter, Index, arr[2],
-                                           Value, arr[3],
-                                           Type,  arr[4],
+                                           Value, arr[4],
+                                           Type,  arr[3],
                                            -1);
     }
     else if(arr[1][0] == '-') remLinha(atoi(arr[5]),storeOP);
@@ -431,8 +430,8 @@ void insOP(char *line) {
         gtk_tree_model_get_iter(GTK_TREE_MODEL(storeOP), &iter, path);
         gtk_tree_path_free(path);
         gtk_list_store_set(storeOP, &iter, Index, arr[2],
-                                           Value, arr[3],
-                                           Type,  arr[4],
+                                           Value, arr[4],
+                                           Type,  arr[3],
                                            -1);
 
     }
