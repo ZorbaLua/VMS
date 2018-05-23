@@ -20,8 +20,8 @@ typedef struct opStack{
 
 int OpStack_pop(OperandElem*);
 int OpStack_top(OperandElem*);
-int OpStack_getPos(int,OperandElem*);
-int OpStack_addPos(int,OperandElem);
+int OpStack_getPos(int, OperandElem*);
+int OpStack_addPos(int, OperandElem);
 void OpStack_push(OperandElem);
 
 OperandElem newOperandElem(Value);

@@ -1,2 +1,6 @@
 read
+alloc 6
+read
+atoi
+writei
 writes

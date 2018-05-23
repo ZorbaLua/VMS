@@ -155,7 +155,7 @@ void runInst(CodeElem ce){
       //-Arquivar--------------------------------------//
         case STOREL : semStorel(f.val.i); break;//x
         case STOREG : semStoreg(f.val.i); break;//x
-        case STORE  : semStore(f.val.i);  break;//x
+        case STORE  : semStore(f.val.i, NULL);break;//x
         case STOREN : semStoren();        break;//x
 
       //-Diversos--------------------------------------//

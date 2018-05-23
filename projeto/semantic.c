@@ -424,25 +424,28 @@ void semStoreg(int index) {
     //try( OpStack_addPos(0 + index, newOperandElem(newValue(oe->val.val, oe->val.type))) );
 }
 
-void semStore(int index) {
+void semStore(int index, OperandElem va) {
     OperandElem v, pt;
-    try(OpStack_pop(&v));
+    if(va == NULL) try(OpStack_pop(&v));
+    else v = va;
     try(OpStack_pop(&pt));
     switch(pt->val.type) {
         case T_heapPt:
+            // Heap_addPos(pt->val.val.h + index, v->val.val);
             break;
         case T_opPt:
-            OpStack_addPos(pt->val.val.o + index, newOperandElem(newValue(v->val.val, v->val.type)));
+            OpStack_addPos(pt->val.val.o + index, newOperandElem(newValue(v->val.val, v->val.type))); v = va;
             break;
         default: try(-22);
     }
 }
 
 void semStoren() {
-    OperandElem oe;
+    OperandElem oe, v;
+    try(OpStack_pop(&v));
     try(OpStack_pop(&oe));
     if(oe->val.type != T_int) try(-23);
-    semStore(oe->val.val.i);
+    semStore(oe->val.val.i, v);
 }
 
 void semSwap() {
