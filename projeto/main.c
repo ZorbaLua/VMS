@@ -217,6 +217,7 @@ void runDebug(){
         }
         if ( !strncmp(input, "reload ", 7)){
             freeStructs();
+            stop = 0;
             if((yyin = fopen(lastfile, "r"))<0) try(-1);
             yyparse();
         }

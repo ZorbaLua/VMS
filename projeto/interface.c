@@ -96,6 +96,30 @@ void getInput(char **input) {
   }
 }
 
+void actLabel (int lab, int value) {
+
+  char l[10], b[5];
+  sprintf(b, "%d", value);
+  switch (lab) {
+    case PC:
+      strncpy(l, "PC:", 10); strcat(l,b);
+      gtk_label_set_text (GTK_LABEL (labelPC), l); break;
+    case FP:
+      strncpy(l, "FP:", 10); strcat(l,b);
+      gtk_label_set_text (GTK_LABEL (labelFP), l); break;
+    case SP:
+      strncpy(l, "SP:", 10); strcat(l,b);
+      gtk_label_set_text (GTK_LABEL (labelSP), l); break;
+    case GP:
+      strncpy(l, "GP:", 10); strcat(l,b);
+      gtk_label_set_text (GTK_LABEL (labelGP), l); break;
+    default :
+    ;
+  }
+}
+
+    //-----------------------------------------//
+
 void freeLine(char** line, int t) {
   for(int i=0; i<t; i++) free(line[i]);
 }
@@ -113,6 +137,18 @@ static void limpaStacks() {
   gtk_list_store_clear (storeHeap);
   gtk_list_store_clear (storeOP);
   gtk_list_store_clear (storeCall);
+}
+
+void cleanReload () {
+  actLabel(PC,0);
+  actLabel(FP,0);
+  actLabel(SP,0);
+  actLabel(GP,0);
+
+  GtkTextIter inicio, fim;
+  gtk_text_buffer_get_start_iter (bufferConsole, &inicio);
+  gtk_text_buffer_get_end_iter (bufferConsole, &fim);
+  gtk_text_buffer_delete (bufferConsole, &inicio, &fim);
 }
 
 //-----------------------------------------------------------------------------//
@@ -221,7 +257,9 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
 }
 
 static void bReloadFile (GtkWidget *widget, gpointer data) {
+
   limpaStacks();
+  cleanReload();
   fprintf(stdout, "reload  \n"); fflush(stdout);
   turnButtons(TRUE);
   loopTranformations();
@@ -231,6 +269,7 @@ static void bLoadIFile (GtkWidget *widget, gpointer data) {
   char* inputFile=NULL;
   GtkFileOpen(&inputFile);
   limpaStacks();
+  cleanReload();
 
   if (inputFile != NULL) {
     GError *err = NULL;
@@ -243,30 +282,6 @@ static void bLoadIFile (GtkWidget *widget, gpointer data) {
 }
 
 //-----------------------------------------------------------------------------//
-
-void actLabel (int lab, int value) {
-
-  char l[10], b[5];
-  sprintf(b, "%d", value);
-  switch (lab) {
-    case PC:
-      strncpy(l, "PC:", 10); strcat(l,b);
-      gtk_label_set_text (GTK_LABEL (labelPC), l); break;
-    case FP:
-      strncpy(l, "FP:", 10); strcat(l,b);
-      gtk_label_set_text (GTK_LABEL (labelFP), l); break;
-    case SP:
-      strncpy(l, "SP:", 10); strcat(l,b);
-      gtk_label_set_text (GTK_LABEL (labelSP), l); break;
-    case GP:
-      strncpy(l, "GP:", 10); strcat(l,b);
-      gtk_label_set_text (GTK_LABEL (labelGP), l); break;
-    default :
-    g_print("Erro label invalido\n" );
-  }
-}
-
-    //-----------------------------------------//
 
 static void activateLables () {
 
