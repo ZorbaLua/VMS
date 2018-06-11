@@ -1,10 +1,14 @@
 .\" Manpage for vms.
 .\" Contact adriano.vc.campinho@gmail.com to correct errors or typos.
-.TH man 8 "30 May 2018" "1.0" "vms man page"
+.TH vms 1 "30 May 2018" "1.0" "VMS Manual"
 .SH NAME
 vms \- Virtual Machine Simulator of Stack Virtual VM
 .SH SYNOPSIS
-vms [OPTION]... [FILE]...
+.B vms
+[OPTION]... FILE...
+.PP
+.B vms
+OPTION... [FILE]...
 .SH DESCRIPTION
 vms is an ...
 .SH OPTIONS
@@ -20,8 +24,8 @@ vms is an ...
 .IP -g
 enable graphical interface
 .SH SEE ALSO
-The Written Report
+For more information on the project check the written report
 .SH BUGS
 No known bugs (but probably some...)
 .SH AUTHORS
-Adriano Campinho (a79032@alunos.uminho.com) / Vasco Leitao (a79220@alunos.uminho.com)
+a79032@alunos.uminho.com / a79220@alunos.uminho.com

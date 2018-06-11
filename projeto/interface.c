@@ -244,12 +244,12 @@ static void bExeT (GtkWidget *widget, gpointer data) {
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
 
   //if(lastfile != NULL) { free(lastfile); }
-  char* file;
-  limpaStacks();
+  char* inputFile=NULL;
 
-  GtkFileOpen(&file);
-  if (file != NULL) {
-    fprintf(stdout, "file %s\n", file); fflush(stdout);
+  GtkFileOpen(&inputFile);
+  if (inputFile != NULL) {
+    fprintf(stdout, "file %s\n", inputFile); fflush(stdout);
+    limpaStacks();
     turnButtons(TRUE);
     loopTranformations();
   }
@@ -268,7 +268,6 @@ static void bReloadFile (GtkWidget *widget, gpointer data) {
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
   char* inputFile=NULL;
   GtkFileOpen(&inputFile);
-  limpaStacks();
   cleanReload();
 
   if (inputFile != NULL) {

@@ -49,31 +49,31 @@ int yyparse();
 void try(int erro) {
     switch (erro) {
         case  0 : return;
-        case -1 : eprintf("error:\n");                                             break;
-        case -2 : eprintf("error: index out of array\n");                          break;
-        case -3 : eprintf("error: fp == sp\n");                                    break;
-        case -4 : eprintf("error: opning file\n");                                 break;
-        case -5 : eprintf("error: invalid args\n");                                break;
-        case -6 : eprintf("error: invalid type write\n");                          break;
-        case -7 : eprintf("error: invalid type not\n");                            break;
-        case -8 : eprintf("error: invalid type equal\n");                          break;
-        case -9 : eprintf("error: invalid type padd second arg not int\n");        break;
-        case -10: eprintf("error: invalid type padd first argument not adress\n"); break;
-        case -11: eprintf("error: invalid type alocn\n");                          break;
-        case -12: eprintf("error: invalid type free\n");                           break;
-        case -13: eprintf("error: invalid type atox arg is not heap adress\n");    break;
-        case -14: eprintf("error: invalid type itof\n");                           break;
-        case -15: eprintf("error: invalid type ftoi\n");                           break;
-        case -16: eprintf("error: invalid type stri\n");                           break;
-        case -17: eprintf("error: invalid type strf\n");                           break;
-        case -18: eprintf("error: invalid type loadn\n");                          break;
-        case -19: eprintf("error: invalid type load\n");                           break;
-        case -20: eprintf("error: invalid type dupn\n");                           break;
-        case -21: eprintf("error: invalid type popn\n");                           break;
-        case -22: eprintf("error: invalid type pon\n");                            break;
-        case -23: eprintf("error: invalid type storen\n");                         break;
-        case -24: eprintf("error: invalid type jz\n");                             break;
-        case -25: eprintf("error: invalid type call\n");                           break;
+        case -1 : eprintf("Error:\n");                                             break;
+        case -2 : eprintf("Error: Index out of array\n");                          break;
+        case -3 : eprintf("Error: fp == sp\n");                                    break;
+        case -4 : eprintf("Error: Opening file\n");                                break;
+        case -5 : eprintf("vms: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n");                                break;
+        case -6 : eprintf("Error: Invalid type write\n");                          break;
+        case -7 : eprintf("Error: Invalid type not\n");                            break;
+        case -8 : eprintf("Error: Invalid type equal\n");                          break;
+        case -9 : eprintf("Error: Invalid type padd second arg not int\n");        break;
+        case -10: eprintf("Error: Invalid type padd first argument not adress\n"); break;
+        case -11: eprintf("Error: Invalid type alocn\n");                          break;
+        case -12: eprintf("Error: Invalid type free\n");                           break;
+        case -13: eprintf("Error: Invalid type atox arg is not heap adress\n");    break;
+        case -14: eprintf("Error: Invalid type itof\n");                           break;
+        case -15: eprintf("Error: Invalid type ftoi\n");                           break;
+        case -16: eprintf("Error: Invalid type stri\n");                           break;
+        case -17: eprintf("Error: Invalid type strf\n");                           break;
+        case -18: eprintf("Error: Invalid type loadn\n");                          break;
+        case -19: eprintf("Error: Invalid type load\n");                           break;
+        case -20: eprintf("Error: Invalid type dupn\n");                           break;
+        case -21: eprintf("Error: Invalid type popn\n");                           break;
+        case -22: eprintf("Error: Invalid type pon\n");                            break;
+        case -23: eprintf("Error: Invalid type storen\n");                         break;
+        case -24: eprintf("Error: Invalid type jz\n");                             break;
+        case -25: eprintf("Error: Invalid type call\n");                           break;
     }
     _exit(erro);
 }
@@ -276,7 +276,7 @@ void execGui(){
         close(wp[1]);
         dup2(rp[1], 1);
         dup2(wp[0], 0);
-        execl("/usr/local/bin/vmsGTK", "/usr/local/bin/vmsGTK", NULL);
+        execl("/usr/local/bin/vmsGTKAuxiliar", "/usr/local/bin/vmsGTKAuxiliar", NULL);
     }
     rl_outstream = fopen("/dev/null", "w");
     prepareDebug();
