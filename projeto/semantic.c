@@ -523,4 +523,6 @@ void semErr(GString* s) {
   code.pc = code.pc-1;
 }
 
+void semStop() {code.pc = code.pc-1;}
+
 void semCheck() { }

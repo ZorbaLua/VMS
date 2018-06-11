@@ -181,7 +181,7 @@ void runInst(CodeElem ce){
 
       //-Inicializacao e Fim---------------------------//
         case START  : semStart();      break;//v
-        case STOP   :                  break;//v
+        case STOP   : semStop();       break;//v
         case NOP    : semNop();        break;//v
         case ERR    : semErr(f.val.s); break;//x
     }
