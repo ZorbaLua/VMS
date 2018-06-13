@@ -215,7 +215,7 @@ void runDebug(){
             if((yyin = fopen(lastfile, "r"))<0) try(-1);
             yyparse();
         }
-        if ( !strncmp(input, "reload ", 7)){
+        if ( !strncmp(input, "reload", 6)){
             freeStructs();
             stop = 0;
             if((yyin = fopen(lastfile, "r"))<0) try(-1);
@@ -256,11 +256,6 @@ void runProgram(){
     }
 }
 
-void prepareDebug(){
-    //fd = dup(1);
-    dbout = fdopen(1, "w");
-}
-
 void execGui(){
     int wp[2], rp[2];
 
@@ -279,7 +274,8 @@ void execGui(){
         execl("/usr/local/bin/vmsGTKAuxiliar", "/usr/local/bin/vmsGTKAuxiliar", NULL);
     }
     rl_outstream = fopen("/dev/null", "w");
-    prepareDebug();
+
+    dbout = fdopen(1, "w");
 }
 
 
@@ -297,8 +293,8 @@ void options(int argc, char** argv){// debug
                     case 'o': opSize   = atoi(argv[i+k]); k++;  break;
                     case 'C': callSize = atoi(argv[i+k]); k++;  break;
                     case 'h': heapSize = atoi(argv[i+k]); k++;  break;
-                    case 'g': execGui();        debug = 1;      break;
-                    case 'd': prepareDebug();   debug = 1;      break;
+                    case 'g': execGui();            debug = 1;  break;
+                    case 'd': dbout=fdopen(1, "w"); debug = 1;  break;
                 }
             }
                 i += k-1;

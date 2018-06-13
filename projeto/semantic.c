@@ -421,7 +421,6 @@ void semStoreg(int index) {
     OperandElem oe;
     try(OpStack_pop(&oe));
     try( OpStack_addPos(opstack.gp + index, newOperandElem(newValue(oe->val.val, oe->val.type))) );
-    //try( OpStack_addPos(0 + index, newOperandElem(newValue(oe->val.val, oe->val.type))) );
 }
 
 void semStore(int index, OperandElem va) {
