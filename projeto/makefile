@@ -8,16 +8,16 @@ GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
 GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 MANPATH=`manpath | cut -d: -f1`
 
-all: main interface
+all: vms interface
 
-install: main interface
+install: vms interface
 	cp interface /usr/local/bin/vmsGTKAuxiliar
-	cp main /usr/local/bin/vms
-	cp -f vmsMan.1 $(MANPATH)/man1/vms.1
-	gzip -f $(MANPATH)/man1/vms.1
+	cp vms /usr/local/bin/vms
+	#cp -f vmsMan.1 $(MANPATH)/man1/vms.1
+	#gzip -f $(MANPATH)/man1/vms.1
 
-main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
-	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o main -L/usr/local/lib -I/usr/local/include -lreadline
+vms: vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
+	$(CC) $(CFLAGS) vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o vms -L/usr/local/lib -I/usr/local/include -lreadline
 
 interface: interface.c
 	$(CC) $(CFLAGS) interface.c $(GTK_LIBS) -o interface
@@ -65,7 +65,7 @@ lex.yy.c: lex.l
 
 ####################################################################################################
 clean:
-	rm -f *.o y.tab.h y.tab.c lex.yy.c main interface
+	rm -f *.o y.tab.h y.tab.c lex.yy.c vms interface
 
 test:
 	./check.sh
