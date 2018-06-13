@@ -6,12 +6,15 @@ GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
 GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
 GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
 GLIB_FLAGS=`pkg-config --cflags glib-2.0`
+MANPATH=`manpath | cut -d: -f1`
 
 all: main interface
 
 install: main interface
 	cp interface /usr/local/bin/vmsGTKAuxiliar
 	cp main /usr/local/bin/vms
+	cp -f vmsMan.1 $(MANPATH)/man1/vms.1
+	gzip -f $(MANPATH)/man1/vms.1
 
 main: main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
 	$(CC) $(CFLAGS) main.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o main -L/usr/local/lib -I/usr/local/include -lreadline
