@@ -13,7 +13,8 @@ all: vms interface
 install: vms interface
 	cp interface /usr/local/bin/vmsGTKAuxiliar
 	cp vms /usr/local/bin/vms
-	#cp -f vmsMan.1 $(MANPATH)/man1/vms.1
+	mkdir -p $(MANPATH)/man1
+	cp -f vmsMan.1 $(MANPATH)/man1/vms.1
 	#gzip -f $(MANPATH)/man1/vms.1
 
 vms: vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
