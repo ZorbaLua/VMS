@@ -271,6 +271,11 @@ void execGui(){
         close(wp[1]);
         dup2(rp[1], 1);
         dup2(wp[0], 0);
+
+        char cwd[1024]; //inacabado
+        if (getcwd(cwd, sizeof(cwd)) != NULL)
+        fprintf(stdout, "Current working dir: %s\n", cwd);
+
         execl("/usr/local/bin/vmsGTKAuxiliar", "/usr/local/bin/vmsGTKAuxiliar", NULL);
     }
     rl_outstream = fopen("/dev/null", "w");

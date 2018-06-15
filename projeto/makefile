@@ -11,7 +11,7 @@ MANPATH=`manpath | cut -d: -f1`
 all: vms interface
 
 install: vms interface
-	cp interface /usr/local/bin/vmsGTKAuxiliar
+	cp vmsGTKAux /usr/local/bin/vmsGTKAux
 	cp vms /usr/local/bin/vms
 	mkdir -p $(MANPATH)/man1
 	cp -f vmsMan.1 $(MANPATH)/man1/vms.1
@@ -21,7 +21,7 @@ vms: vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.
 	$(CC) $(CFLAGS) vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o vms -L/usr/local/lib -I/usr/local/include -lreadline
 
 interface: interface.c
-	$(CC) $(CFLAGS) interface.c $(GTK_LIBS) -o interface
+	$(CC) $(CFLAGS) interface.c $(GTK_LIBS) -o vmsGTKAux
 
 ####################################################################################################
 
@@ -66,7 +66,7 @@ lex.yy.c: lex.l
 
 ####################################################################################################
 clean:
-	rm -f *.o y.tab.h y.tab.c lex.yy.c vms interface
+	rm -f *.o y.tab.h y.tab.c lex.yy.c vms vmsGTKAux
 
 test:
 	./check.sh
