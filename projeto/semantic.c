@@ -35,7 +35,7 @@ void semPushf(Value v) {
     OpStack_push(oe);
 }
 
-void semWrite(Etype type) {    // POR ISTO MELHOR (ver erros)
+void semWrite(Etype type) {
     OperandElem oe = NULL;
     char *s;
     try(OpStack_pop(&oe));
@@ -519,7 +519,6 @@ void semErr(GString* s) {
   fflush(stdout);
   fprintf(dbout, "\n\"\n");
   fflush(dbout);
-  code.pc = code.pc-1;
 }
 
 void semStop() {code.pc = code.pc-1;}
