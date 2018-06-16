@@ -218,8 +218,7 @@ void GtkFileOpen (char **retFilename) {
   if (res == GTK_RESPONSE_ACCEPT) {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
       *retFilename = gtk_file_chooser_get_filename (chooser);
-      gtk_widget_destroy (dialog);
-    }
+  }
   gtk_widget_destroy (dialog);
 }
 
@@ -245,7 +244,6 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
 
   //if(lastfile != NULL) { free(lastfile); }
   char* inputFile=NULL;
-
   GtkFileOpen(&inputFile);
   if (inputFile != NULL) {
     fprintf(stdout, "file %s\n", inputFile); fflush(stdout);

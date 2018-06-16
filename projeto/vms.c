@@ -274,7 +274,7 @@ void execGui(){
 
         char cwd[1024]; //inacabado
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
-          strcat(cwd, "/vmsGTKAuxiliar");
+          strcat(cwd, "/vmsGTKAux");
           execl(cwd, cwd, NULL);
         }
     }
