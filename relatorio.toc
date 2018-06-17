@@ -17,9 +17,9 @@
 \contentsline {subsection}{\numberline {3.0.3}Interface}{5}
 \contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{6}
 \contentsline {section}{\numberline {4.1}Modo de utiliza\IeC {\c c}\IeC {\~a}o}{6}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso}{6}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug}{6}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface}{6}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag)}{6}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{6}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{6}
 \contentsline {subsection}{\numberline {4.1.1}Mensagens de erro}{6}
 \contentsline {section}{\numberline {4.2}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{6}
 \contentsline {section}{\numberline {4.3}Testes realizados e Resultados}{6}

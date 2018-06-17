@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  17 JUN 2018 19:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  17 JUN 2018 22:24
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -585,6 +585,16 @@ Cap\'{\i }tulo 3.
 
 ]
 Cap\'{\i }tulo 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--190
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
+
+ []
+
 [6
 
 ]
@@ -594,15 +604,15 @@ No file relatorio.bbl.
 
 ] (/home/z/Desktop/VMS/relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2521 strings out of 493029
- 32580 string characters out of 6136234
+ 2528 strings out of 493029
+ 32676 string characters out of 6136234
  95987 words of memory out of 5000000
- 6069 multiletter control sequences out of 15000+600000
+ 6076 multiletter control sequences out of 15000+600000
  10734 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  26i,7n,32p,220b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on /home/z/Desktop/VMS/relatorio.pdf (9 pages, 137443 bytes).
+Output written on /home/z/Desktop/VMS/relatorio.pdf (9 pages, 140047 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream

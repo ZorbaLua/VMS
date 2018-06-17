@@ -184,10 +184,28 @@ Os requesitos deste projeto podem ser divididos em 3 grupos:
 
 \chapter{Guia de Utilização e Testes}
 \section{Modo de utilização}
-\quad O projeto desenvolvido, tem 3 modos de utilização, estes são:
-\paragraph{\quad Máquina em Modo Silencioso}
-\paragraph{\quad Máquina em Modo Debug}
-\paragraph{\quad Máquina em Modo Interface}
+\quad Esta máquina destina-se a uma utilização interactiva do utilizador, para visualizar a execução de um programa.\\
+A execução poderá ser conduzida passo a passo, ou ser feita de uma só vez.\\
+Sendo feita da seguinte forma:\\
+
+\quad \textbf{vms [opção] ficheiro.vm} OU \textbf{vms opção [ficheiro.vm]}\\
+
+O projeto desenvolvido, tem 3 opções de utilização, estas são:
+\paragraph{\quad Máquina em Modo Silencioso (sem flag)}
+	O programa passado como argumento, e executado de inicio ao fim, apenas permitindo ao utilizador introduzir input quando pedido;
+\paragraph{\quad Máquina em Modo Debug (-d)}
+	O modo Debug permite ao utilizador o acesso a mais informação sobre o programa, disponibilizando
+  os seguintes comandos, que permitem uma execução interativa do programa:
+
+\begin{itemize}
+	\item \textbf{run:} executa o programa ate ao fim;
+	\item \textbf{next 'n':} executa 'n' passos;
+	\item \textbf{file 'f':} "carrega" o ficheiro 'f' para ser executado;
+	\item \textbf{reload:} recarrega o ficheiro no "local" do ultimo ficheiro executado;
+	\item \textbf{quit:} termina a execução do simulador;
+\end{itemize}
+\paragraph{\quad Máquina em Modo Interface (-g)}
+  Coiso
 \subsection{Mensagens de erro}
 \section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
