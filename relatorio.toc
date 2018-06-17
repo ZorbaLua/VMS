@@ -1,7 +1,7 @@
 \select@language {portuges}
 \contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
 \contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\IeC {\c c}\IeC {\~a}o}{3}
-\contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o informal da Organiza\IeC {\c c}\IeC {\~a}o da M\IeC {\'a}quina}{3}
+\contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o Informal da M\IeC {\'a}quina}{3}
 \contentsline {paragraph}{\hskip 1em\relax Code}{3}
 \contentsline {paragraph}{\hskip 1em\relax OPStack}{3}
 \contentsline {paragraph}{\hskip 1em\relax Heap}{3}
@@ -20,6 +20,7 @@
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso}{6}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug}{6}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface}{6}
+\contentsline {subsection}{\numberline {4.1.1}Mensagens de erro}{6}
 \contentsline {section}{\numberline {4.2}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{6}
 \contentsline {section}{\numberline {4.3}Testes realizados e Resultados}{6}
 \contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{7}

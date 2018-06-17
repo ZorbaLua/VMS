@@ -34,6 +34,7 @@ int heapSize = 1000;
 int debug = 0;
 int parseInitial = 0;
 pid_t pidGui=0;
+_Bool instalado = TRUE;
 char *debuggerFunctionNames[] = {
     "file",
     "reload",
@@ -272,10 +273,14 @@ void execGui(){
         dup2(rp[1], 1);
         dup2(wp[0], 0);
 
-        char cwd[1024]; //inacabado
-        if (getcwd(cwd, sizeof(cwd)) != NULL) {
-          strcat(cwd, "/vmsGTKAux");
-          execl(cwd, cwd, NULL);
+        if (!instalado) {
+          char cwd[1024];
+          if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            strcat(cwd, "/vmsGTKAux");
+            execl(cwd, cwd, NULL);
+          }
+        } else {
+            execl("/usr/local/bin/vmsGTKAux", "/usr/local/bin/vmsGTKAux", NULL);
         }
     }
     rl_outstream = fopen("/dev/null", "w");
@@ -355,6 +360,11 @@ int main(int argc, char** argv){
     rl_attempted_completion_function = debuggerFunctionNames_completion;
     rl_outstream = fdopen(dup(1), "w");
     dbout = fopen("/dev/null", "w");
+
+    // Muito duvidoso (espero que temporario), acho que pode causar problemas
+    if (strcmp(argv[0],"./vms") == 0) { instalado = FALSE; }
+    //if (instalado){fprintf(stderr,"\ninst\n");} else {fprintf(stderr,"\nnao inst\n");}
+
     signals();
     options(argc, argv);
     Code_init(codeSize);

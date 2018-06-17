@@ -96,7 +96,7 @@ visual para a máquina VM desde o início, em Java ou em C (conforme preferênci
 produzindo um executável que evite os problemas atuais.
 
 \chapter{Análise e Especificação} \label{ae}
-\section{Descrição informal da Organização da Máquina}
+\section{Descrição Informal da Máquina}
 
 \quad Trata-se duma máquina de pilhas (por oposição às máquinas de registos),...
 
@@ -104,7 +104,8 @@ produzindo um executável que evite os problemas atuais.
 
 Esta e composta pelas seguintes 4 pilhas:
 \paragraph{\quad Code}
-Esta pilha contem www www www www www www www www www www www www www www www www www www www www www www
+Esta pilha contem o conjunto das instruções do programa, esta e preenchida no inicio da execução do programa, mantendo-se igual
+ate ao fim da execução do mesmo;
 \paragraph{\quad OPStack}
 Esta pilha contem www www www www www www www www www www www www www www www www www www www www www www
 \paragraph{\quad Heap}
@@ -139,7 +140,7 @@ A pilha de chamada permite guardar as chamadas: contém pares de apontadores
 \item Constantes reais,
 \item Cadeias de caracteres delimitadas por aspas. Estas cadeias de caracteres seguem as
 mesmas regras de formatação que as cadeias da linguagem C (em particular no que
-diz respeito aos caracteres especiais como \", \n ou \\ ),
+diz respeito aos caracteres especiais como \", \n ou \textbackslash\textbackslash ),
 \item Uma etiqueta simbólica designando uma zona no código.
 \end{itemize}
 
@@ -147,8 +148,32 @@ diz respeito aos caracteres especiais como \", \n ou \\ ),
 A estas foram adicionadas
 
 \section{Especificação do Requisitos}
-Os requesitos deste projeto podem ser divididos em 3 grandes grupos:
+Os requesitos deste projeto podem ser divididos em 3 grupos:
 \subsection{Parser}
+
+\<code\> ::= <instr>*\\
+
+\<instr\> ::= <ident> :\\
+\quad | <instr_atom>\\
+\quad | <instr_int> <integer>\\
+\quad | pushf <float>\\
+\quad | (pushs | err) <string>\\
+\quad | check <integer> , <integer>\\
+\quad | (jump | jz | pusha) <ident>\\
+
+<instr_atom> ::= add | sub | mul | div | mod | not | inf | infeq | sup |\\
+| supeq | fadd | fsub | fmul | fdiv | fcos | fsin |\\
+| finf | finfeq | fsup | fsupeq | concat | equal | atoi | atof |\\
+| itof | ftoi | stri | strf |\\
+| pushsp | pushfp | pushgp | loadn | storen | swap |\\
+| writei | writef | writes | read | call | return |\\
+| drawpoint | drawline | drawcircle |\\
+| cleardrawingarea | opendrawingarea | setcolor | refresh |\\
+| start | nop | stop | allocn | free | dupn | popn |\\
+<instr_int> ::= pushi | pushn | pushg | pushl | load |\\
+| dup | pop | storel | storeg | alloc\\
+
+
 \subsection{Processador}
 \subsection{Interface}
 
@@ -163,6 +188,7 @@ Os requesitos deste projeto podem ser divididos em 3 grandes grupos:
 \paragraph{\quad Máquina em Modo Silencioso}
 \paragraph{\quad Máquina em Modo Debug}
 \paragraph{\quad Máquina em Modo Interface}
+\subsection{Mensagens de erro}
 \section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
 Mostram-se a seguir alguns testes feitos (valores introduzidos) e
