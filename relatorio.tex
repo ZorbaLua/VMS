@@ -54,8 +54,8 @@
 
 \maketitle
 \begin{abstract}
-	\quad O objetivo principal deste relatório técnico revolve em explicar e esclarecer os passos
-	que os alunos comprometeram neste projecto e as pretendidas resoluções
+	\quad Este documento apresenta o relatório desenvolvido no âmbito da Unidade Curricular de Projecto, pretendendo
+	explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as pretendidas resoluções
 	para cada problema exposto no enunciado fornecido. \\
 	\\
 	\\
@@ -147,31 +147,54 @@ diz respeito aos caracteres especiais como \", \n ou \textbackslash\textbackslas
 \quad O conjunto da maioria das intrucoes pode ser encontrado no relatorio ...
 A estas foram adicionadas
 
+\section{Planeamento e objetivos}
+\quad O simulador deve ser implementado de forma a funcionar num maior numero de ambientes UNIX possível:
+deve ser possível correr a simulação de vários modos possibilitando uma simulação interativa de cada programa.
+Existindo a possibilidade do jogador interagir com a simulação através da linha de comandos ou através de uma Interface
+gráfica a ser desenvolvida.\\
+.\quad Podemos então dividir o projecto em 3 grandes grupos:
+\begin{itemize}
+	\item \textbf{Parser:} um parser que receba o input
+	(programas a ser simulados) partindo-os em partes para que possam ser geridas por um outro grupo,
+	verificando se o ficheiro esta no formato correto, caso contrario apontando onde estarão os possíveis problemas;
+
+	\item \textbf{Simulador:} um programa que através do input recebido do parser e, se necessário, do input do utilizador,
+	faca a simulação em si do programa;
+
+	\item \textbf{Interface:} uma interface que permita ao utilizador interagir com a execução do simulador,
+	e dando-lhe acesso a informação sobre o estado atual da maquina;
+	Cada vez que o utilizador interatue com a interface (e.g. clicando num botão), esta deve ser atualizada,
+	refletindo as alterações feitas no estado na maquina e na interface.
+\end{itemize}
+
 \section{Especificação do Requisitos}
-Os requesitos deste projeto podem ser divididos em 3 grupos:
+\quad Esta secção de forma mais especifica os requisitos de cada um dos grupos de desenvolvimento demonstrando os problemas que
+surgiram durante cada fase:
+
 \subsection{Parser}
 
 \<code\> ::= <instr>*\\
 
 \<instr\> ::= <ident> :\\
-\quad | <instr_atom>\\
-\quad | <instr_int> <integer>\\
-\quad | pushf <float>\\
-\quad | (pushs | err) <string>\\
-\quad | check <integer> , <integer>\\
-\quad | (jump | jz | pusha) <ident>\\
+.\quad \quad| <instr_atom>\\
+.\quad \quad| <instr_int> <integer>\\
+.\quad \quad| pushf <float>\\
+.\quad \quad| (pushs | err) <string>\\
+.\quad \quad| check <integer> , <integer>\\
+.\quad \quad| (jump | jz | pusha) <ident>\\
 
 <instr_atom> ::= add | sub | mul | div | mod | not | inf | infeq | sup |\\
-| supeq | fadd | fsub | fmul | fdiv | fcos | fsin |\\
-| finf | finfeq | fsup | fsupeq | concat | equal | atoi | atof |\\
-| itof | ftoi | stri | strf |\\
-| pushsp | pushfp | pushgp | loadn | storen | swap |\\
-| writei | writef | writes | read | call | return |\\
-| drawpoint | drawline | drawcircle |\\
-| cleardrawingarea | opendrawingarea | setcolor | refresh |\\
-| start | nop | stop | allocn | free | dupn | popn |\\
+.\quad \quad| supeq | fadd | fsub | fmul | fdiv | fcos | fsin |\\
+.\quad \quad| finf | finfeq | fsup | fsupeq | concat | equal | atoi | atof |\\
+.\quad \quad| itof | ftoi | stri | strf |\\
+.\quad \quad| pushsp | pushfp | pushgp | loadn | storen | swap |\\
+.\quad \quad| writei | writef | writes | read | call | return |\\
+.\quad \quad| drawpoint | drawline | drawcircle |\\
+.\quad \quad| cleardrawingarea | opendrawingarea | setcolor | refresh |\\
+.\quad \quad| start | nop | stop | allocn | free | dupn | popn |\\
+
 <instr_int> ::= pushi | pushn | pushg | pushl | load |\\
-| dup | pop | storel | storeg | alloc\\
+.\quad \quad| dup | pop | storel | storeg | alloc\\
 
 
 \subsection{Processador}
@@ -196,7 +219,6 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 \paragraph{\quad Máquina em Modo Debug (-d)}
 	O modo Debug permite ao utilizador o acesso a mais informação sobre o programa, disponibilizando
   os seguintes comandos, que permitem uma execução interativa do programa:
-
 \begin{itemize}
 	\item \textbf{run:} executa o programa ate ao fim;
 	\item \textbf{next 'n':} executa 'n' passos;
@@ -205,7 +227,7 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 	\item \textbf{quit:} termina a execução do simulador;
 \end{itemize}
 \paragraph{\quad Máquina em Modo Interface (-g)}
-  Coiso
+  O modo Interface
 \subsection{Mensagens de erro}
 \section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
