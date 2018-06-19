@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex relatorio"] 1529369867 "relatorio.aux" "relatorio.bbl" "relatorio" 1529369867
+["bibtex relatorio"] 1529375331 "relatorio.aux" "relatorio.bbl" "relatorio" 1529375332
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "relatorio.aux" 1529369867 3102 470ce5902f2f8ff939390d0018e0af0f ""
+  "relatorio.aux" 1529375332 3274 2752c0c7e0c6e4eaf75487b756594a44 ""
   "relatorio.bcf" 0 -1 0 ""
   "relprojLayout.bib" 0 -1 0 ""
   (generated)
   "relatorio.blg"
   "relatorio.bbl"
-["pdflatex"] 1529369867 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1529369867
+["pdflatex"] 1529375331 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1529375332
   "/etc/texmf/web2c/texmf.cnf" 1522533546 1101 af7716885e081ab43982cab7b4672c1a ""
-  "/home/z/Desktop/VMS/relatorio.aux" 1529369867 3102 470ce5902f2f8ff939390d0018e0af0f ""
+  "/home/z/Desktop/VMS/relatorio.aux" 1529375332 3274 2752c0c7e0c6e4eaf75487b756594a44 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -29,7 +29,6 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb" 1248133631 36554 b67dc2cfa451409e100b3fcf5f506509 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
-  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
@@ -39,6 +38,7 @@
   "/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def" 1456440043 50112 f44490c2cb959606ae206a8f9f3f70e2 ""
   "/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty" 1456440043 13499 cfeb1da37929c37eb2a356b8abd63f74 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty" 1454284088 5619 b1e63522e111972696a4db609d2b915f ""
+  "/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd" 1454284088 2257 15f13452fccbf1841cc4a62831b0d32a ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd" 1454284088 2256 80ce1168fb4ce6a85583a9cf8972c013 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu" 1454284088 2006 ed35f065eb949f203d1b6acd2bc1dcb8 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu" 1454284088 3183 76313d3584eba6cfdb7421aa6c69c2dd ""
@@ -57,14 +57,14 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1503343927 31343 93828589fb0cea665e553ee5a17ad2d4 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1522533746 1863403 f3ff9a4253bcb5fb9a9baaf0c572cb01 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1522533756 3858658 e833236796c0a45cb8b663f50fb767a6 ""
-  "relatorio.aux" 1529369867 3102 470ce5902f2f8ff939390d0018e0af0f ""
+  "relatorio.aux" 1529375332 3274 2752c0c7e0c6e4eaf75487b756594a44 ""
   "relatorio.bbl" 0 -1 0 "bibtex relatorio"
-  "relatorio.tex" 1529369866 10225 72ad0d97b3cd65468c27bddd68c8e4be ""
-  "relatorio.toc" 1529369867 1979 29ddc36023e0cf7c1a5aa2f548465228 ""
+  "relatorio.tex" 1529375331 10986 500d210a4f97ec2724a59a06e330847f ""
+  "relatorio.toc" 1529375332 2115 eed5dd203e42a568b59a535979241f38 ""
   (generated)
-  "relatorio.toc"
-  "relatorio.pdf"
-  "/home/z/Desktop/VMS/relatorio.pdf"
-  "relatorio.log"
-  "/home/z/Desktop/VMS/relatorio.log"
   "relatorio.aux"
+  "relatorio.pdf"
+  "relatorio.log"
+  "relatorio.toc"
+  "/home/z/Desktop/VMS/relatorio.pdf"
+  "/home/z/Desktop/VMS/relatorio.log"

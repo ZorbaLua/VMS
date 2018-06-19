@@ -173,36 +173,52 @@ surgiram durante cada fase:
 
 \subsection{Parser}
 
-\<code\> ::= <instr>*\\
+\quad Os programas por executar devem obedecer a sintaxe seguinte:
 
-\<instr\> ::= <ident> :\\
-.\quad \quad| <instr_atom>\\
-.\quad \quad| <instr_int> <integer>\\
-.\quad \quad| pushf <float>\\
-.\quad \quad| (pushs | err) <string>\\
-.\quad \quad| check <integer> , <integer>\\
-.\quad \quad| (jump | jz | pusha) <ident>\\
+\subsubsection{Convenções Lexicais:}
 
-<instr_atom> ::= add | sub | mul | div | mod | not | inf | infeq | sup |\\
-.\quad \quad| supeq | fadd | fsub | fmul | fdiv | fcos | fsin |\\
-.\quad \quad| finf | finfeq | fsup | fsupeq | concat | equal | atoi | atof |\\
-.\quad \quad| itof | ftoi | stri | strf |\\
-.\quad \quad| pushsp | pushfp | pushgp | loadn | storen | swap |\\
-.\quad \quad| writei | writef | writes | read | call | return |\\
-.\quad \quad| drawpoint | drawline | drawcircle |\\
-.\quad \quad| cleardrawingarea | opendrawingarea | setcolor | refresh |\\
-.\quad \quad| start | nop | stop | allocn | free | dupn | popn |\\
+ -\quad \textless INTEGER\textgreater \quad ::= -?[0-9]+\\
+ -\quad \textless FLOAT\textgreater   \quad ::= -?[0-9] + "."[0-9]+\\
+ -\quad \textless LABEL\textgreater   \quad ::= [A-Z][A-Z0-9]* \\
+ -\quad \textless COMMENT\textgreater \quad ::= "//".* \quad \| \quad "\#".*\\
 
-<instr_int> ::= pushi | pushn | pushg | pushl | load |\\
-.\quad \quad| dup | pop | storel | storeg | alloc\\
+\subsubsection{Funções:}
+
+"not"\|"equal"\|"add"\|"sub"\|"mul"\|"div"\|"mod"\|\\
+\|"inf"\|"infeq"\|"sup"\|"supeq"\|\\
+\|"fadd"\|"fsub"\|"fmul"\|"fdiv"\|\\
+\|"fcos"\|"fsin"\|"ftan"\|\\
+\|"finf"\|"finfeq"\|"fsup"\|"fsupeq"\|\\
+\|"padd"\|"concat"\|"alloc"\|"allocn"\|"free"\|\\
+\|"atoi"\|"atof"\|"itof"\|"ftoi"\|"stri"\|"strf"\|\\
+\|"pushi"\|"pushn"\|"pushf"\|"pushs"\|"pushg"\|"pushl"\|"pushsp"\|"pushfp"\|"pushgp"\|"load"\|"loadn"\|"dup"\|"dupn"\|\\
+\|"pop"\|"popn"\|"storel"\|"storeg"\|"store"\|"storen"\|\\
+\|"check"\|"swap"\|\\
+\|"writei"\|"writes"\|"writef"\|"read"\|\\
+\|"jump"\|"jz"\|"pusha"\|\\
+\|"call"\|"return"\|\\
+\|"start"\|"nop"\|"err"\|"stop"\\
 
 
 \subsection{Processador}
 \subsection{Interface}
+\quad A interface deve permitir ao utilizador executar as seguintes ações:
+\begin{itemize}
+\item Executar 1 passo na execução do programa;
+\item Executar n passos (passado como argumento) na execução do programa;
+\item Executar o programa ate ao fim;
+\item Carregar um programa para ser simulado;
+\item Recarregar o programa que esta atualmente a ser simulado;
+\item Em qualquer momento da execução do programa, mostrar o estado actual da maquina (stacks e pointers);
+\item Permitir ao utilizador introduzir input para o programa quando necessário;
+\item Carregar um ficheiro com o input para ser lido por um programa;
+\end{itemize}
 
 \chapter{Concepção/desenho da Resolução}
 \subsection{Parser}
+\quad Falar flex etc.
 \subsection{Processador}
+\quad Estruturas de dados etc.
 \subsection{Interface}
 
 \chapter{Guia de Utilização e Testes}
