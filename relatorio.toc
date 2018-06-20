@@ -3,7 +3,7 @@
 \contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\IeC {\c c}\IeC {\~a}o}{3}
 \contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o Informal da M\IeC {\'a}quina}{3}
 \contentsline {paragraph}{\hskip 1em\relax Code}{3}
-\contentsline {paragraph}{\hskip 1em\relax OPStack}{3}
+\contentsline {paragraph}{\hskip 1em\relax Operation Stack}{3}
 \contentsline {paragraph}{\hskip 1em\relax Heap}{3}
 \contentsline {paragraph}{\hskip 1em\relax Call Stack}{3}
 \contentsline {subsubsection}{Instru\IeC {\c c}\IeC {\~o}es}{3}
@@ -15,15 +15,18 @@
 \contentsline {subsection}{\numberline {2.3.2}Processador}{5}
 \contentsline {subsection}{\numberline {2.3.3}Interface}{5}
 \contentsline {chapter}{\numberline {3}Concep\IeC {\c c}\IeC {\~a}o/desenho da Resolu\IeC {\c c}\IeC {\~a}o}{6}
-\contentsline {subsection}{\numberline {3.0.1}Parser}{6}
-\contentsline {subsection}{\numberline {3.0.2}Processador}{6}
-\contentsline {subsection}{\numberline {3.0.3}Interface}{6}
-\contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{7}
-\contentsline {section}{\numberline {4.1}Modo de utiliza\IeC {\c c}\IeC {\~a}o}{7}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag)}{7}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{7}
-\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{7}
-\contentsline {subsection}{\numberline {4.1.1}Mensagens de erro}{7}
-\contentsline {section}{\numberline {4.2}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{7}
-\contentsline {section}{\numberline {4.3}Testes realizados e Resultados}{7}
-\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{8}
+\contentsline {section}{\numberline {3.1}Organiza\IeC {\c c}\IeC {\~a}o do c\IeC {\'o}digo}{6}
+\contentsline {subsection}{\numberline {3.1.1}Estruturas}{6}
+\contentsline {section}{\numberline {3.2}Fases de Desenvolvimento}{7}
+\contentsline {subsection}{\numberline {3.2.1}Parser}{7}
+\contentsline {subsection}{\numberline {3.2.2}Processador}{7}
+\contentsline {subsection}{\numberline {3.2.3}Interface}{7}
+\contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{8}
+\contentsline {section}{\numberline {4.1}Modo de utiliza\IeC {\c c}\IeC {\~a}o}{8}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag de op\IeC {\c c}\IeC {\~a}o)}{8}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{8}
+\contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{8}
+\contentsline {section}{\numberline {4.2}Mensagens de erro}{8}
+\contentsline {section}{\numberline {4.3}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{9}
+\contentsline {section}{\numberline {4.4}Testes realizados e Resultados}{9}
+\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{10}

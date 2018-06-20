@@ -78,7 +78,7 @@ conjunto de instruções máquina mínimo e muito compreensível, o que a torna
 pedagogicamente muito relevante como máquina objeto (destino) em tarefas de compilação.
 \\
 \\
-\quad Para que o uso da VM seja realmente um bom instrumento de trabalho nestes cursos, é
+\null\quad Para que o uso da VM seja realmente um bom instrumento de trabalho nestes cursos, é
 fundamental que exista um simulador que permita testar (de preferência passo a passo) o
 código gerado. Atualmente existe, como é de conhecimento de todos, um Assembler para
 traduzir o Assembly produzido numa lista de códigos máquina e existe um interpretado que
@@ -86,12 +86,12 @@ executa esse código e que fornece uma interface visual que permite acompanhar a
 verificando a evolução dos vários blocos de memória e dos registo de controlo da máquina.
 \\
 \\
-\quad Esta versão, codificada em Java, está funcional e pode ser usada, mas tem alguns problemas de
+\null\quad Esta versão, codificada em Java, está funcional e pode ser usada, mas tem alguns problemas de
 implementação, nomeadamente o elevado tempo de execução, quando os programas
 aumentam um pouco.
 \\
 \\
-\quad Neste projeto pretende-se que os alunos reconstruam o simulador com interface interativo e
+\null\quad Neste projeto pretende-se que os alunos reconstruam o simulador com interface interativo e
 visual para a máquina VM desde o início, em Java ou em C (conforme preferência do grupo)
 produzindo um executável que evite os problemas atuais.
 
@@ -106,15 +106,16 @@ Esta e composta pelas seguintes 4 pilhas:
 \paragraph{\quad Code}
 Esta pilha contem o conjunto das instruções do programa, esta e preenchida no inicio da execução do programa, mantendo-se igual
 ate ao fim da execução do mesmo;
-\paragraph{\quad OPStack}
-Esta pilha contem www www www www www www www www www www www www www www www www www www www www www www
+\paragraph{\quad Operation Stack}
+Esta pilha contem valores guardados na maquina, este podem ser do tipo inteiro, real e podem ser enderecos;
 \paragraph{\quad Heap}
-Esta pilha contem www www www www www www www www www www www www www www www www www www www www www www
+Esta pilha contem cadeias de caracteres (strings), cada uma destas referenciado por enderecos;
 \paragraph{\quad Call Stack}
-Esta pilha contem www www www www www www www www www www www www www www www www www www www www www www
+Esta pilha contem blocos estruturados, cada um destes referenciado por enderecoes, cada bloco
+estruturdo contem um certo numero de valores (do mesmo tipo dos valores que se podem encontrar na Operation Stack)
 \\
 \\
-\quad A pilha de execução contém valores, que podem ser inteiros, reais ou endereços.
+\null\quad A pilha de execução contém valores, que podem ser inteiros, reais ou endereços.
 As duas heaps contêm, respetivamente, cadeias de caracteres (strings) e blocos estruturados.
 Cada um destes tipos de dados é referenciado por endereços. Cada bloco
 estruturado contem um certo número de valores (do mesmo tipo dos valores que se podem
@@ -152,7 +153,7 @@ A estas foram adicionadas
 deve ser possível correr a simulação de vários modos possibilitando uma simulação interativa de cada programa.
 Existindo a possibilidade do jogador interagir com a simulação através da linha de comandos ou através de uma Interface
 gráfica a ser desenvolvida.\\
-.\quad Podemos então dividir o projecto em 3 grandes grupos:
+\null\quad Podemos então dividir o projecto em 3 grandes grupos:
 \begin{itemize}
 	\item \textbf{Parser:} um parser que receba o input
 	(programas a ser simulados) partindo-os em partes para que possam ser geridas por um outro grupo,
@@ -211,15 +212,51 @@ surgiram durante cada fase:
 \item Recarregar o programa que esta atualmente a ser simulado;
 \item Em qualquer momento da execução do programa, mostrar o estado actual da maquina (stacks e pointers);
 \item Permitir ao utilizador introduzir input para o programa quando necessário;
+\item Permitir ao utilizador introduzir múltiplas linhas de input de uma vez;
 \item Carregar um ficheiro com o input para ser lido por um programa;
 \end{itemize}
 
 \chapter{Concepção/desenho da Resolução}
+\section{Organização do código}
+
+Em termos de organização do código, este foi dividido nos seguintes ficheiros:
+
+\begin{itemize}
+\item \textbf{check.sh*} - Coisas
+\item \textbf{README} - Coisas
+\item \textbf{structs/} - Coisas
+\item \textbf{vmsMan.1} - Coisas
+\item \textbf{inst\_err} - Coisas
+\item \textbf{lex.l} - Coisas
+\item \textbf{semantic.c} - Coisas
+\item \textbf{syntax.y} - Coisas
+\item \textbf{interface.c} - Coisas
+\item \textbf{makefile} - Coisas
+\item \textbf{semantic.h} - Coisas
+\item \textbf{vms.c} - Coisas
+\end{itemize}
+
+\subsection{Estruturas}
+
+Em termos de estruturas criadas, estas foram divididas nos seguintes grupos
+(sendo que cada grupo representa um par de ficheiros .h e .c):
+
+
+\begin{itemize}
+	\item \textbf{array} - Coisas
+	\item \textbf{callStack} - Coisas
+	\item \textbf{code} - Coisas
+	\item \textbf{heap} - Coisas
+	\item \textbf{opStack} - Coisas
+	\item \textbf{types} - Coisas
+\end{itemize}
+\section{Fases de Desenvolvimento}
 \subsection{Parser}
 \quad Falar flex etc.
 \subsection{Processador}
 \quad Estruturas de dados etc.
 \subsection{Interface}
+\quad Nao faco ideia
 
 \chapter{Guia de Utilização e Testes}
 \section{Modo de utilização}
@@ -230,7 +267,7 @@ Sendo feita da seguinte forma:\\
 \quad \textbf{vms [opção] ficheiro.vm} OU \textbf{vms opção [ficheiro.vm]}\\
 
 O projeto desenvolvido, tem 3 opções de utilização, estas são:
-\paragraph{\quad Máquina em Modo Silencioso (sem flag)}
+\paragraph{\quad Máquina em Modo Silencioso (sem flag de opção)}
 	O programa passado como argumento, e executado de inicio ao fim, apenas permitindo ao utilizador introduzir input quando pedido;
 \paragraph{\quad Máquina em Modo Debug (-d)}
 	O modo Debug permite ao utilizador o acesso a mais informação sobre o programa, disponibilizando
@@ -244,14 +281,54 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 \end{itemize}
 \paragraph{\quad Máquina em Modo Interface (-g)}
   O modo Interface
-\subsection{Mensagens de erro}
+\section{Mensagens de erro}
+
+\begin{itemize}
+\item "Error:"
+\item "Error: Index out of array"
+\item "Error: fp == sp"
+\item "Error: Opening file"
+\item "Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n"
+\item "Error: Invalid type write"
+\item "Error: Invalid type not"
+\item "Error: Invalid type equal"
+\item "Error: Invalid type padd second arg not int"
+\item "Error: Invalid type padd first argument not adress"
+\item "Error: Invalid type alocn"
+\item "Error: Invalid type free"
+\item "Error: Invalid type atox arg is not heap adress"
+\item "Error: Invalid type itof"
+\item "Error: Invalid type ftoi"
+\item "Error: Invalid type stri"
+\item "Error: Invalid type strf"
+\item "Error: Invalid type loadn"
+\item "Error: Invalid type load"
+\item "Error: Invalid type dupn"
+\item "Error: Invalid type popn"
+\item "Error: Invalid type pon"
+\item "Error: Invalid type storen"
+\item "Error: Invalid type jz"
+\item "Error: Invalid type call"
+\end{itemize}
+
 \section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
 Mostram-se a seguir alguns testes feitos (valores introduzidos) e
 os respectivos resultados obtidos:
 
 \chapter{Conclusão} \label{concl}
-Conclusão e não conclusão da conclusão
+\quad Neste relatório descreveu-se o processo de conceção e implementação do projecto pedido pelo
+enunciado, nomeadamente o parser, o simulador e a interface gráfica, alem de descrever em detalhe
+o funcionamento da maquina referida.\\
+\null\quad Apesar de estarmos satisfeitos com o trabalho desenvolvido, há ainda espaço para muitas
+melhorias desta implementação. Enumeram-se algumas ideias que, por falta de tempo, não foram
+(ainda) concretizadas:
+
+\begin{itemize}
+\item Criar um conjunto grande de ficheiros de testes, que sirvam tanto para provar/verificar a
+implementação da maquina, assim como servir de exemplo da correcta instalação da mesma;
+\item Fazer melhorias no espaçamento da interface gráfica, permitindo a utilização mais fácil em janelas mais pequenas;
+\end{itemize}
 
 \bibliographystyle{alpha}
 \bibliography{relprojLayout}
