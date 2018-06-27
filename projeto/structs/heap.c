@@ -68,6 +68,42 @@ heapPt Heap_alloc(char* s, int len){
     return ret;
 }
 
+void add(heapPt pt, char c){
+    HeapElem* he;
+    printHeap('~', pt, c);
+    he = get(pt);
+    he->c = c;
+}
+void Heap_addPos(heapPt pt, Value v){
+    char *buffer;
+    int len, i;
+    switch(v.type){
+        case T_int:
+            len = asprintf(&buffer, "%d", v.val.i);
+		break;
+        case T_float:
+            len = asprintf(&buffer, "%f", v.val.f);
+		break;
+        case T_string:
+            buffer = v.val.s->str;
+            len = v.val.s->len;
+		break;
+        case T_codePt:
+            len = asprintf(&buffer, "%d", v.val.c);
+		break;
+        case T_opPt:
+            len = asprintf(&buffer, "%d", v.val.o);
+		break;
+        case T_heapPt:
+            len = asprintf(&buffer, "%d", v.val.h);
+		break;
+        default: len = asprintf(&buffer, "");
+    }
+    for(i=0; i<len; i++) add(pt+i, buffer[i]);
+    add(pt+i, '\0');
+}
+
+
 
 void Heap_init(int size){
     int i=0;

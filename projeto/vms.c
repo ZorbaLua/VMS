@@ -71,7 +71,7 @@ void try(int erro) {
         case -19: eprintf("Error: Invalid type load\n");                           break;
         case -20: eprintf("Error: Invalid type dupn\n");                           break;
         case -21: eprintf("Error: Invalid type popn\n");                           break;
-        case -22: eprintf("Error: Invalid type pon\n");                            break;
+        case -22: eprintf("Error: Invalid type store\n");                          break;
         case -23: eprintf("Error: Invalid type storen\n");                         break;
         case -24: eprintf("Error: Invalid type jz\n");                             break;
         case -25: eprintf("Error: Invalid type call\n");                           break;

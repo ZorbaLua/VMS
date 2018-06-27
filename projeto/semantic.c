@@ -430,7 +430,7 @@ void semStore(int index, OperandElem va) {
     try(OpStack_pop(&pt));
     switch(pt->val.type) {
         case T_heapPt:
-            // Heap_addPos(pt->val.val.h + index, v->val.val);
+            Heap_addPos(pt->val.val.h + index, v->val);
             break;
         case T_opPt:
             OpStack_addPos(pt->val.val.o + index, newOperandElem(newValue(v->val.val, v->val.type))); v = va;

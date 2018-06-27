@@ -20,6 +20,7 @@ typedef struct heap{
 void Heap_freeBlock(heapPt);
 char* Heap_getBlock(heapPt);
 heapPt Heap_alloc(char*, int);
+void Heap_addPos(heapPt, Value);
 void printHeap(char,int,char);
 
 void Heap_free();
