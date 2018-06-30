@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  20 JUN 2018 01:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  30 JUN 2018 18:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -347,8 +347,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.8 
-    
+l.8 \usepackage
+               {graphicx}
 The package inputenc has already been loaded with options:
   [utf8]
 There has now been an attempt to load it with options
@@ -358,32 +358,53 @@ Adding the global options:
 to your \documentclass declaration may fix this.
 Try typing  <return>  to proceed.
 
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 95.
+ (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count89
+))
+\Gin@req@height=\dimen104
+\Gin@req@width=\dimen105
+) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ) (/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks16
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks17
-)
-\lst@mode=\count89
+\@enLab=\toks17
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count90
 \lst@gtempboxa=\box26
 \lst@token=\toks18
-\lst@length=\count90
-\lst@currlwidth=\dimen104
-\lst@column=\count91
-\lst@pos=\count92
-\lst@lostspace=\dimen105
-\lst@width=\dimen106
-\lst@newlines=\count93
-\lst@lineno=\count94
-\lst@maxwidth=\dimen107
+\lst@length=\count91
+\lst@currlwidth=\dimen106
+\lst@column=\count92
+\lst@pos=\count93
+\lst@lostspace=\dimen107
+\lst@width=\dimen108
+\lst@newlines=\count94
+\lst@lineno=\count95
+\lst@maxwidth=\dimen109
  (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count95
-\lst@skipnumbers=\count96
+\c@lstnumber=\count96
+\lst@skipnumbers=\count97
 \lst@framebox=\box27
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
@@ -394,51 +415,100 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 ) (/home/z/Desktop/VMS/relatorio.aux)
 \openout1 = `relatorio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-\c@lstlisting=\count97
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count98
+\scratchdimen=\dimen110
+\scratchbox=\box28
+\nofMPsegments=\count99
+\nofMParguments=\count100
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count101
+\MPscratchDim=\dimen111
+\MPnumerator=\count102
+\makeMPintoPDFobject=\count103
+\everyMPtoPDFconversion=\toks20
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+ (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+)) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+ (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+\c@lstlisting=\count104
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 55.
+(Font)              <17.28> on input line 56.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 55.
+(Font)              <12> on input line 56.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 55.
+(Font)              <8> on input line 56.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 55.
+(Font)              <6> on input line 56.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 57--66
+Underfull \hbox (badness 10000) in paragraph at lines 58--67
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--66
+Underfull \hbox (badness 10000) in paragraph at lines 58--67
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--66
+Underfull \hbox (badness 10000) in paragraph at lines 58--67
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--66
+Underfull \hbox (badness 10000) in paragraph at lines 58--67
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--66
+Underfull \hbox (badness 10000) in paragraph at lines 58--67
 
  []
 
@@ -456,17 +526,17 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ]
 Cap\'{\i }tulo 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--97
+Underfull \hbox (badness 10000) in paragraph at lines 74--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--97
+Underfull \hbox (badness 10000) in paragraph at lines 74--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--97
+Underfull \hbox (badness 10000) in paragraph at lines 74--98
 
  []
 
@@ -474,17 +544,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--97
 
 ]
 Cap\'{\i }tulo 2.
+<stacks.png, id=21, 430.60875pt x 220.57407pt>
+File: stacks.png Graphic file (type png)
+ <use stacks.png>
+Package pdftex.def Info: stacks.png used on input line 106.
+(pdftex.def)             Requested size: 430.60768pt x 220.57352pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--126
+Underfull \hbox (badness 10000) in paragraph at lines 118--125
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 127.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+[3
+
+ </home/z/Desktop/VMS/stacks.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 126.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 126.
 
 /home/z/Desktop/VMS/relatorio.tex:144: Undefined control sequence.
 l.144 ...eito aos caracteres especiais como \", \n
@@ -495,81 +573,41 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[3
-
-]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 181.
+<sintaxe.png, id=27, 988.44281pt x 484.81125pt>
+File: sintaxe.png Graphic file (type png)
+ <use sintaxe.png>
+Package pdftex.def Info: sintaxe.png used on input line 180.
+(pdftex.def)             Requested size: 512.1496pt x 251.19339pt.
+ [4]
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 186.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 181.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 186.
 
-/home/z/Desktop/VMS/relatorio.tex:184: Missing $ inserted.
-<inserted text> 
-                $
-l.184 ...ENT\textgreater \quad ::= "//".* \quad \|
-                                                   \quad "\#".*\\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/home/z/Desktop/VMS/relatorio.tex:185: Missing $ inserted.
-<inserted text> 
-                $
-l.185 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 181--185
+Underfull \hbox (badness 10000) in paragraph at lines 186--190
 
  []
 
-/home/z/Desktop/VMS/relatorio.tex:188: Missing $ inserted.
-<inserted text> 
-                $
-l.188 "not"\|
-             "equal"\|"add"\|"sub"\|"mul"\|"div"\|"mod"\|\\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/home/z/Desktop/VMS/relatorio.tex:202: Missing $ inserted.
-<inserted text> 
-                $
-l.202 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (18.95665pt too wide) in paragraph at lines 188--202
-\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushi\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushn\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushf\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushs\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushg\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushl\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushsp\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushfp\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 pushgp\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 load\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 loadn\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 dup\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 "\OML/cmm/m/it/10 dupn\OT1/cmr/m/n/10 "\OMS/cmsy/m/n/10 k[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 188--202
-
- []
-
-[4] [5]
+[5 </home/z/Desktop/VMS/sintaxe.png>]
 Cap\'{\i }tulo 3.
 [6
 
 ] [7]
 Cap\'{\i }tulo 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 263--266
+Underfull \hbox (badness 10000) in paragraph at lines 255--258
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 267--268
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
 
  []
 
-/home/z/Desktop/VMS/relatorio.tex:291: Undefined control sequence.
-l.291 ...d' or '-g' option, or a program file\nTry
+/home/z/Desktop/VMS/relatorio.tex:283: Undefined control sequence.
+l.283 ...d' or '-g' option, or a program file\nTry
                                                    'man vms' for more inform...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -577,8 +615,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/home/z/Desktop/VMS/relatorio.tex:291: Undefined control sequence.
-l.291 ...le\nTry 'man vms' for more information.\n
+/home/z/Desktop/VMS/relatorio.tex:283: Undefined control sequence.
+l.283 ...le\nTry 'man vms' for more information.\n
                                                   "
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -595,18 +633,18 @@ No file relatorio.bbl.
 
 ] (/home/z/Desktop/VMS/relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2568 strings out of 493029
- 33345 string characters out of 6136234
- 97988 words of memory out of 5000000
- 6113 multiletter control sequences out of 15000+600000
+ 3792 strings out of 493029
+ 51551 string characters out of 6136234
+ 121853 words of memory out of 5000000
+ 7275 multiletter control sequences out of 15000+600000
  10734 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 26i,7n,32p,220b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,7n,32p,235b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on /home/z/Desktop/VMS/relatorio.pdf (12 pages, 140899 bytes).
+Output written on /home/z/Desktop/VMS/relatorio.pdf (12 pages, 219767 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

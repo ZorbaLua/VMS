@@ -5,6 +5,7 @@
 \usepackage[portuges]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[latin1]{inputenc}
+\usepackage{graphicx}
 
 \usepackage{url}
 \usepackage{enumerate}
@@ -56,7 +57,7 @@
 \begin{abstract}
 	\quad Este documento apresenta o relatório desenvolvido no âmbito da Unidade Curricular de Projecto, pretendendo
 	explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as pretendidas resoluções
-	para cada problema exposto no enunciado fornecido. \\
+	para cada problema exposto no enunciado fornecido, prestando especial atenção ao modo de utilização do simulador; \\
 	\\
 	\\
 	\\
@@ -98,31 +99,29 @@ produzindo um executável que evite os problemas atuais.
 \chapter{Análise e Especificação} \label{ae}
 \section{Descrição Informal da Máquina}
 
-\quad Trata-se duma máquina de pilhas (por oposição às máquinas de registos),...
+\quad Trata-se duma máquina de pilhas (por oposição às máquinas de registos), esta e composta duma pilha de execução, duma pilha de chamadas,
+duma zona de código e de duas heaps:
 
+\begin{center}
+\includegraphics{stacks.png}
+\end{center}
 
-
-Esta e composta pelas seguintes 4 pilhas:
-\paragraph{\quad Code}
+\paragraph{\quad Code -}
 Esta pilha contem o conjunto das instruções do programa, esta e preenchida no inicio da execução do programa, mantendo-se igual
-ate ao fim da execução do mesmo;
-\paragraph{\quad Operation Stack}
-Esta pilha contem valores guardados na maquina, este podem ser do tipo inteiro, real e podem ser enderecos;
-\paragraph{\quad Heap}
-Esta pilha contem cadeias de caracteres (strings), cada uma destas referenciado por enderecos;
-\paragraph{\quad Call Stack}
-Esta pilha contem blocos estruturados, cada um destes referenciado por enderecoes, cada bloco
-estruturdo contem um certo numero de valores (do mesmo tipo dos valores que se podem encontrar na Operation Stack)
+do princípio ao fim da execução do mesmo;
+\paragraph{\quad Operation Stack -}
+Esta pilha contem valores guardados no registo da maquina, estes são todos indexados, podendo ser do tipo inteiro, real e endereço;
+\paragraph{\quad Heap -}
+Esta pilha contem cadeias de caracteres (strings), cada uma destas referenciado por endereços, cada bloco,
+contendo um certo numero de caracteres;
+\paragraph{\quad Call Stack -}
+Esta pilha contem blocos estruturados, cada um destes referenciado por endereços, cada bloco
+estruturado contem um certo numero de valores (estes são do mesmo tipo dos que se podem encontrar na Operation Stack);
 \\
 \\
-\null\quad A pilha de execução contém valores, que podem ser inteiros, reais ou endereços.
-As duas heaps contêm, respetivamente, cadeias de caracteres (strings) e blocos estruturados.
-Cada um destes tipos de dados é referenciado por endereços. Cada bloco
-estruturado contem um certo número de valores (do mesmo tipo dos valores que se podem
-encontrar na pilha).
-Um endereço pode apontar para quatro tipos de informação: para código, para a
+\null\quad Um endereço pode apontar para quatro tipos de informação: para código, para a
 pilha, para um bloco estruturado ou para uma string.
-Ao longo da execução do programa são guardados os seguintes quatro registos
+Ao longo da execução do programa são guardados os seguintes quatro registos:
 \begin{itemize}
 	\item \textit{\textbf{SP}} (Stack Pointer) o registo aponta para o topo corrente da pilha/ para a primeira célula livre da pilha.
 	\item \textit{\textbf{FP}} (Frame Pointer) o registo aponta para o endereço de base das variáveis locais.
@@ -135,7 +134,8 @@ A pilha de chamada permite guardar as chamadas: contém pares de apontadores
 
 \subsubsection{Instruções}
 
-\quad As instruções são designadas por um nome e podem aceitar um ou dois parâmetros. Estes podem ser:
+\quad As instruções são designadas por um nome e podem aceitar um ou dois parâmetros.
+Estes parâmetros podem ser dos seguintes tipos:
 \begin{itemize}
 \item Constantes inteiras,
 \item Constantes reais,
@@ -145,11 +145,11 @@ diz respeito aos caracteres especiais como \", \n ou \textbackslash\textbackslas
 \item Uma etiqueta simbólica designando uma zona no código.
 \end{itemize}
 
-\quad O conjunto da maioria das intrucoes pode ser encontrado no relatorio ...
-A estas foram adicionadas
+\quad O conjunto das instruções pode ser encontrado no documento original fornecido com as fontes da maquina virtual aqui descrita,
+destas foram ignoradas as primitivas gráficas, não sendo esta uma implementação de uma versão gráfica da maquina virtual;
 
 \section{Planeamento e objetivos}
-\quad O simulador deve ser implementado de forma a funcionar num maior numero de ambientes UNIX possível:
+\quad O simulador deve ser implementado de forma a funcionar num maior numero de ambientes possível:
 deve ser possível correr a simulação de vários modos possibilitando uma simulação interativa de cada programa.
 Existindo a possibilidade do jogador interagir com a simulação através da linha de comandos ou através de uma Interface
 gráfica a ser desenvolvida.\\
@@ -174,31 +174,23 @@ surgiram durante cada fase:
 
 \subsection{Parser}
 
-\quad Os programas por executar devem obedecer a sintaxe seguinte:
+\quad Os programas por executar devem obedecer a seguinte sintaxe:
+
+\begin{center}
+\includegraphics[width=\textwidth]{sintaxe.png}
+\end{center}
+
 
 \subsubsection{Convenções Lexicais:}
 
  -\quad \textless INTEGER\textgreater \quad ::= -?[0-9]+\\
  -\quad \textless FLOAT\textgreater   \quad ::= -?[0-9] + "."[0-9]+\\
  -\quad \textless LABEL\textgreater   \quad ::= [A-Z][A-Z0-9]* \\
- -\quad \textless COMMENT\textgreater \quad ::= "//".* \quad \| \quad "\#".*\\
+ -\quad \textless COMMENT\textgreater \quad ::= "//".* \quad \textbar \quad "\#".*\\
 
 \subsubsection{Funções:}
 
-"not"\|"equal"\|"add"\|"sub"\|"mul"\|"div"\|"mod"\|\\
-\|"inf"\|"infeq"\|"sup"\|"supeq"\|\\
-\|"fadd"\|"fsub"\|"fmul"\|"fdiv"\|\\
-\|"fcos"\|"fsin"\|"ftan"\|\\
-\|"finf"\|"finfeq"\|"fsup"\|"fsupeq"\|\\
-\|"padd"\|"concat"\|"alloc"\|"allocn"\|"free"\|\\
-\|"atoi"\|"atof"\|"itof"\|"ftoi"\|"stri"\|"strf"\|\\
-\|"pushi"\|"pushn"\|"pushf"\|"pushs"\|"pushg"\|"pushl"\|"pushsp"\|"pushfp"\|"pushgp"\|"load"\|"loadn"\|"dup"\|"dupn"\|\\
-\|"pop"\|"popn"\|"storel"\|"storeg"\|"store"\|"storen"\|\\
-\|"check"\|"swap"\|\\
-\|"writei"\|"writes"\|"writef"\|"read"\|\\
-\|"jump"\|"jz"\|"pusha"\|\\
-\|"call"\|"return"\|\\
-\|"start"\|"nop"\|"err"\|"stop"\\
+
 
 
 \subsection{Processador}

@@ -2,16 +2,16 @@
 \contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
 \contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\IeC {\c c}\IeC {\~a}o}{3}
 \contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o Informal da M\IeC {\'a}quina}{3}
-\contentsline {paragraph}{\hskip 1em\relax Code}{3}
-\contentsline {paragraph}{\hskip 1em\relax Operation Stack}{3}
-\contentsline {paragraph}{\hskip 1em\relax Heap}{3}
-\contentsline {paragraph}{\hskip 1em\relax Call Stack}{3}
-\contentsline {subsubsection}{Instru\IeC {\c c}\IeC {\~o}es}{3}
+\contentsline {paragraph}{\hskip 1em\relax Code -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Operation Stack -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Heap -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Call Stack -}{3}
+\contentsline {subsubsection}{Instru\IeC {\c c}\IeC {\~o}es}{4}
 \contentsline {section}{\numberline {2.2}Planeamento e objetivos}{4}
 \contentsline {section}{\numberline {2.3}Especifica\IeC {\c c}\IeC {\~a}o do Requisitos}{4}
-\contentsline {subsection}{\numberline {2.3.1}Parser}{4}
-\contentsline {subsubsection}{Conven\IeC {\c c}\IeC {\~o}es Lexicais:}{4}
-\contentsline {subsubsection}{Fun\IeC {\c c}\IeC {\~o}es:}{4}
+\contentsline {subsection}{\numberline {2.3.1}Parser}{5}
+\contentsline {subsubsection}{Conven\IeC {\c c}\IeC {\~o}es Lexicais:}{5}
+\contentsline {subsubsection}{Fun\IeC {\c c}\IeC {\~o}es:}{5}
 \contentsline {subsection}{\numberline {2.3.2}Processador}{5}
 \contentsline {subsection}{\numberline {2.3.3}Interface}{5}
 \contentsline {chapter}{\numberline {3}Concep\IeC {\c c}\IeC {\~a}o/desenho da Resolu\IeC {\c c}\IeC {\~a}o}{6}
