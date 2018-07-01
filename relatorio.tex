@@ -157,9 +157,14 @@ Existindo a possibilidade do jogador interagir com a simulação através da lin
 gráfica a ser desenvolvida.\\
 \null\quad Podemos então dividir o projecto em 3 grandes grupos:
 \begin{itemize}
-	\item \textbf{Parser:} um parser que receba o input
-	(programas a ser simulados) partindo-os em partes para que possam ser geridas por um outro grupo,
-	verificando se o ficheiro esta no formato correto, caso contrario apontando onde estarão os possíveis problemas;
+	\item \textbf{Parser:} O parser é responsável por percorrer o input do sistema e devolve
+	os tokens, que correspondem a qualquer instrução, isto é, qualquer conjunto de símbolos que não incluam
+	espaçamentos e mudanças de linha.
+	\quad Por fim, o parser filtra também o texto por forma a remover qualquer ocorrência de espaçamentos e mudanças de linhas.
+	Assim, o parser é responsável por processar o input para que este fique num estado que possa ser digerido pelo simulador,
+	permitindo assim estabelecer uma maior diversidade de formatos de input que, mesmo não sendo totalmente aceites
+	pelo processador, são mais completos e possuem uma componente estética maior.
+
 
 	\item \textbf{Simulador:} um programa que através do input recebido do parser e, se necessário, do input do utilizador,
 	faca a simulação em si do programa;
@@ -300,9 +305,13 @@ Mostram-se a seguir alguns testes feitos (valores introduzidos) e
 os respectivos resultados obtidos:
 
 \chapter{Conclusão} \label{concl}
-\quad Neste relatório descreveu-se o processo de conceção e implementação do projecto pedido pelo
+\quad Neste relatório descreveu-se o processo de conceção e implementação do trabalho no
+âmbito da Unidade Curricular de Projecto, do curso de Licenciatura em Ciências da Computação, Universidade do Minho, no
+segundo semestre do ano letivo 2017/2018. pedido pelo
 enunciado, nomeadamente o parser, o simulador e a interface gráfica, alem de descrever em detalhe
-o funcionamento da maquina referida.\\
+o funcionamento da maquina referida.\\\\
+\null\quad Os requisitos impostos pelo enunciado a que este relatório é referente são cumpridos pelos programas desenvolvidos,
+os quais são apresentados neste relatório. Foram também implementadas várias funcionalidades adicionais.\\
 \null\quad Apesar de estarmos satisfeitos com o trabalho desenvolvido, há ainda espaço para muitas
 melhorias desta implementação. Enumeram-se algumas ideias que, por falta de tempo, não foram
 (ainda) concretizadas:
