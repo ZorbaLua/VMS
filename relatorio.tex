@@ -6,6 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[latin1]{inputenc}
 \usepackage{graphicx}
+\usepackage{ tipa }
 
 \usepackage{url}
 \usepackage{enumerate}
@@ -55,8 +56,9 @@
 
 \maketitle
 \begin{abstract}
-	\quad Este documento apresenta o relatório desenvolvido no âmbito da Unidade Curricular de Projecto, pretendendo
-	explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as pretendidas resoluções
+	\quad Este documento apresenta o relatório desenvolvido no âmbito da Unidade Curricular de Projecto, do curso de
+	Licenciatura em Ciências da Computação, Universidade do Minho, no segundo semestre do ano letivo 2017/2018.\\
+	\quad Pretendendo-se explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as pretendidas resoluções
 	para cada problema exposto no enunciado fornecido, prestando especial atenção ao modo de utilização do simulador; \\
 	\\
 	\\
@@ -208,12 +210,10 @@ esperado (descrito no documento referido acima), permitindo ao utilizador contro
 Em termos de organização do código, este foi dividido nos seguintes ficheiros:
 
 \begin{itemize}
-\item \textbf{check.sh*} - Coisas
-\item \textbf{README} - Coisas
-\item \textbf{structs/} - Coisas
-\item \textbf{vmsMan.1} - Coisas
-\item \textbf{inst\_err} - Coisas
-\item \textbf{lex.l} - Coisas
+\item \textbf{README} - Este ficheiro contem uma lista de packages que necessitam de ser instalados para o correto funcionamento do simulador;
+\item \textbf{structs/} - Pasta que contem os módulos das estruturas de dados criadas;
+\item \textbf{vmsMan.1} - Este ficheiro e relativo a man page do simulador, este e acessível após a instalação da vms;
+\item \textbf{lex.l} - Ficheiro lex referente ao parser, que contem todas as instruções e convenções necessárias;
 \item \textbf{semantic.c} - Coisas
 \item \textbf{syntax.y} - Coisas
 \item \textbf{interface.c} - Coisas
@@ -238,7 +238,19 @@ Em termos de estruturas criadas, estas foram divididas nos seguintes grupos
 \end{itemize}
 \section{Fases de Desenvolvimento}
 \subsection{Parser}
-\quad Falar flex etc.
+Os programas
+
+\subsubsection{Convencoes lexicais}
+
+\null\quad \textbf{\textless digit\textgreater}  ::= 0-9\\
+\null\quad \textbf{\textless alpha\textgreater} ::= a-z \textvertline\space A-Z\\
+\null\quad \textbf{\textless ident\textgreater} ::= ...
+
+\null\quad \textbf{\textless comentario\textgreater} ::= \#.* \textvertline \space //\textspace\space.*
+
+\null\quad \textbf{\textless integer\textgreater} ::= -? \textless digit\textgreater + \\
+\null\quad \textbf{\textless float\textgreater} ::= -? \textless digit\textgreater + (.\textless digit\textgreater *?)\\
+
 \subsection{Processador}
 \quad Estruturas de dados etc.
 \subsection{Interface}
@@ -270,12 +282,16 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 \section{Mensagens de erro}
 
 \begin{itemize}
-\item "Error: Index out of array"
-\item "Error: fp == sp"
-\item "Error: Opening file"
-\item "Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n"
-\item "Error: Invalid type ( write / not / equal / padd second arg not int / padd first argument not adress / alocn / free /
- atox arg is not heap adress / itof / ftoi / stri / strf / loadn / load / dupn / popn / pon / storen / jz / call )"
+\item \textbf{Error: Index out of array - } Provocado por um acesso indevido a zona de código, seja acesso as duas heaps ou a pilha;
+\item \textbf{Error: fp == sp - } Provocado quando ...
+\item \textbf{Error: Opening file - } Provocado quando ocorreu um erro a abrir um ficheiro;
+\item \textbf{Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n - } Provocado quando e iniciado o simulador
+com as opções/flags incorrectas;
+\item \textbf{Error: Invalid type ( write / not / equal / padd second arg not int / padd first argument not adress / alocn / free /
+ atox arg is not heap adress / itof / ftoi / stri / strf / loadn / load / dupn / popn / pon / storen / jz / call ) - } Provocado
+ quando o(s) valores retirados da pilha não tem o tipo esperado;
+\item \textbf{Segmentation Fault - } Provocado por um acesso indevido a zona de código, as duas heaps ou a pilha;
+\item \textbf{Error \textit{mensagem} - } Provocado por uma instrução err;
 \end{itemize}
 
 \section{Alternativas, Decisões e Problemas de Implementação}

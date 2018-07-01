@@ -17,6 +17,7 @@
 \contentsline {subsection}{\numberline {3.1.1}Estruturas}{6}
 \contentsline {section}{\numberline {3.2}Fases de Desenvolvimento}{7}
 \contentsline {subsection}{\numberline {3.2.1}Parser}{7}
+\contentsline {subsubsection}{Convencoes lexicais}{7}
 \contentsline {subsection}{\numberline {3.2.2}Processador}{7}
 \contentsline {subsection}{\numberline {3.2.3}Interface}{7}
 \contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{8}
