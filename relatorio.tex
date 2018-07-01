@@ -235,11 +235,105 @@ Em termos de estruturas criadas, estas foram divididas nos seguintes grupos
 
 \begin{itemize}
 	\item \textbf{array} - Coisas
+	\begin{verbatim}
+		typedef struct array {
+		    int len;
+		    int allocSize;
+		    void** array;
+		} Array;
+  \end{verbatim}
+
 	\item \textbf{callStack} - Coisas
+	\begin{verbatim}
+		typedef struct callElem{
+		    int pc;
+		    int fp;
+		} *CallElem;
+
+		typedef struct callStack{
+		    Array stack;
+		} CallStack;
+  \end{verbatim}
+
 	\item \textbf{code} - Coisas
+	\begin{verbatim}
+		typedef struct codeElem{
+		    Einst inst;
+		    Value first;
+		    Value second;
+		} *CodeElem;
+
+		typedef struct code{
+		    Array array;
+		    codePt pc;
+		} Code;
+	\end{verbatim}
 	\item \textbf{heap} - Coisas
+	\begin{verbatim}
+		typedef struct heapElem{
+		    char c;
+		    heapPt next;
+		} HeapElem;
+
+		typedef struct heap{
+		    HeapElem* mem;
+		    int size;
+		    heapPt first;
+		} Heap;
+	\end{verbatim}
 	\item \textbf{opStack} - Coisas
+	\begin{verbatim}
+		typedef struct operandElem{
+		    Value val;
+		} *OperandElem;
+
+		typedef struct opStack{
+		    Array stack;
+		    opPt sp;
+		    opPt fp;
+		    opPt gp;
+		} OpStack;
+	\end{verbatim}
 	\item \textbf{types} - Coisas
+	\begin{verbatim}
+		typedef enum etype{
+		    T_int,
+		    T_float,
+		    T_string,
+		    T_codePt,
+		    T_opPt,
+		    T_heapPt,
+		    NOTHING
+		} Etype;
+
+		typedef int codePt, opPt, heapPt;
+
+		typedef union uvalue{
+		    int i;
+		    float f;
+		    GString* s;
+		    codePt c;
+		    opPt o;
+		    heapPt h;
+		} Uvalue;
+
+		typedef struct value{
+		    Uvalue val;
+		    Etype type;
+		} Value;
+
+		typedef enum inst {
+		    ADD,
+				.
+				.
+				.
+		    STOP,
+		} Einst;
+
+		typedef struct hashData{
+		    codePt line;
+		} *HashData;
+	\end{verbatim}
 \end{itemize}
 \section{Fases de Desenvolvimento}
 \subsection{Parser}
@@ -294,7 +388,7 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 com as opções/flags incorrectas;
 \item \textbf{Error: Invalid type ( write / not / equal / padd second arg not int / padd first argument not adress / alocn / free /
  atox arg is not heap adress / itof / ftoi / stri / strf / loadn / load / dupn / popn / pon / storen / jz / call ) - } Provocado
- quando o(s) valores retirados da pilha não tem o tipo esperado;
+ quando o(s) valores retirados da pilha/ enviados com as instruções não tem o tipo esperado;
 \item \textbf{Segmentation Fault - } Provocado por um acesso indevido a zona de código, as duas heaps ou a pilha;
 \item \textbf{Error \textit{mensagem} - } Provocado por uma instrução err;
 \end{itemize}
