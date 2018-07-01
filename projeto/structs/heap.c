@@ -1,4 +1,5 @@
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,7 +9,7 @@ extern Heap heap;
 extern FILE* dbout;
 
 HeapElem* get(heapPt pt){
-//((heap.mem)[pt]).c == '\0' || 
+//((heap.mem)[pt]).c == '\0' ||
     if( pt<0 || pt>heap.size) return NULL;
     return &(heap.mem[pt]);
 }
@@ -127,20 +128,3 @@ void printHeap(char signal, int index, char c){
     fprintf(dbout, "> HEAP %c %d \"\n%c\n\"\n", signal, index, c);
     fflush(dbout);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

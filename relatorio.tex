@@ -162,7 +162,7 @@ gráfica a ser desenvolvida.\\
 	\item \textbf{Simulador:} um programa que através do input recebido do parser e, se necessário, do input do utilizador,
 	faca a simulação em si do programa;
 
-	\item \textbf{Interface:} uma interface que permita ao utilizador interagir com a execução do simulador,
+	\item \textbf{Interface Gráfica:} uma interface que permita ao utilizador interagir com a execução do simulador,
 	e dando-lhe acesso a informação sobre o estado atual da maquina;
 	Cada vez que o utilizador interatue com a interface (e.g. clicando num botão), esta deve ser atualizada,
 	refletindo as alterações feitas no estado na maquina e na interface.
@@ -174,32 +174,26 @@ surgiram durante cada fase:
 
 \subsection{Parser}
 
-\quad Os programas por executar devem obedecer a seguinte sintaxe:
+\quad O parser deve aceitar programas com a seguinte sintaxe:
 
 \begin{center}
 \includegraphics[width=\textwidth]{sintaxe.png}
 \end{center}
 
-
-\subsubsection{Convenções Lexicais:}
-
- -\quad \textless INTEGER\textgreater \quad ::= -?[0-9]+\\
- -\quad \textless FLOAT\textgreater   \quad ::= -?[0-9] + "."[0-9]+\\
- -\quad \textless LABEL\textgreater   \quad ::= [A-Z][A-Z0-9]* \\
- -\quad \textless COMMENT\textgreater \quad ::= "//".* \quad \textbar \quad "\#".*\\
-
-\subsubsection{Funções:}
-
-
-
+\quad Ainda, o parser devera ignorar tudo o que sirva para embelezar o código do programa (sejam espaços a mais, linhas em branco etc.),
+assim como devera ser possível a utilização de comentários que deverão ser ignorados pelo mesmo.
 
 \subsection{Processador}
-\subsection{Interface}
+
+\quad O processador devera receber o programa tratado pelo Parser e executar as instruções produzindo o resultado
+esperado (descrito no documento referido acima), permitindo ao utilizador controlar a execução do programa;
+
+\subsection{Interface Gráfica}
 \quad A interface deve permitir ao utilizador executar as seguintes ações:
 \begin{itemize}
-\item Executar 1 passo na execução do programa;
-\item Executar n passos (passado como argumento) na execução do programa;
-\item Executar o programa ate ao fim;
+\item Realizar 1 passo na execução do programa;
+\item Realizar n passos (passado como argumento) na execução do programa;
+\item Realizar a execução do programa ate ao fim de uma vez só;
 \item Carregar um programa para ser simulado;
 \item Recarregar o programa que esta atualmente a ser simulado;
 \item Em qualquer momento da execução do programa, mostrar o estado actual da maquina (stacks e pointers);
@@ -276,31 +270,12 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 \section{Mensagens de erro}
 
 \begin{itemize}
-\item "Error:"
 \item "Error: Index out of array"
 \item "Error: fp == sp"
 \item "Error: Opening file"
 \item "Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n"
-\item "Error: Invalid type write"
-\item "Error: Invalid type not"
-\item "Error: Invalid type equal"
-\item "Error: Invalid type padd second arg not int"
-\item "Error: Invalid type padd first argument not adress"
-\item "Error: Invalid type alocn"
-\item "Error: Invalid type free"
-\item "Error: Invalid type atox arg is not heap adress"
-\item "Error: Invalid type itof"
-\item "Error: Invalid type ftoi"
-\item "Error: Invalid type stri"
-\item "Error: Invalid type strf"
-\item "Error: Invalid type loadn"
-\item "Error: Invalid type load"
-\item "Error: Invalid type dupn"
-\item "Error: Invalid type popn"
-\item "Error: Invalid type pon"
-\item "Error: Invalid type storen"
-\item "Error: Invalid type jz"
-\item "Error: Invalid type call"
+\item "Error: Invalid type ( write / not / equal / padd second arg not int / padd first argument not adress / alocn / free /
+ atox arg is not heap adress / itof / ftoi / stri / strf / loadn / load / dupn / popn / pon / storen / jz / call )"
 \end{itemize}
 
 \section{Alternativas, Decisões e Problemas de Implementação}

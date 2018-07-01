@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  30 JUN 2018 18:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  1 JUL 2018 17:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -578,36 +578,24 @@ File: sintaxe.png Graphic file (type png)
  <use sintaxe.png>
 Package pdftex.def Info: sintaxe.png used on input line 180.
 (pdftex.def)             Requested size: 512.1496pt x 251.19339pt.
- [4]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 186.
- (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
-File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 186.
-
-Underfull \hbox (badness 10000) in paragraph at lines 186--190
-
- []
-
-[5 </home/z/Desktop/VMS/sintaxe.png>]
+ [4] [5 </home/z/Desktop/VMS/sintaxe.png>]
 Cap\'{\i }tulo 3.
 [6
 
 ] [7]
 Cap\'{\i }tulo 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--258
+Underfull \hbox (badness 10000) in paragraph at lines 249--252
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--260
+Underfull \hbox (badness 10000) in paragraph at lines 253--254
 
  []
 
-/home/z/Desktop/VMS/relatorio.tex:283: Undefined control sequence.
-l.283 ...d' or '-g' option, or a program file\nTry
+/home/z/Desktop/VMS/relatorio.tex:276: Undefined control sequence.
+l.276 ...d' or '-g' option, or a program file\nTry
                                                    'man vms' for more inform...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -615,8 +603,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/home/z/Desktop/VMS/relatorio.tex:283: Undefined control sequence.
-l.283 ...le\nTry 'man vms' for more information.\n
+/home/z/Desktop/VMS/relatorio.tex:276: Undefined control sequence.
+l.276 ...le\nTry 'man vms' for more information.\n
                                                   "
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -633,18 +621,18 @@ No file relatorio.bbl.
 
 ] (/home/z/Desktop/VMS/relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 3792 strings out of 493029
- 51551 string characters out of 6136234
+ 3770 strings out of 493029
+ 51186 string characters out of 6136234
  121853 words of memory out of 5000000
- 7275 multiletter control sequences out of 15000+600000
+ 7256 multiletter control sequences out of 15000+600000
  10734 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,7n,32p,235b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on /home/z/Desktop/VMS/relatorio.pdf (12 pages, 219767 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on /home/z/Desktop/VMS/relatorio.pdf (12 pages, 211076 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 79 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

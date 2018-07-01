@@ -10,10 +10,8 @@
 \contentsline {section}{\numberline {2.2}Planeamento e objetivos}{4}
 \contentsline {section}{\numberline {2.3}Especifica\IeC {\c c}\IeC {\~a}o do Requisitos}{4}
 \contentsline {subsection}{\numberline {2.3.1}Parser}{5}
-\contentsline {subsubsection}{Conven\IeC {\c c}\IeC {\~o}es Lexicais:}{5}
-\contentsline {subsubsection}{Fun\IeC {\c c}\IeC {\~o}es:}{5}
 \contentsline {subsection}{\numberline {2.3.2}Processador}{5}
-\contentsline {subsection}{\numberline {2.3.3}Interface}{5}
+\contentsline {subsection}{\numberline {2.3.3}Interface Gr\IeC {\'a}fica}{5}
 \contentsline {chapter}{\numberline {3}Concep\IeC {\c c}\IeC {\~a}o/desenho da Resolu\IeC {\c c}\IeC {\~a}o}{6}
 \contentsline {section}{\numberline {3.1}Organiza\IeC {\c c}\IeC {\~a}o do c\IeC {\'o}digo}{6}
 \contentsline {subsection}{\numberline {3.1.1}Estruturas}{6}
