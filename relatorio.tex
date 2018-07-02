@@ -218,7 +218,7 @@ Em termos de organização do código, este foi dividido nos seguintes ficheiros
 \item \textbf{structs/} - Pasta que contem os módulos das estruturas de dados criadas;
 \item \textbf{vmsMan.1} - Este ficheiro e relativo a man page do simulador, este e acessível após a instalação da vms;
 \item \textbf{lex.l} - Ficheiro lex referente ao parser, que contem todas as instruções e convenções necessárias;
-\item \textbf{semantic.c} - A este ficheiro estão associadas as funçoes que dão significado as instruçoes, isto é, manipula as estruturas de acordo com a instrução; 
+\item \textbf{semantic.c} - A este ficheiro estão associadas as funçoes que dão significado as instruçoes, isto é, manipula as estruturas de acordo com a instrução;
 \item \textbf{syntax.y} - Este ficheriro é processado pelo yacc, e gera o codigo c que trata de fazer o parsing;
 \item \textbf{interface.c} - Este ficheiro contêm todo o código referente à interface gráfica;
 \item \textbf{makefile} - A makefile gere a dependência da compilação dos restantes ficheiros;
@@ -252,7 +252,7 @@ void Array_free(Array*);
   \end{verbatim}
 
 
-    \item \textbf{callStack} - Esta estrurura serve-se da estrutura "Array", como se pode ver na API tem apena duas funções "push" e "pop", dado que questa stack tem um coprtamento LIFO, de salientar que os blocos (CallElem) que constituem o array tem apenas um par de valores com referido anteriormente, o program counter e o frame pointer. 
+    \item \textbf{callStack} - Esta estrurura serve-se da estrutura "Array", como se pode ver na API tem apena duas funções "push" e "pop", dado que questa stack tem um coprtamento LIFO, de salientar que os blocos (CallElem) que constituem o array tem apenas um par de valores com referido anteriormente, o program counter e o frame pointer.
 	\begin{verbatim}
 		typedef struct callElem{
 		    int pc;
@@ -322,7 +322,7 @@ void OpStack_free();
 	\end{verbatim}
 
 
-	\item \textbf{opStack} - Esta estrutura à semelhança com a callStack tem um comportamento de Lifo, e assim sendo, tem uma API similar, em oposição esta estrutura tem mais dua funçoes na API, essas são "getPos" e "addPos", isto deve-se ao facto de haver instruçoes como por exemplo "store" que alteram o valor de posiçoes  especificas da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers actuais, assim como do global pointer. 
+	\item \textbf{opStack} - Esta estrutura à semelhança com a callStack tem um comportamento de Lifo, e assim sendo, tem uma API similar, em oposição esta estrutura tem mais dua funçoes na API, essas são "getPos" e "addPos", isto deve-se ao facto de haver instruçoes como por exemplo "store" que alteram o valor de posiçoes  especificas da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers actuais, assim como do global pointer.
 	\begin{verbatim}
 		typedef struct operandElem{
 		    Value val;
