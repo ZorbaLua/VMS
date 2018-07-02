@@ -7,6 +7,7 @@
 \usepackage[latin1]{inputenc}
 \usepackage{graphicx}
 \usepackage{tipa}
+\usepackage{parallel,enumitem}
 
 \usepackage{url}
 \usepackage{enumerate}
@@ -227,58 +228,83 @@ Em termos de organização do código, este foi dividido nos seguintes ficheiros
 
 \subsection{Estruturas}
 
-Em termos de estruturas criadas têm-se as estruturas apresentadas anteriormente associadas com os respectivos apontadores, para alem, destas criou-se uma estrutura "array" auxiliar para facilitar a implementação das restantes stacks, assim têm-se os seguintes grupos
+\quad Em termos de estruturas criadas têm-se as estruturas apresentadas anteriormente associadas com os respectivos apontadores, para alem, destas criou-se uma estrutura "array" auxiliar para facilitar a implementação das restantes stacks, assim têm-se os seguintes grupos
 (sendo que cada grupo representa um par de ficheiros .h e .c):
 
+\paragraph{\quad Array - }
+Esta estrutura e uma estrutura auxiliar, constituida por três campos, um array, e dois int's, isto deve-se ao facto de a estrura ser a
+implementação de um array dinamico, sendo que o int len é o indice da primeira posição livre, e o int allocSize e otamnho do array alocado.
+De notar que devido ao campo len foi facultada uma API que permite usar esta estrutura como um LIFO (Last In First Out) através dos
+metodos "remove" e "add".
 
-\begin{itemize}
-    \item \textbf{array} - Esta estrutura e uma estrutura auxiliar, constituida por três campos, um array, e dois int's, isto deve-se ao facto de a estrura ser a implementação de um array dinamico, sendo que o int len é o indice da primeira posição livre, e o int allocSize e otamnho do array alocado. De notar que devido ao campo len foi facultada uma API que permite usar esta estrutura como um LIFO (Last In First Out) através dos metodos "remove" e "add".
-    \begin{verbatim}
-        typedef struct array {
-            int len;
-            int allocSize;
-            void** array;
-        } Array;
-    \end{verbatim}
-        \textbf{API}
-    \begin{verbatim}
-int  Array_remove(Array*, int, void**);
-int  Array_getPos(Array*, int, void**);
-int  Array_addPos(Array*, int, void*);
-void Array_add(Array*, void*);
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+			typedef struct array {
+					   int len;
+					   int allocSize;
+					   void** array;
+			} Array;
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			int  Array_remove(Array*, int, void**);
+			int  Array_getPos(Array*, int, void**);
+			int  Array_addPos(Array*, int, void*);
+			void Array_add(Array*, void*);
 
-void Array_init(Array*, int);
-void Array_free(Array*);
-  \end{verbatim}
+			void Array_init(Array*, int);
+			void Array_free(Array*);
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
 
+\paragraph{\quad CallStack - } Esta estrurura serve-se da estrutura "Array", como se pode ver na API tem apena duas funções
+ "push" e "pop", dado que questa stack tem um coprtamento LIFO, de salientar que os blocos (CallElem) que constituem
+ o array tem apenas um par de valores com referido anteriormente, o program counter e o frame pointer.
 
-    \item \textbf{callStack} - Esta estrurura serve-se da estrutura "Array", como se pode ver na API tem apena duas funções "push" e "pop", dado que questa stack tem um coprtamento LIFO, de salientar que os blocos (CallElem) que constituem o array tem apenas um par de valores com referido anteriormente, o program counter e o frame pointer.
-	\begin{verbatim}
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
 		typedef struct callElem{
-		    int pc;
-		    int fp;
+				   int pc; int fp;
 		} *CallElem;
 
 		typedef struct callStack{
-		    Array stack;
+				     Array stack;
 		} CallStack;
-    \end{verbatim}
-        \textbf{API}
-	\begin{verbatim}
-void CallStack_pop(CallElem*);
-void CallStack_push(CallElem);
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			void CallStack_pop(CallElem*);
+			void CallStack_push(CallElem);
 
-void CallStack_init(int);
-void CallStack_free();
-  \end{verbatim}
+			void CallStack_init(int);
+			void CallStack_free();
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
 
+\paragraph{\quad Code - } Esta estrutura é inicializada ao se realizar o parsing, a estrutura te dois campos,
+ um array e um code pointer. O array é composto por blocos do tipo codeElem, estes são compostos por um
+ inst que é do tipo enum que serve para correspoder cada instução a um codigo único, estes blocos têm ainda
+	mais dois campos que são os argumentos da instução estes serão retratados mais abaixo.
 
-	\item \textbf{code} - Esta estrutura é inicializada ao se realizar o parsing, a estrutura te dois campos, um array e um code pointer. O array é composto por blocos do tipo codeElem, estes são compostos por um inst que é do tipo enum que serve para correspoder cada instução a um codigo único, estes blocos têm ainda mais dois campos que são os argumentos da instução estes serão retratados mais abaixo.
-	\begin{verbatim}
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
 		typedef struct codeElem{
-		    Einst inst;
-		    Value first;
-		    Value second;
+		    Einst inst; Value first; Value second;
 		} *CodeElem;
 
 		typedef struct code{
@@ -286,18 +312,30 @@ void CallStack_free();
 		    codePt pc;
 		} Code;
 	\end{verbatim}
-        \textbf{API}
-	\begin{verbatim}
-void Code_add(CodeElem);
-int  Code_get(CodeElem*);
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			void Code_add(CodeElem);
+			int  Code_get(CodeElem*);
 
-void Code_init(int);
-void Code_free();
-	\end{verbatim}
+			void Code_init(int);
+			void Code_free();
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
 
+\paragraph{\quad Heap - } A estrutura heap é um array dinamico constituido por blocos com dois campos um campo do
+ tipo char que serve para armazenar um valor, e o campo next que contem o índice da proxima posição livre no
+ caso de esse bloco nao estar alocado, ou o indice do proximo char da cadeia de chars alocados, no caso de
+ o bloco seja um bloco alocado. A estrutura heap em si tem entao um array de blocos deste tipo, tem o tamanho
+ do array alocado, para se poder implementar com um array dinamico, e ainda um heapPt queé o menor índice de um bloco nao alocado.
 
-	\item \textbf{heap} - A estrutura heap é um array dinamico constituido por blocos com dois campos um campo do tipo char que serve para armazenar um valor, e o campo next que contem o índice da proxima posição livre no caso de esse bloco nao estar alocado, ou o indice do proximo char da cadeia de chars alocados, no caso de o bloco seja um bloco alocado. A estrutura heap em si tem entao um array de blocos deste tipo, tem o tamanho do array alocado, para se poder implementar com um array dinamico, e ainda um heapPt queé o menor índice de um bloco nao alocado.
-	\begin{verbatim}
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
 		typedef struct heapElem{
 		    char c;
 		    heapPt next;
@@ -305,25 +343,35 @@ void Code_free();
 
 		typedef struct heap{
 		    HeapElem* mem;
-		    int size;
-		    heapPt first;
+		    int size; heapPt first;
 		} Heap;
 	\end{verbatim}
-        \textbf{API}
-	\begin{verbatim}
-int OpStack_pop(OperandElem*);
-int OpStack_top(OperandElem*);
-int OpStack_getPos(int, OperandElem*);
-int OpStack_addPos(int, OperandElem);
-void OpStack_push(OperandElem);
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			int OpStack_pop(OperandElem*);
+			int OpStack_top(OperandElem*);
+			int OpStack_getPos(int, OperandElem*);
+			int OpStack_addPos(int, OperandElem);
+			void OpStack_push(OperandElem);
 
-void OpStack_init(int);
-void OpStack_free();
-	\end{verbatim}
+			void OpStack_init(int);
+			void OpStack_free();
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
 
+\paragraph{\quad OpStack - } Esta estrutura à semelhança com a callStack tem um comportamento de Lifo, e assim sendo,
+ tem uma API similar, em oposição esta estrutura tem mais dua funçoes na API, essas são "getPos" e "addPos",
+ isto deve-se ao facto de haver instruçoes como por exemplo "store" que alteram o valor de posiçoes  especificas
+ da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers actuais, assim como do global pointer.
 
-	\item \textbf{opStack} - Esta estrutura à semelhança com a callStack tem um comportamento de Lifo, e assim sendo, tem uma API similar, em oposição esta estrutura tem mais dua funçoes na API, essas são "getPos" e "addPos", isto deve-se ao facto de haver instruçoes como por exemplo "store" que alteram o valor de posiçoes  especificas da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers actuais, assim como do global pointer.
-	\begin{verbatim}
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
 		typedef struct operandElem{
 		    Value val;
 		} *OperandElem;
@@ -335,40 +383,46 @@ void OpStack_free();
 		    opPt gp;
 		} OpStack;
 	\end{verbatim}
-        \textbf{API}
-	\begin{verbatim}
-int OpStack_pop(OperandElem*);
-int OpStack_top(OperandElem*);
-void OpStack_push(OperandElem);
-int OpStack_getPos(int, OperandElem*);
-int OpStack_addPos(int, OperandElem);
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			int OpStack_pop(OperandElem*);
+			int OpStack_top(OperandElem*);
+			void OpStack_push(OperandElem);
+			int OpStack_getPos(int, OperandElem*);
+			int OpStack_addPos(int, OperandElem);
 
-void OpStack_init(int);
-void OpStack_free();
-	\end{verbatim}
+			void OpStack_init(int);
+			void OpStack_free();
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
 
+\paragraph{\quad Types - } Para a concretização da maquina necessitou-se da criação de novos tipos de dados como ter
+ um tipo para os apontadores das diversas etruturas, assim surgiram os tipos codePT, opPt e heapPt, uma
+	vez que estes são índices de posições de arrays optou-se por terem tipo int. Tem-se ainda o tipo dos
+	 arguntos das instruçoes e e os valores armazenados na operand stack, este tipo é o Value e é composto
+		por dois campos, uma union dos tipos genericos como int e float, com tipo dos apontadores mostrados
+		 anteriormente e ainda do tipos string, o outro campo e um enum que identifica o tipo do primeiro campo.
+		 Por fim falta destacar o tipo Eints que é um enum que associa cada instrução a um codigo único.
 
-	\item \textbf{types} - Para a concretização da maquina necessitou-se da criação de novos tipos de dados como ter um tipo para os apontadores das diversas etruturas, assim surgiram os tipos codePT, opPt e heapPt, uma vez que estes são índices de posições de arrays optou-se por terem tipo int. Tem-se ainda o tipo dos arguntos das instruçoes e e os valores armazenados na operand stack, este tipo é o Value e é composto por dois campos, uma union dos tipos genericos como int e float, com tipo dos apontadores mostrados anteriormente e ainda do tipos string, o outro campo e um enum que identifica o tipo do primeiro campo. Por fim falta destacar o tipo Eints que é um enum que associa cada instrução a um codigo único.
-	\begin{verbatim}
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{\noindent
+	\null\begin{verbatim}
 		typedef enum etype{
-		    T_int,
-		    T_float,
-		    T_string,
-		    T_codePt,
-		    T_opPt,
-		    T_heapPt,
+		    T_int,  T_float, T_string,
+		    T_codePt, T_opPt, T_heapPt,
 		    NOTHING
 		} Etype;
 
 		typedef int codePt, opPt, heapPt;
 
 		typedef union uvalue{
-		    int i;
-		    float f;
-		    GString* s;
-		    codePt c;
-		    opPt o;
-		    heapPt h;
+		    int i; float f; GString* s;
+		    codePt c; opPt o; heapPt h;
 		} Uvalue;
 
 		typedef struct value{
@@ -377,18 +431,25 @@ void OpStack_free();
 		} Value;
 
 		typedef enum inst {
-		    ADD,
-				.
-				.
-				.
-		    STOP,
+		    ADD, ..., STOP,
 		} Einst;
 
 		typedef struct hashData{
 		    codePt line;
 		} *HashData;
 	\end{verbatim}
-\end{itemize}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			HashData newHashData(codePt);
+			Value newValue(Uvalue,Etype);
+			char* Value_toString(Value);
+			char* Inst_toString(Einst);
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+
 \section{Fases de Desenvolvimento}
 \subsection{Parser}
 Os programas
