@@ -188,8 +188,19 @@ surgiram durante cada fase:
 \includegraphics[width=\textwidth]{sintaxe.png}
 \end{center}
 
-\quad Ainda, o parser deverá ignorar tudo o que sirva para embelezar o código do programa (sejam espaços a mais, linhas em branco etc.),
-assim como deverá ser possível a utilização de comentários que deverão ser ignorados pelo mesmo.
+%\subsubsection{Convenções lexicais:}
+
+%\null\quad \textbf{\textless digit\textgreater} ::= [0-9]\\
+%\null\quad \textbf{\textless alpha\textgreater} ::= [a-zA-Z]\\
+%\null\quad \textbf{\textless label\textgreater} ::= [A-Z][A-Z0-9]*
+
+%\null\quad \textbf{\textless comentario\textgreater} ::= \#.* \textvertline \space //\textspace\space.*
+
+%\null\quad \textbf{\textless integer\textgreater} ::= -? \textless digit\textgreater + \\
+%\null\quad \textbf{\textless float\textgreater} ::= -? \textless digit\textgreater + (.\textless digit\textgreater *?)\\
+
+\quad Ainda, o parser deverá ignorar tudo o que sirva para embelezar o código do programa (sejam múltiplos espaços seguidos, linhas em branco ou mesmo
+comentários por parte do criador do programa).
 
 \subsection{Processador}
 
@@ -461,52 +472,53 @@ Como referido acima, no desenvolvimento do projeto, este foi dividido em 3 parte
 
 \subsection{Parser}
 
- Este pode ser dividido em duas partes:
+\quad Este pode ser dividido em duas partes:
   uma primeira que se trata de um reconhecedor lexical (lexer) que irá ser responsável pela filtragem do input,
 	 e uma segunda que corresponde a um reconhecedor gramatical (parser) que analisa os resultados do lexer,
 	 de forma a os enquadrar com as regras gramaticais definidas acima. Essas duas partes são descritas
 	  nas secções que se seguem.
 
-O reconhecedor lexical é responsável por percorrer o programa a ser simulado e devolve os tokens, que correspondem a qualquer palavra,
+\quad O reconhecedor lexical é responsável por percorrer o programa a ser simulado e devolve os tokens, que correspondem a qualquer palavra,
  isto é, qualquer conjunto de símbolos que não incluam espaçamentos e mudanças de linha.
 
 Por fim, o lexer filtra também o texto por forma a remover qualquer ocorrência de espaçamentos e mudanças de linhas.
 
-Assim, o lexer é responsável por processar o input para que este fique num estado que possa ser digerido pelo reconhecedor gramatical,
+\quad Assim, o lexer, implementado com recurso à ferramenta {\FLEX}, e então responsável por processar o input para que este fique num estado que possa ser digerido pelo reconhecedor gramatical,
 permitindo assim estabelecer uma maior diversidade de formatos de input que, mesmo não sendo totalmente aceites pelo
-parser, são mais completos e possuem uma componente estética maior. Todo enquanto permite que o parser permeneça com
+parser, são mais completos e possuem uma componente estética maior. Todo enquanto permite que o parser permaneça com
 uma linguagem simples e direta.
 
-O parser vai, então, receber os tokens do lexer e através da análise destes, determina se o conjunto
+\quad O parser implementado na linguagem {\YACC}, vai então receber os tokens do lexer, e através da análise destes, determina se o conjunto
 corresponde a alguma das regra gramatical definida, se este correspondência for positiva, e armazenada
 uma nova "linha" da estrutura do Código, correspondente a instrução no código lida.
 
-Quando todos os elementos do ficheiro forem percorridos ficamos com um conjunto de instruções guardado no Code Block que
+\quad Quando todos os elementos do ficheiro forem percorridos ficamos com um conjunto de instruções guardado no Code Block que
 representam o programa a ser simulado. Esta possui então toda a informação necessária para
 efetuar a simulação (aparte do input do utilizador possivelmente necessário
 durante a sua execução), pelo que esta pode ser inicializada;
 
-
-
-
-
-
-
-\subsubsection{Convencoes lexicais}
-
-\null\quad \textbf{\textless digit\textgreater}  ::= 0-9\\
-\null\quad \textbf{\textless alpha\textgreater} ::= a-z \textvertline\space A-Z\\
-\null\quad \textbf{\textless ident\textgreater} ::= ...
-
-\null\quad \textbf{\textless comentario\textgreater} ::= \#.* \textvertline \space //\textspace\space.*
-
-\null\quad \textbf{\textless integer\textgreater} ::= -? \textless digit\textgreater + \\
-\null\quad \textbf{\textless float\textgreater} ::= -? \textless digit\textgreater + (.\textless digit\textgreater *?)\\
-
 \subsection{Processador}
 \quad Estruturas de dados etc.
 \subsection{Interface}
-\quad Nao faco ideia
+\quad A interface permita ao utilizador interagir com a execução do simulador, dando-lhe acesso a informação sobre o estado atual da maquina;
+Esta foi desenvolvida na linguagem C com recurso à ferramenta GTK.
+
+Quando a simulação e iniciada utilizando a Interface Gráfica, são criados dois processos em paralelo (o simulador e a interface) tal que
+o output de um seja enviado para o outro. Desta maneira, o simulador recebe da interface
+as ações dos utilizadores (através dos botões) e o input quando necessário para a execução, e
+após executar a ação modificando o estado da maquina,  envia-o para a interface para que esta possa ser atualizada.
+
+A interface e então defina em duas fases, uma primeira fase de preparação onde:
+\begin{itemize}
+	\item O input/output da interface são redirecionados;
+	\item A janela da interface e criada;
+	\item Por últimos os objetos da interface (botões, listas e labels) são criados;
+\end{itemize}
+
+\quad A segunda fase pode ser simplesmente definida como um ciclo
+ A interface esta num estado em inicial que espera que o utilizador execute uma ação, apos esta ser acionada,
+ esta envia a ação do utilizador ao simulador e espera pela resposta para que a interface possa ser atualizada
+ voltando depois ao estado inicial;
 
 \chapter{Guia de Utilização}
 \section{Modo de utilização}
@@ -573,10 +585,9 @@ com as opções/flags incorrectas;
 
 \chapter{Codificação e Testes}
 
-\section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
-Mostram-se a seguir alguns testes feitos (valores introduzidos) e
-os respectivos resultados obtidos:
+Durante o desenvolvimento do teste foram realizados vários programas para testar a correta implementação, mostram-se
+a seguir alguns testes feitos e os respetivos resultados obtidos:
 
 \chapter{Conclusão} \label{concl}
 \quad Neste relatório descreveu-se o processo de conceção e implementação do trabalho no
