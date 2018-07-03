@@ -2,9 +2,9 @@
 \contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
 \contentsline {chapter}{\numberline {2}An\IeC {\'a}lise e Especifica\IeC {\c c}\IeC {\~a}o}{3}
 \contentsline {section}{\numberline {2.1}Descri\IeC {\c c}\IeC {\~a}o Informal da M\IeC {\'a}quina}{3}
-\contentsline {paragraph}{\hskip 1em\relax Code -}{3}
-\contentsline {paragraph}{\hskip 1em\relax Operation Stack -}{3}
-\contentsline {paragraph}{\hskip 1em\relax Heap -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Code Stack -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Operand Stack -}{3}
+\contentsline {paragraph}{\hskip 1em\relax Heap Stack -}{3}
 \contentsline {paragraph}{\hskip 1em\relax Call Stack -}{3}
 \contentsline {subsubsection}{Instru\IeC {\c c}\IeC {\~o}es}{4}
 \contentsline {section}{\numberline {2.2}Planeamento e objetivos}{4}
@@ -23,7 +23,7 @@
 \contentsline {paragraph}{\hskip 1em\relax Types - }{8}
 \contentsline {section}{\numberline {3.2}Fases de Desenvolvimento}{8}
 \contentsline {subsection}{\numberline {3.2.1}Parser}{8}
-\contentsline {subsubsection}{Convencoes lexicais}{8}
+\contentsline {subsubsection}{Convencoes lexicais}{9}
 \contentsline {subsection}{\numberline {3.2.2}Processador}{9}
 \contentsline {subsection}{\numberline {3.2.3}Interface}{9}
 \contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{10}
@@ -31,7 +31,7 @@
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag de op\IeC {\c c}\IeC {\~a}o)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{10}
-\contentsline {section}{\numberline {4.2}Mensagens de erro}{10}
-\contentsline {section}{\numberline {4.3}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{11}
-\contentsline {section}{\numberline {4.4}Testes realizados e Resultados}{11}
-\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{12}
+\contentsline {section}{\numberline {4.2}Mensagens de erro}{11}
+\contentsline {section}{\numberline {4.3}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{12}
+\contentsline {section}{\numberline {4.4}Testes realizados e Resultados}{12}
+\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{13}

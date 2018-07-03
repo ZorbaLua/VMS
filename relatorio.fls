@@ -135,8 +135,9 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
 INPUT /usr/share/texmf/fonts/tfm/fkr/tipa/tipa10.tfm
-INPUT /home/z/Desktop/VMS/relatorio.bbl
-INPUT /home/z/Desktop/VMS/relatorio.bbl
+INPUT /home/z/Desktop/VMS/gtk2.png
+INPUT /home/z/Desktop/VMS/gtk2.png
+INPUT /home/z/Desktop/VMS/gtk2.png
 INPUT /home/z/Desktop/VMS/relatorio.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

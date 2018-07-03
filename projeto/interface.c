@@ -284,11 +284,11 @@ static void activateLables () {
 
   GtkWidget *label;
 
-  label = gtk_label_new ("Code");
+  label = gtk_label_new ("Code Stack");
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  label = gtk_label_new ("Heap");
+  label = gtk_label_new ("Heap Stack");
   gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
-  label = gtk_label_new ("OPStack");
+  label = gtk_label_new ("Operand Stack");
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
   label = gtk_label_new ("Call Stack");
   gtk_grid_attach (GTK_GRID (grid), label, 2, 10, 1, 1);
@@ -331,7 +331,7 @@ static void activateInputs () {
   button = gtk_button_new_with_label ("Load Program File");
   g_signal_connect (button, "clicked", G_CALLBACK (bLoadPFile), NULL);
   gtk_grid_attach (GTK_GRID (grid), button, 3, 3, 2, 1);
-  buttonR = gtk_button_new_with_label ("Reload File");
+  buttonR = gtk_button_new_with_label ("Reload Program File");
   g_signal_connect (buttonR, "clicked", G_CALLBACK (bReloadFile), NULL);
   gtk_widget_set_sensitive (buttonR, FALSE);
   gtk_grid_attach (GTK_GRID (grid), buttonR, 5, 3, 2, 1);

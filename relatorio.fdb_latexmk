@@ -1,15 +1,7 @@
 # Fdb version 3
-["bibtex relatorio"] 1530548490 "relatorio.aux" "relatorio.bbl" "relatorio" 1530548567
-  "/usr/share/texlive/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "relatorio.aux" 1530548567 3968 bd80a2cfe2739e8fa52e6a2a15233068 ""
-  "relatorio.bcf" 0 -1 0 ""
-  "relprojLayout.bib" 0 -1 0 ""
-  (generated)
-  "relatorio.blg"
-  "relatorio.bbl"
-["pdflatex"] 1530548566 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1530548567
+["pdflatex"] 1530577502 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1530577503
   "/etc/texmf/web2c/texmf.cnf" 1522533546 1101 af7716885e081ab43982cab7b4672c1a ""
-  "/home/z/Desktop/VMS/relatorio.aux" 1530548567 3968 bd80a2cfe2739e8fa52e6a2a15233068 ""
+  "/home/z/Desktop/VMS/relatorio.aux" 1530577503 3937 c45bc1e5a7c870be08c762b48b0634b3 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -90,16 +82,16 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1503343927 31343 93828589fb0cea665e553ee5a17ad2d4 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1522533746 1863403 f3ff9a4253bcb5fb9a9baaf0c572cb01 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1522533756 3858658 e833236796c0a45cb8b663f50fb767a6 ""
-  "relatorio.aux" 1530548567 3968 bd80a2cfe2739e8fa52e6a2a15233068 ""
-  "relatorio.bbl" 1530465667 49 0eba253fc001332e731e8aba3f23127b "bibtex relatorio"
-  "relatorio.tex" 1530548565 22681 4a1aa44ec95446d379b10320b0c8cbe2 ""
-  "relatorio.toc" 1530548567 2664 d455cb99b764e975350996f60be982b8 ""
+  "gtk2.png" 1530567986 38427 68e25eb2a960c3d1673afcbf2ee1847c ""
+  "relatorio.aux" 1530577503 3937 c45bc1e5a7c870be08c762b48b0634b3 ""
+  "relatorio.tex" 1530577502 25134 925ffdbe096862850407ad015efda5ed ""
+  "relatorio.toc" 1530577503 2674 1216d392fdbab3353add22a022894714 ""
   "sintaxe.png" 1530378205 90297 f1f7e941bf2304c6b00f3d9630555296 ""
   "stacks.png" 1530374051 9270 f2a3db9ccae55fc8b9d8439644911742 ""
   (generated)
-  "/home/z/Desktop/VMS/relatorio.pdf"
   "relatorio.toc"
-  "relatorio.pdf"
   "/home/z/Desktop/VMS/relatorio.log"
-  "relatorio.aux"
+  "relatorio.pdf"
+  "/home/z/Desktop/VMS/relatorio.pdf"
   "relatorio.log"
+  "relatorio.aux"

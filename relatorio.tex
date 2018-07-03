@@ -101,24 +101,24 @@ produzindo um executável que evite os problemas atuais.
 \chapter{Análise e Especificação} \label{ae}
 \section{Descrição Informal da Máquina}
 
-\quad Trata-se duma máquina de pilhas (por oposição às máquinas de registos), esta e composta duma pilha de execução, duma pilha de chamadas,
+\quad Trata-se duma máquina de pilhas (por oposição às máquinas de registos). Esta é composta duma pilha de execução, duma pilha de chamadas,
 duma zona de código e de duas heaps:
 
 \begin{center}
 \includegraphics{stacks.png}
 \end{center}
 
-\paragraph{\quad Code -}
-Esta pilha contem o conjunto das instruções do programa, esta e preenchida no inicio da execução do programa, mantendo-se igual
+\paragraph{\quad Code Stack -}
+Esta pilha contém o conjunto das instruções do programa. Esta é preenchida no inicio da execução do programa, mantendo-se igual
 do princípio ao fim da execução do mesmo;
-\paragraph{\quad Operation Stack -}
-Esta pilha contem valores guardados no registo da maquina, estes são todos indexados, podendo ser do tipo inteiro, real e endereço;
-\paragraph{\quad Heap -}
-Esta pilha contem cadeias de caracteres (strings), cada uma destas referenciado por endereços, cada bloco,
+\paragraph{\quad Operand Stack -}
+Esta pilha contém valores guardados no registo da maquina. Estes são todos indexados, podendo ser do tipo inteiro, real e endereço;
+\paragraph{\quad Heap Stack -}
+Esta pilha contém cadeias de caracteres (strings), cada uma destas referenciado por endereços, cada bloco,
 contendo um certo numero de caracteres;
 \paragraph{\quad Call Stack -}
-Esta pilha contem blocos estruturados, cada um destes referenciado por endereços, cada bloco
-estruturado contem um certo numero de valores (estes são do mesmo tipo dos que se podem encontrar na Operation Stack);
+Esta pilha contém blocos estruturados, cada um destes referenciado por endereços, cada bloco
+estruturado contém um certo numero de valores (estes são do mesmo tipo dos que se podem encontrar na Operand Stack);
 \\
 \\
 \null\quad Um endereço pode apontar para quatro tipos de informação: para código, para a
@@ -127,7 +127,7 @@ Ao longo da execução do programa são guardados os seguintes quatro registos:
 \begin{itemize}
 	\item \textit{\textbf{SP}} (Stack Pointer) o registo aponta para o topo corrente da pilha/ para a primeira célula livre da pilha.
 	\item \textit{\textbf{FP}} (Frame Pointer) o registo aponta para o endereço de base das variáveis locais.
-	\item \textit{\textbf{GP}} (Global Pointer) o registo contem o endereço de base das variáveis globais.
+	\item \textit{\textbf{GP}} (Global Pointer) o registo contém o endereço de base das variáveis globais.
 	\item \textit{\textbf{PC}} (Program Counter) o registo aponta para a instrução corrente (da zona de código) por executar.
 \end{itemize}
 
@@ -147,8 +147,8 @@ diz respeito aos caracteres especiais como \", \n ou \textbackslash\textbackslas
 \item Uma etiqueta simbólica designando uma zona no código.
 \end{itemize}
 
-\quad O conjunto das instruções pode ser encontrado no documento original fornecido com as fontes da maquina virtual aqui descrita,
-destas foram ignoradas as primitivas gráficas, não sendo esta uma implementação de uma versão gráfica da maquina virtual;
+\quad O conjunto das instruções pode ser encontrado no documento original fornecido com as fontes da maquina virtual aqui descrita.
+Destas foram ignoradas as primitivas gráficas, não sendo esta uma implementação de uma versão gráfica da maquina virtual;
 
 \section{Planeamento e objetivos}
 \quad O simulador deve ser implementado de forma a funcionar num maior numero de ambientes possível:
@@ -167,16 +167,16 @@ gráfica a ser desenvolvida.\\
 
 
 	\item \textbf{Simulador:} um programa que através do input recebido do parser e, se necessário, do input do utilizador,
-	faca a simulação em si do programa;
+	faça a simulação em si do programa;
 
 	\item \textbf{Interface Gráfica:} uma interface que permita ao utilizador interagir com a execução do simulador,
-	e dando-lhe acesso a informação sobre o estado atual da maquina;
+  dando-lhe acesso a informação sobre o estado atual da maquina;
 	Cada vez que o utilizador interatue com a interface (e.g.\ clicando num botão), esta deve ser atualizada,
 	refletindo as alterações feitas no estado na maquina e na interface.
 \end{itemize}
 
 \section{Especificação do Requisitos}
-\quad Esta secção de forma mais especifica os requisitos de cada um dos grupos de desenvolvimento demonstrando os problemas que
+\quad Esta secção apresenta de forma mais especifica os requisitos de cada um dos grupos de desenvolvimento demonstrando os problemas que
 surgiram durante cada fase:
 
 \subsection{Parser}
@@ -187,12 +187,12 @@ surgiram durante cada fase:
 \includegraphics[width=\textwidth]{sintaxe.png}
 \end{center}
 
-\quad Ainda, o parser devera ignorar tudo o que sirva para embelezar o código do programa (sejam espaços a mais, linhas em branco etc.),
-assim como devera ser possível a utilização de comentários que deverão ser ignorados pelo mesmo.
+\quad Ainda, o parser deverá ignorar tudo o que sirva para embelezar o código do programa (sejam espaços a mais, linhas em branco etc.),
+assim como deverá ser possível a utilização de comentários que deverão ser ignorados pelo mesmo.
 
 \subsection{Processador}
 
-\quad O processador devera receber o programa tratado pelo Parser e executar as instruções produzindo o resultado
+\quad O processador deverá receber o programa tratado pelo Parser e executar as instruções produzindo o resultado
 esperado (descrito no documento referido acima), permitindo ao utilizador controlar a execução do programa;
 
 \subsection{Interface Gráfica}
@@ -215,12 +215,12 @@ esperado (descrito no documento referido acima), permitindo ao utilizador contro
 Em termos de organização do código, este foi dividido nos seguintes ficheiros:
 
 \begin{itemize}
-\item \textbf{README} - Este ficheiro contem uma lista de packages que necessitam de ser instalados para o correto funcionamento do simulador;
-\item \textbf{structs/} - Pasta que contem os módulos das estruturas de dados criadas;
-\item \textbf{vmsMan.1} - Este ficheiro e relativo a man page do simulador, este e acessível após a instalação da vms;
-\item \textbf{lex.l} - Ficheiro lex referente ao parser, que contem todas as instruções e convenções necessárias;
-\item \textbf{semantic.c} - A este ficheiro estão associadas as funçoes que dão significado as instruçoes, isto é, manipula as estruturas de acordo com a instrução;
-\item \textbf{syntax.y} - Este ficheriro é processado pelo yacc, e gera o codigo c que trata de fazer o parsing;
+\item \textbf{README} - Este ficheiro contém uma lista de packages que necessitam de ser instalados para o correto funcionamento do simulador;
+\item \textbf{structs/} - Pasta que contém os módulos das estruturas de dados criadas;
+\item \textbf{vmsMan.1} - Este ficheiro é relativo a man page do simulador. Esta é acessível após a instalação da vms;
+\item \textbf{lex.l} - Ficheiro lex referente ao parser, que contém todas as instruções e convenções necessárias;
+\item \textbf{semantic.c} - A este ficheiro estão associadas as funçoes que dão significado as instruções, isto é, manipula as estruturas de acordo com a instrução;
+\item \textbf{syntax.y} - Este ficheiro é processado pelo yacc e gera o código c que trata de fazer o parsing;
 \item \textbf{interface.c} - Este ficheiro contêm todo o código referente à interface gráfica;
 \item \textbf{makefile} - A makefile gere a dependência da compilação dos restantes ficheiros;
 \item \textbf{vms.c} - Este é o ficheiro que contêm a main, e portanto trata das opções invocadas, de inicializar as estruturas, da inteface gráfica, de iniciar o parsing, e de executar o codigo;
@@ -232,10 +232,10 @@ Em termos de organização do código, este foi dividido nos seguintes ficheiros
 (sendo que cada grupo representa um par de ficheiros .h e .c):
 
 \paragraph{\quad Array - }
-Esta estrutura e uma estrutura auxiliar, constituida por três campos, um array, e dois int's, isto deve-se ao facto de a estrura ser a
-implementação de um array dinamico, sendo que o int len é o indice da primeira posição livre, e o int allocSize e otamnho do array alocado.
+Esta estrutura e uma estrutura auxiliar, constituída por três campos, um array, e dois int's, isto deve-se ao facto de a estrutura ser a
+implementação de um array dinâmico, sendo que o int len é o índice da primeira posição livre, e o int allocSize e o tamanho do array alocado.
 De notar que devido ao campo len foi facultada uma API que permite usar esta estrutura como um LIFO (Last In First Out) através dos
-metodos "remove" e "add".
+métodos "remove" e "add".
 
 \noindent
 \par
@@ -263,8 +263,8 @@ metodos "remove" e "add".
 \ParallelPar
 \end{Parallel}
 
-\paragraph{\quad CallStack - } Esta estrurura serve-se da estrutura "Array", como se pode ver na API tem apena duas funções
- "push" e "pop", dado que questa stack tem um coprtamento LIFO, de salientar que os blocos (CallElem) que constituem
+\paragraph{\quad CallStack - } Esta estrutura serve-se da estrutura "Array", como se pode ver na API tem apenas duas funções
+ "push" e "pop", dado que esta stack tem um comportamento LIFO, de salientar que os blocos (CallElem) que constituem
  o array tem apenas um par de valores com referido anteriormente, o program counter e o frame pointer.
 
 \noindent
@@ -295,8 +295,8 @@ metodos "remove" e "add".
 
 \paragraph{\quad Code - } Esta estrutura é inicializada ao se realizar o parsing, a estrutura te dois campos,
  um array e um code pointer. O array é composto por blocos do tipo codeElem, estes são compostos por um
- inst que é do tipo enum que serve para correspoder cada instução a um codigo único, estes blocos têm ainda
-	mais dois campos que são os argumentos da instução estes serão retratados mais abaixo.
+ inst que é do tipo enum que serve para corresponder cada instrução a um código único, estes blocos têm ainda
+	mais dois campos que são os argumentos da instrução estes serão retratados mais abaixo.
 
 \noindent
 \par
@@ -325,11 +325,11 @@ metodos "remove" e "add".
 \ParallelPar
 \end{Parallel}
 
-\paragraph{\quad Heap - } A estrutura heap é um array dinamico constituido por blocos com dois campos um campo do
- tipo char que serve para armazenar um valor, e o campo next que contem o índice da proxima posição livre no
- caso de esse bloco nao estar alocado, ou o indice do proximo char da cadeia de chars alocados, no caso de
- o bloco seja um bloco alocado. A estrutura heap em si tem entao um array de blocos deste tipo, tem o tamanho
- do array alocado, para se poder implementar com um array dinamico, e ainda um heapPt queé o menor índice de um bloco nao alocado.
+\paragraph{\quad Heap - } A estrutura heap é um array dinâmico constituído por blocos com dois campos um campo do
+ tipo char que serve para armazenar um valor, e o campo next que contém o índice da próxima posição livre no
+ caso de esse bloco não estar alocado, ou o índice do próximo char da cadeia de chars alocados, no caso de
+ o bloco seja um bloco alocado. A estrutura heap em si tem então um array de blocos deste tipo, tem o tamanho
+ do array alocado, para se poder implementar com um array dinâmico, e ainda um heapPt que é o menor índice de um bloco não alocado.
 
 \noindent
 \par
@@ -362,10 +362,10 @@ metodos "remove" e "add".
 \ParallelPar
 \end{Parallel}
 
-\paragraph{\quad OpStack - } Esta estrutura à semelhança com a callStack tem um comportamento de Lifo, e assim sendo,
- tem uma API similar, em oposição esta estrutura tem mais dua funçoes na API, essas são "getPos" e "addPos",
- isto deve-se ao facto de haver instruçoes como por exemplo "store" que alteram o valor de posiçoes  especificas
- da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers actuais, assim como do global pointer.
+\paragraph{\quad OpStack - } Esta estrutura à semelhança com a callStack tem um comportamento de LIFO, e assim sendo,
+ tem uma API similar, em oposição esta estrutura tem mais duas funções na API, essas são "getPos" e "addPos",
+ isto deve-se ao facto de haver instruções como por exemplo "store" que alteram o valor de posições  especificas
+ da estrutura. De notar que esta estrutura guarda o valor do stack e frame pointers atuais, assim como do global pointer.
 
 \noindent
 \par
@@ -400,12 +400,12 @@ metodos "remove" e "add".
 \end{Parallel}
 
 \paragraph{\quad Types - } Para a concretização da maquina necessitou-se da criação de novos tipos de dados como ter
- um tipo para os apontadores das diversas etruturas, assim surgiram os tipos codePT, opPt e heapPt, uma
+ um tipo para os apontadores das diversas estruturas, assim surgiram os tipos codePT, opPt e heapPt, uma
 	vez que estes são índices de posições de arrays optou-se por terem tipo int. Tem-se ainda o tipo dos
-	 arguntos das instruçoes e e os valores armazenados na operand stack, este tipo é o Value e é composto
-		por dois campos, uma union dos tipos genericos como int e float, com tipo dos apontadores mostrados
+	 argumentos das instruções e e os valores armazenados na operand stack, este tipo é o Value e é composto
+		por dois campos, uma union dos tipos genéricos como int e float, com tipo dos apontadores mostrados
 		 anteriormente e ainda do tipos string, o outro campo e um enum que identifica o tipo do primeiro campo.
-		 Por fim falta destacar o tipo Eints que é um enum que associa cada instrução a um codigo único.
+		 Por fim falta destacar o tipo Eints que é um enum que associa cada instrução a um código único.
 
 \noindent
 \par
@@ -452,7 +452,31 @@ metodos "remove" e "add".
 
 \section{Fases de Desenvolvimento}
 \subsection{Parser}
-Os programas
+
+
+
+
+
+
+
+\null\quad O ficheiro lex.l disponibilizado juntamente com este relatório corresponde ao lexer, cuja função é a
+de transformar o input do programa (uma sequência de caracteres) numa sequência de tokens, os quais serão depois
+transmitidos ao parser em si, descrito mais à frente.\\
+\null\quad O lexer, implementado com recurso à ferramenta Flex, baseia-se inteiramente nos conhecimentos obtidos na disciplina de PLC...
+O ficheiro sintax.y disponibilizado juntamente com este relatório corresponde ao parser, cuja função é
+a de transformar a sequência de tokens dada pelo lexer no conjunto de instruções a ser guardadas na Code Stack; Este parser foi
+implementado na linguagem Yacc, tirando também proveito dos conhecimentos da disciplina de PLC....\\
+
+
+
+
+
+
+
+
+
+
+
 
 \subsubsection{Convencoes lexicais}
 
@@ -472,7 +496,7 @@ Os programas
 
 \chapter{Guia de Utilização e Testes}
 \section{Modo de utilização}
-\quad Esta máquina destina-se a uma utilização interactiva do utilizador, para visualizar a execução de um programa.\\
+\quad Esta máquina destina-se a uma utilização interativa do utilizador, para visualizar a execução de um programa.\\
 A execução poderá ser conduzida passo a passo, ou ser feita de uma só vez.\\
 Sendo feita da seguinte forma:\\
 
@@ -492,7 +516,32 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 	\item \textbf{quit:} termina a execução do simulador;
 \end{itemize}
 \paragraph{\quad Máquina em Modo Interface (-g)}
-  O modo Interface
+  O modo Interface apresenta ao utilizador a informação representada no modo de debug num modo mais apelativo,
+	e ainda da ao utilizador um conjunto de funcionalidades mais poderosas no controlo da simulação:
+
+	\begin{center}
+	\includegraphics[width=15cm]{gtk2.png}
+	\end{center}
+
+	\begin{itemize}
+		\item A informação sobre o estado das stacks encontra-se a esquerda, respetivamente
+		 Code Stack / Operand Stack / Heap Stack /	Call Stack;
+		\item No topo a direita e apresentada a informacao sobre todas os registos da maquina, respetivamente
+			Stack Pointer / Frame Pointer /	Global Pointer /Program Counter;
+		\item Execute 1 - Tal como o nome indica, executa a próxima instrução do programa;
+		\item Execute N - Executa os próximos N passos, onde N e o numero que se encontra na caixa a direita; Como caso excecional,
+		no caso de N ser 0, o programa será executado ate ao fim;
+		\item Load Program File - Carrega um ficheiro de programa para ser executado no simulador;
+		\item Reload Program File - Esta ação carrega o ficheiro na	mesma localização do ficheiro que foi carregado previamente,
+		permitindo o recomeço da simulação do programa;
+		\item Load Input File - Carrega um ficheiro para a zona de input (canto inferior direito);
+		\item Shell" - Nesta janela, e apresentada...
+		\item Janela de Input - Nesta janela e possível guardar texto para que possa ser processado como input sempre que
+		o programa simulado o necessitar. Sempre que o programa necessitar de input, a primeira linha desta janela e utilizada
+		a nao serque seja vazia, nesse caso e criada uma janela de input;
+	\end{itemize}
+
+
 \section{Mensagens de erro}
 
 \begin{itemize}
@@ -531,7 +580,7 @@ implementação da maquina, assim como servir de exemplo da correcta instalaçã
 \item Fazer melhorias no espaçamento da interface gráfica, permitindo a utilização mais fácil em janelas mais pequenas;
 \end{itemize}
 
-\bibliographystyle{alpha}
-\bibliography{relprojLayout}
+%\bibliographystyle{alpha}
+%\bibliography{relprojLayout}
 
 \end{document}
