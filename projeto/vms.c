@@ -211,6 +211,7 @@ void runDebug(){
         input = readline("(VMDB) ");
         if( !strncmp(input, "file ", 5) ){
             freeStructs();
+            stop = 0;
             if(input[5] != '/'){ getcwd(path, MAXPATHLEN); asprintf(&lastfile, "%s/%s", path, &input[5]); }
             else{ asprintf(&lastfile, "%s", &input[5]); }
             if((yyin = fopen(lastfile, "r"))<0) try(-1);

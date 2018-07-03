@@ -1,6 +1,6 @@
 
 CC=cc
-CFLAGS=-Wall -std=gnu99 -g -Wall #-O2 #-Wextra 
+CFLAGS=-Wall -std=gnu99 -Wall #-O2 #-Wextra 
 STRUCTS=structs
 GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
 GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
@@ -8,9 +8,9 @@ GLIB_LIBS=`pkg-config --cflags --libs glib-2.0`
 GLIB_FLAGS=`pkg-config --cflags glib-2.0`
 MANPATH=`manpath | cut -d: -f1`
 
-all: vms interface
+all: vms vmsGTKAux
 
-install: vms interface
+install: all 
 	cp vmsGTKAux /usr/local/bin/vmsGTKAux
 	cp vms /usr/local/bin/vms
 	mkdir -p $(MANPATH)/man1
@@ -20,7 +20,7 @@ install: vms interface
 vms: vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o
 	$(CC) $(CFLAGS) vms.c semantic.o types.o array.o code.o opStack.o callStack.o heap.o y.tab.o lex.yy.o $(GLIB_LIBS) -lm -o vms -L/usr/local/lib -I/usr/local/include -lreadline
 
-interface: interface.c
+vmsGTKAux: interface.c
 	$(CC) $(CFLAGS) interface.c $(GTK_LIBS) -o vmsGTKAux
 
 ####################################################################################################
