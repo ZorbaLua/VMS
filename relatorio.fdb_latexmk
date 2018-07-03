@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1530632206 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1530632207
+["pdflatex"] 1530633037 "relatorio.tex" "/home/z/Desktop/VMS/relatorio.pdf" "relatorio" 1530633037
   "/etc/texmf/web2c/texmf.cnf" 1522533546 1101 af7716885e081ab43982cab7b4672c1a ""
-  "/home/z/Desktop/VMS/relatorio.aux" 1530632207 3937 7918ffe73e368222d1519d4d51816510 ""
+  "/home/z/Desktop/VMS/relatorio.aux" 1530633037 4112 d718f37bb6e52f6fc2e7430be0f6903d ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -83,15 +83,15 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1522533746 1863403 f3ff9a4253bcb5fb9a9baaf0c572cb01 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1522533756 3858658 e833236796c0a45cb8b663f50fb767a6 ""
   "gtk2.png" 1530567986 38427 68e25eb2a960c3d1673afcbf2ee1847c ""
-  "relatorio.aux" 1530632207 3937 7918ffe73e368222d1519d4d51816510 ""
-  "relatorio.tex" 1530632205 25347 5f4495e81cef38819a29e3f0da08fcc3 ""
-  "relatorio.toc" 1530632207 2674 444cf98a792e8e7960d1ad1e9e765033 ""
+  "relatorio.aux" 1530633037 4112 d718f37bb6e52f6fc2e7430be0f6903d ""
+  "relatorio.tex" 1530633035 25370 83b48c89761f268b683048105af30d46 ""
+  "relatorio.toc" 1530633037 2755 ef4ba61a9256e76f29c6e7a28622a866 ""
   "sintaxe.png" 1530378205 90297 f1f7e941bf2304c6b00f3d9630555296 ""
   "stacks.png" 1530374051 9270 f2a3db9ccae55fc8b9d8439644911742 ""
   (generated)
-  "relatorio.log"
-  "relatorio.aux"
-  "/home/z/Desktop/VMS/relatorio.log"
-  "relatorio.toc"
   "relatorio.pdf"
+  "relatorio.aux"
+  "relatorio.toc"
   "/home/z/Desktop/VMS/relatorio.pdf"
+  "relatorio.log"
+  "/home/z/Desktop/VMS/relatorio.log"

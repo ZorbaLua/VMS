@@ -21,17 +21,18 @@
 \contentsline {paragraph}{\hskip 1em\relax Heap - }{7}
 \contentsline {paragraph}{\hskip 1em\relax OpStack - }{7}
 \contentsline {paragraph}{\hskip 1em\relax Types - }{8}
-\contentsline {section}{\numberline {3.2}Fases de Desenvolvimento}{8}
+\contentsline {section}{\numberline {3.2}M\IeC {\'o}dulos Desenvolvidos}{8}
 \contentsline {subsection}{\numberline {3.2.1}Parser}{8}
 \contentsline {subsubsection}{Convencoes lexicais}{9}
 \contentsline {subsection}{\numberline {3.2.2}Processador}{9}
 \contentsline {subsection}{\numberline {3.2.3}Interface}{9}
-\contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o e Testes}{10}
+\contentsline {chapter}{\numberline {4}Guia de Utiliza\IeC {\c c}\IeC {\~a}o}{10}
 \contentsline {section}{\numberline {4.1}Modo de utiliza\IeC {\c c}\IeC {\~a}o}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag de op\IeC {\c c}\IeC {\~a}o)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{10}
 \contentsline {section}{\numberline {4.2}Mensagens de erro}{11}
-\contentsline {section}{\numberline {4.3}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{12}
-\contentsline {section}{\numberline {4.4}Testes realizados e Resultados}{12}
-\contentsline {chapter}{\numberline {5}Conclus\IeC {\~a}o}{13}
+\contentsline {chapter}{\numberline {5}Codifica\IeC {\c c}\IeC {\~a}o e Testes}{13}
+\contentsline {section}{\numberline {5.1}Alternativas, Decis\IeC {\~o}es e Problemas de Implementa\IeC {\c c}\IeC {\~a}o}{13}
+\contentsline {section}{\numberline {5.2}Testes realizados e Resultados}{13}
+\contentsline {chapter}{\numberline {6}Conclus\IeC {\~a}o}{14}

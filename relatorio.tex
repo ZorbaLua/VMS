@@ -408,6 +408,10 @@ métodos "remove" e "add".
 		 anteriormente e ainda do tipos string, o outro campo e um enum que identifica o tipo do primeiro campo.
 		 Por fim falta destacar o tipo Eints que é um enum que associa cada instrução a um código único.
 
+
+
+
+
 \noindent
 \par
 \begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
@@ -451,27 +455,36 @@ métodos "remove" e "add".
 \ParallelPar
 \end{Parallel}
 
-\section{Fases de Desenvolvimento}
+\section{Módulos Desenvolvidos}
+
+Como referido acima, no desenvolvimento do projeto, este foi dividido em 3 partes, estas serão descritas nas secções que se seguem.
+
 \subsection{Parser}
 
+ Este pode ser dividido em duas partes:
+  uma primeira que se trata de um reconhecedor lexical (lexer) que irá ser responsável pela filtragem do input,
+	 e uma segunda que corresponde a um reconhecedor gramatical (parser) que analisa os resultados do lexer,
+	 de forma a os enquadrar com as regras gramaticais definidas acima. Essas duas partes são descritas
+	  nas secções que se seguem.
 
+O reconhecedor lexical é responsável por percorrer o programa a ser simulado e devolve os tokens, que correspondem a qualquer palavra,
+ isto é, qualquer conjunto de símbolos que não incluam espaçamentos e mudanças de linha.
 
+Por fim, o lexer filtra também o texto por forma a remover qualquer ocorrência de espaçamentos e mudanças de linhas.
 
+Assim, o lexer é responsável por processar o input para que este fique num estado que possa ser digerido pelo reconhecedor gramatical,
+permitindo assim estabelecer uma maior diversidade de formatos de input que, mesmo não sendo totalmente aceites pelo
+parser, são mais completos e possuem uma componente estética maior. Todo enquanto permite que o parser permeneça com
+uma linguagem simples e direta.
 
+O parser vai, então, receber os tokens do lexer e através da análise destes, determina se o conjunto
+corresponde a alguma das regra gramatical definida, se este correspondência for positiva, e armazenada
+uma nova "linha" da estrutura do Código, correspondente a instrução no código lida.
 
-
-\null\quad O ficheiro lex.l disponibilizado juntamente com este relatório corresponde ao lexer, cuja função é a
-de transformar o input do programa (uma sequência de caracteres) numa sequência de tokens, os quais serão depois
-transmitidos ao parser em si, descrito mais à frente.\\
-\null\quad O lexer, implementado com recurso à ferramenta Flex, baseia-se inteiramente nos conhecimentos obtidos na disciplina de PLC...
-O ficheiro sintax.y disponibilizado juntamente com este relatório corresponde ao parser, cuja função é
-a de transformar a sequência de tokens dada pelo lexer no conjunto de instruções a ser guardadas na Code Stack; Este parser foi
-implementado na linguagem Yacc, tirando também proveito dos conhecimentos da disciplina de PLC....\\
-
-
-
-
-
+Quando todos os elementos do ficheiro forem percorridos ficamos com um conjunto de instruções guardado no Code Block que
+representam o programa a ser simulado. Esta possui então toda a informação necessária para
+efetuar a simulação (aparte do input do utilizador possivelmente necessário
+durante a sua execução), pelo que esta pode ser inicializada;
 
 
 
@@ -495,7 +508,7 @@ implementado na linguagem Yacc, tirando também proveito dos conhecimentos da di
 \subsection{Interface}
 \quad Nao faco ideia
 
-\chapter{Guia de Utilização e Testes}
+\chapter{Guia de Utilização}
 \section{Modo de utilização}
 \quad Esta máquina destina-se a uma utilização interativa do utilizador, para visualizar a execução de um programa.\\
 A execução poderá ser conduzida passo a passo, ou ser feita de uma só vez.\\
@@ -557,6 +570,8 @@ com as opções/flags incorrectas;
 \item \textbf{Segmentation Fault - } Provocado por um acesso indevido a zona de código, as duas heaps ou a pilha;
 \item \textbf{Error \textit{mensagem} - } Provocado por uma instrução err;
 \end{itemize}
+
+\chapter{Codificação e Testes}
 
 \section{Alternativas, Decisões e Problemas de Implementação}
 \section{Testes realizados e Resultados}
