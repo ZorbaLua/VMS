@@ -48,7 +48,7 @@
 
 %%%%\input{LPgeneralDefintions}
 
-\title{Projeto (3º ano de LCC)\\ \textbf{VMS, Simular Visual para a máquina de Stack Virtual VM}\\ Relatório de Desenvolvimento}
+\title{Projeto (3º ano de LCC)\\ \textbf{VMS, um Simular Visual para a Máquina de Stack Virtual VM}\\ Relatório de Desenvolvimento}
 \author{Adriano Campinho\\ (a79032) \and Vasco Leitão\\ (a79220) }
 \date{\today}
 
@@ -105,10 +105,11 @@ produzindo um executável que evite os problemas atuais.
 duma zona de código e de duas heaps:
 
 \begin{center}
-\includegraphics{stacks.png}
+\includegraphics{stacks.png} \\
+\caption { Diagrama organização maquina VM }
 \end{center}
 
-\paragraph{\quad Code Stack -}
+\paragraph{\quad Code Block -}
 Esta pilha contém o conjunto das instruções do programa. Esta é preenchida no inicio da execução do programa, mantendo-se igual
 do princípio ao fim da execução do mesmo;
 \paragraph{\quad Operand Stack -}
@@ -576,8 +577,10 @@ melhorias desta implementação. Enumeram-se algumas ideias que, por falta de te
 
 \begin{itemize}
 \item Criar um conjunto grande de ficheiros de testes, que sirvam tanto para provar/verificar a
-implementação da maquina, assim como servir de exemplo da correcta instalação da mesma;
+implementação da maquina, assim como servir de exemplo da correta instalação da mesma;
 \item Fazer melhorias no espaçamento da interface gráfica, permitindo a utilização mais fácil em janelas mais pequenas;
+\item Para fins de debug, achamos importante que no final da execução seja apresentado de forma elegante o estado final das stacks,
+o que ainda não acontece;
 \end{itemize}
 
 %\bibliographystyle{alpha}

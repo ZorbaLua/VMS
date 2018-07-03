@@ -284,11 +284,11 @@ static void activateLables () {
 
   GtkWidget *label;
 
-  label = gtk_label_new ("Code Stack");
+  label = gtk_label_new ("Code");
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  label = gtk_label_new ("Heap Stack");
+  label = gtk_label_new ("Heap");
   gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
-  label = gtk_label_new ("Operand Stack");
+  label = gtk_label_new ("OPStack");
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
   label = gtk_label_new ("Call Stack");
   gtk_grid_attach (GTK_GRID (grid), label, 2, 10, 1, 1);
