@@ -30,7 +30,7 @@ instrf1: nop
 	storeg 2
 	jump ultinstrf1
 endf1: nop
-	pushs "factorial of"
+	pushs "factorial of "
 	writes  //escrever
 	pushg 1
 	writei  //escrever

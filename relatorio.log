@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  3 JUL 2018 21:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  4 JUL 2018 03:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -706,31 +706,150 @@ and I'll forget about whatever was undefined.
 
 [11 </home/z/Desktop/VMS/gtk2.png>] [12]
 Cap\'{\i }tulo 5.
-[13
 
-]
-Cap\'{\i }tulo 6.
-
-Underfull \hbox (badness 10000) in paragraph at lines 593--603
+Underfull \hbox (badness 10000) in paragraph at lines 589--591
 
  []
 
-[14
+
+Underfull \hbox (badness 10000) in paragraph at lines 617--619
+
+ []
+
+
+/home/z/Desktop/VMS/relatorio.tex:628: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.628 T
+       este Maior de 2 Números (maior2numLidos.vm):
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:683: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.683 \quad
+            Testes:
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:690: Package inputenc Error: Unicode char ⏎ (U+23CE)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.690 	\end{verbatim}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:699: Package inputenc Error: Unicode char ⏎ (U+23CE)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.699 		\end{verbatim}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[13
+
+]
+
+/home/z/Desktop/VMS/relatorio.tex:703: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.703 \null\\\null
+                  \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:704: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.704 \quad
+            Calculadora de Factorial (factorial.vm):
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:775: Package inputenc Error: Unicode char ⏎ (U+23CE)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.775 	\end{verbatim}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:783: Package inputenc Error: Unicode char ⏎ (U+23CE)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.783 		\end{verbatim}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[14]
+Cap\'{\i }tulo 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 805--815
+
+ []
+
+[15
 
 ] (/home/z/Desktop/VMS/relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 5138 strings out of 493029
- 68564 string characters out of 6136234
+ 5139 strings out of 493029
+ 68570 string characters out of 6136234
  141518 words of memory out of 5000000
- 8599 multiletter control sequences out of 15000+600000
+ 8600 multiletter control sequences out of 15000+600000
  11560 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,7n,32p,313b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on /home/z/Desktop/VMS/relatorio.pdf (16 pages, 268301 bytes).
+Output written on /home/z/Desktop/VMS/relatorio.pdf (17 pages, 273900 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 100 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

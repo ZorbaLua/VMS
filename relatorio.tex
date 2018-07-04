@@ -168,7 +168,7 @@ gráfica a ser desenvolvida.\\
 
 
 	\item \textbf{Simulador:} um programa que através do input recebido do parser e, se necessário, do input do utilizador,
-	faça a simulação em si do programa;
+	faça a simulação em si do programa, permitindo que o utilizador controle a sua execução;
 
 	\item \textbf{Interface Gráfica:} uma interface que permita ao utilizador interagir com a execução do simulador,
   dando-lhe acesso a informação sobre o estado atual da maquina;
@@ -561,7 +561,7 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 		\item Reload Program File - Esta ação carrega o ficheiro na	mesma localização do ficheiro que foi carregado previamente,
 		permitindo o recomeço da simulação do programa;
 		\item Load Input File - Carrega um ficheiro para a zona de input (canto inferior direito);
-		\item Shell" - Nesta janela, e apresentada...
+		\item Shell - Esta janela simula a o output do modo silencioso;
 		\item Janela de Input - Nesta janela e possível guardar texto para que possa ser processado como input sempre que
 		o programa simulado o necessitar. Sempre que o programa necessitar de input, a primeira linha desta janela e utilizada
 		a nao serque seja vazia, nesse caso e criada uma janela de input;
@@ -587,7 +587,219 @@ com as opções/flags incorrectas;
 
 \section{Testes realizados e Resultados}
 Durante o desenvolvimento do teste foram realizados vários programas para testar a correta implementação, mostram-se
-a seguir alguns testes feitos e os respetivos resultados obtidos:
+a seguir alguns testes feitos e os respetivos resultados obtidos:\\
+
+
+
+
+
+
+
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+
+\quad Teste 3x9=? (3vezes9.vm):
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+	start
+			pushi 3
+			pushi 9
+			mul
+			pushs "3 vezes 9 = "
+			writes
+			writei
+			pushs " \n"
+			writes
+stop
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+\quad Resultado:\\
+		\begin{verbatim}
+			> vms 3vezes9.vm
+		3 vezes 9 = 27
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+
+\null\\
+Teste Maior de 2 Números (maior2numLidos.vm):
+
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+	start
+	pushi 0
+	pushi 0
+
+	pushs "introduza um numero inteiro:"
+	writes
+	read
+	atoi
+	storeg 0
+	pushs "introduza um numero inteiro:"
+	writes
+	read
+	atoi
+	storeg 1
+	pushg 1
+
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			pushg 0
+			supeq
+			jz amaior
+			pushs "O maior e: "
+			writes
+			pushg 1
+			writei
+			jump fim
+			amaipushs "O maior e: "
+		  writes
+			pushg 0
+			writei
+			fim: stop
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+
+
+
+
+
+
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\null\\
+\quad Testes:
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+	 > vms 5-maior2numLidos.vm
+introduza um numero inteiro:49129
+introduza um numero inteiro:3556
+O maior e: 49129⏎
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+\quad
+		\begin{verbatim}
+		>	 vms 5-maior2numLidos.vm
+introduza um numero inteiro:-12
+introduza um numero inteiro:14
+O maior e: 14⏎
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+\null\\\null\\
+\quad Calculadora de Factorial (factorial.vm):
+
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+	pushi 0
+	pushi 0
+	pushi 0
+start
+	pushi 1
+	storeg 2
+	pushs "enter a number\n"
+	writes
+	read
+	atoi
+	storeg 1
+	pushi 1
+	storeg 0
+inif1: nop
+	pushg 0
+	pushg 1
+	infeq
+	jz endf1
+	jump instrf1
+ultinstrf1: nop
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			pushg 0
+			pushi 1
+			add
+			storeg 0
+			jump inif1
+		instrf1: nop
+			pushg 2
+			pushg 0
+			mul
+			storeg 2
+			jump ultinstrf1
+		endf1: nop
+			pushs "factorial of "
+			writes  //escrever
+			pushg 1
+			writei  //escrever
+			pushs " = "
+			writes   //escrever
+			pushg 2
+			writei  //escrever
+		stop
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+
+
+Testes:
+
+\noindent
+\par
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+
+\ParallelLText{\noindent
+	\null\begin{verbatim}
+	> vms factorial.vm
+enter a number to calculate it's factorial
+7
+factorial of 7 = 5040⏎
+	\end{verbatim}
+}
+\ParallelRText{\noindent
+		\begin{verbatim}
+			> vms factorial.vm
+			enter a number to calculate it's factorial
+			10
+			factorial of 10 = 3628800⏎
+		\end{verbatim}
+}
+\ParallelPar
+\end{Parallel}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \chapter{Conclusão} \label{concl}
 \quad Neste relatório descreveu-se o processo de conceção e implementação do trabalho no
@@ -605,8 +817,8 @@ melhorias desta implementação. Enumeram-se algumas ideias que, por falta de te
 \item Criar um conjunto grande de ficheiros de testes, que sirvam tanto para provar/verificar a
 implementação da maquina, assim como servir de exemplo da correta instalação da mesma;
 \item Fazer melhorias no espaçamento da interface gráfica, permitindo a utilização mais fácil em janelas mais pequenas;
-\item Para fins de debug, achamos importante que no final da execução seja apresentado de forma elegante o estado final das stacks,
-o que ainda não acontece;
+\item Para fins de comparação, achamos importante que no final da execução seja apresentado no modo de execução de debug
+ de forma elegante o estado final das stacks, o que não acontece;
 \end{itemize}
 
 %\bibliographystyle{alpha}
