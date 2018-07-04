@@ -1,0 +1,5 @@
+start
+
+pushi 0  // i -> 0
+writei
+stop
