@@ -498,7 +498,7 @@ efetuar a simulação (aparte do input do utilizador possivelmente necessário
 durante a sua execução), pelo que esta pode ser inicializada;
 
 \subsection{Processador}
-\quad Estruturas de dados etc.
+\quad ...
 \subsection{Interface}
 \quad A interface permita ao utilizador interagir com a execução do simulador, dando-lhe acesso a informação sobre o estado atual da maquina;
 Esta foi desenvolvida na linguagem C com recurso à ferramenta GTK.
@@ -563,16 +563,24 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 		\item Load Input File - Carrega um ficheiro para a zona de input (canto inferior direito);
 		\item Shell - Esta janela simula a o output do modo silencioso;
 		\item Janela de Input - Nesta janela e possível guardar texto para que possa ser processado como input sempre que
-		o programa simulado o necessitar. Sempre que o programa necessitar de input, a primeira linha desta janela e utilizada
-		a nao serque seja vazia, nesse caso e criada uma janela de input;
+		o programa simulado o necessitar. Sempre que o programa necessitar de input, a primeira linha desta janela e utilizada como tal
+		a não ser que seja vazia, nesse caso e criada uma janela onde e pedido o input ao utilizador;
 	\end{itemize}
 
-
+\null\\
+\null\\
+\null\\
+\null\\
+\null\\
+\null\\
+\null\\
+\null\\
+\null\\
 \section{Mensagens de erro}
 
 \begin{itemize}
 \item \textbf{Error: Index out of array - } Provocado por um acesso indevido a zona de código, seja acesso as duas heaps ou a pilha;
-\item \textbf{Error: fp == sp - } Provocado quando ...
+%\item \textbf{Error: fp == sp - } Provocado quando ...
 \item \textbf{Error: Opening file - } Provocado quando ocorreu um erro a abrir um ficheiro;
 \item \textbf{Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n - } Provocado quando e iniciado o simulador
 com as opções/flags incorrectas;
@@ -818,7 +826,7 @@ melhorias desta implementação. Enumeram-se algumas ideias que, por falta de te
 implementação da maquina, assim como servir de exemplo da correta instalação da mesma;
 \item Fazer melhorias no espaçamento da interface gráfica, permitindo a utilização mais fácil em janelas mais pequenas;
 \item Para fins de comparação, achamos importante que no final da execução seja apresentado no modo de execução de debug
- de forma elegante o estado final das stacks, o que não acontece;
+ de forma elegante o estado final das stacks, o que por agora não acontece;
 \end{itemize}
 
 %\bibliographystyle{alpha}

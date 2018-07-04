@@ -30,7 +30,7 @@
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Silencioso (sem flag de op\IeC {\c c}\IeC {\~a}o)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Debug (-d)}{10}
 \contentsline {paragraph}{\hskip 1em\relax M\IeC {\'a}quina em Modo Interface (-g)}{10}
-\contentsline {section}{\numberline {4.2}Mensagens de erro}{11}
+\contentsline {section}{\numberline {4.2}Mensagens de erro}{12}
 \contentsline {chapter}{\numberline {5}Codifica\IeC {\c c}\IeC {\~a}o e Testes}{13}
 \contentsline {section}{\numberline {5.1}Testes realizados e Resultados}{13}
 \contentsline {chapter}{\numberline {6}Conclus\IeC {\~a}o}{15}

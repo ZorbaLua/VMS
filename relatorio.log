@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  4 JUL 2018 03:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.3.31)  4 JUL 2018 04:02
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -682,89 +682,207 @@ Package pdftex.def Info: gtk2.png used on input line 549.
  [10
 
 ]
-/home/z/Desktop/VMS/relatorio.tex:577: Undefined control sequence.
-<argument> ...'-g' option, or a program file\nTry 
-                                                  'man vms' for more informa...
-l.577 ...Try 'man vms' for more information.\n - }
-                                                   Provocado quando e inicia...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
-/home/z/Desktop/VMS/relatorio.tex:577: Undefined control sequence.
-<argument> ...y 'man vms' for more information.\n 
-                                                  - 
-l.577 ...Try 'man vms' for more information.\n - }
-                                                   Provocado quando e inicia...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-[11 </home/z/Desktop/VMS/gtk2.png>] [12]
-Cap\'{\i }tulo 5.
-
-Underfull \hbox (badness 10000) in paragraph at lines 589--591
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 617--619
-
- []
-
-
-/home/z/Desktop/VMS/relatorio.tex:628: LaTeX Error: There's no line here to end.
+/home/z/Desktop/VMS/relatorio.tex:571: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.628 T
+l.571 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:572: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.572 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:573: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.573 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:574: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.574 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:575: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.575 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:576: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.576 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:577: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.577 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:578: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.578 \null
+           \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:579: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.579 \section
+              {Mensagens de erro}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[11 </home/z/Desktop/VMS/gtk2.png>]
+/home/z/Desktop/VMS/relatorio.tex:585: Undefined control sequence.
+<argument> ...'-g' option, or a program file\nTry 
+                                                  'man vms' for more informa...
+l.585 ...Try 'man vms' for more information.\n - }
+                                                   Provocado quando e inicia...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/home/z/Desktop/VMS/relatorio.tex:585: Undefined control sequence.
+<argument> ...y 'man vms' for more information.\n 
+                                                  - 
+l.585 ...Try 'man vms' for more information.\n - }
+                                                   Provocado quando e inicia...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[12]
+Cap\'{\i }tulo 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--599
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 625--627
+
+ []
+
+
+/home/z/Desktop/VMS/relatorio.tex:636: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.636 T
        este Maior de 2 Números (maior2numLidos.vm):
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-/home/z/Desktop/VMS/relatorio.tex:683: LaTeX Error: There's no line here to end.
+/home/z/Desktop/VMS/relatorio.tex:691: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.683 \quad
+l.691 \quad
             Testes:
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-/home/z/Desktop/VMS/relatorio.tex:690: Package inputenc Error: Unicode char ⏎ (U+23CE)
+/home/z/Desktop/VMS/relatorio.tex:698: Package inputenc Error: Unicode char ⏎ (U+23CE)
 (inputenc)                not set up for use with LaTeX.
 
 See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.690 	\end{verbatim}
+l.698 	\end{verbatim}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-/home/z/Desktop/VMS/relatorio.tex:699: Package inputenc Error: Unicode char ⏎ (U+23CE)
+/home/z/Desktop/VMS/relatorio.tex:707: Package inputenc Error: Unicode char ⏎ (U+23CE)
 (inputenc)                not set up for use with LaTeX.
 
 See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.699 		\end{verbatim}
+l.707 		\end{verbatim}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -774,41 +892,27 @@ or  <return>  to continue without it.
 
 ]
 
-/home/z/Desktop/VMS/relatorio.tex:703: LaTeX Error: There's no line here to end.
+/home/z/Desktop/VMS/relatorio.tex:711: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.703 \null\\\null
+l.711 \null\\\null
                   \\
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-/home/z/Desktop/VMS/relatorio.tex:704: LaTeX Error: There's no line here to end.
+/home/z/Desktop/VMS/relatorio.tex:712: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.704 \quad
+l.712 \quad
             Calculadora de Factorial (factorial.vm):
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-/home/z/Desktop/VMS/relatorio.tex:775: Package inputenc Error: Unicode char ⏎ (U+23CE)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.775 	\end{verbatim}
-                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
@@ -821,7 +925,21 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.783 		\end{verbatim}
+l.783 	\end{verbatim}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+/home/z/Desktop/VMS/relatorio.tex:791: Package inputenc Error: Unicode char ⏎ (U+23CE)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.791 		\end{verbatim}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -830,7 +948,7 @@ or  <return>  to continue without it.
 [14]
 Cap\'{\i }tulo 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 805--815
+Underfull \hbox (badness 10000) in paragraph at lines 813--823
 
  []
 
@@ -844,9 +962,9 @@ Here is how much of TeX's memory you used:
  8600 multiletter control sequences out of 15000+600000
  11560 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,7n,32p,313b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,7n,32p,313b,222s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on /home/z/Desktop/VMS/relatorio.pdf (17 pages, 273900 bytes).
+Output written on /home/z/Desktop/VMS/relatorio.pdf (17 pages, 273726 bytes).
 PDF statistics:
  100 PDF objects out of 1000 (max. 8388607)
  67 compressed objects within 1 object stream
