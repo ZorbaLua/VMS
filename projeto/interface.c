@@ -137,6 +137,8 @@ static void limpaStacks() {
   gtk_list_store_clear (storeHeap);
   gtk_list_store_clear (storeOP);
   gtk_list_store_clear (storeCall);
+
+  gtk_text_buffer_set_text (bufferConsole,"",0);
 }
 
 void cleanReload () {
