@@ -56,15 +56,15 @@
 
 \maketitle
 \begin{abstract}
-	\quad Este documento apresenta o relatório desenvolvido no âmbito da Unidade Curricular de Projecto, do curso de
+	\quad Este documento apresenta o projeto desenvolvido no âmbito da Unidade Curricular de Projecto, do curso de
 	Licenciatura em Ciências da Computação, Universidade do Minho, no segundo semestre do ano letivo 2017/2018.\\
-	\quad Pretendendo-se explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as pretendidas resoluções
+	\quad Pretendendo-se explicitar o processo de conceção e implementação do mesmo, assim como as escolhas tomadas e as soluções encontradas
 	para cada problema exposto no enunciado fornecido, prestando especial atenção ao modo de utilização do simulador; \\
 	\\
 	\\
 	\\
     \\
-	\supers{Pedro Rangel Henriques e José João}
+	\supers{Pedro Rangel Henriques e José João Dias de Almeida}
 	\area{Processamento de Linguagens}
 
 \end{abstract}
@@ -122,22 +122,22 @@ Esta pilha contém blocos estruturados, cada um destes referenciado por endereç
 estruturado contém um certo numero de valores (estes são do mesmo tipo dos que se podem encontrar na Operand Stack);
 \\
 \\
-\null\quad Um endereço pode apontar para quatro tipos de informação: para código, para a
-pilha, para um bloco estruturado ou para uma string.
-Ao longo da execução do programa são guardados os seguintes quatro registos:
+\null\quad Um endereço pode apontar para quatro tipos de informação: para código (Code Block), para a
+pilha (Operand Stack), para um bloco estruturado ou para uma string (Heap).
+Na execução do programa é controlado totalmente pelos valores guardados nos seguintes quatro registos:
 \begin{itemize}
 	\item \textit{\textbf{SP}} (Stack Pointer) o registo aponta para o topo corrente da pilha/ para a primeira célula livre da pilha.
 	\item \textit{\textbf{FP}} (Frame Pointer) o registo aponta para o endereço de base das variáveis locais.
 	\item \textit{\textbf{GP}} (Global Pointer) o registo contém o endereço de base das variáveis globais.
-	\item \textit{\textbf{PC}} (Program Counter) o registo aponta para a instrução corrente (da zona de código) por executar.
+	\item \textit{\textbf{PC}} (Program Counter) o registo aponta para a próxima instrução (da zona de código) a ser executada.
 \end{itemize}
 
 A pilha de chamada permite guardar as chamadas: contém pares de apontadores
-(i, f). O endereço i guarda o registo de instrução pc e f o registo fp.
+(i, f). O endereço i guarda o valor de pc e f o valor de fp.
 
 \subsubsection{Instruções}
 
-\quad As instruções são designadas por um nome e podem aceitar um ou dois parâmetros.
+\quad As instruções são designadas por uma sigla, ou mnemónica nome e podem aceitar um ou dois parâmetros.
 Estes parâmetros podem ser dos seguintes tipos:
 \begin{itemize}
 \item Constantes inteiras,
@@ -149,16 +149,16 @@ diz respeito aos caracteres especiais como \", \n ou \textbackslash\textbackslas
 \end{itemize}
 
 \quad O conjunto das instruções pode ser encontrado no documento original fornecido com as fontes da maquina virtual aqui descrita.
-Destas foram ignoradas as primitivas gráficas, não sendo esta uma implementação de uma versão gráfica da maquina virtual;
+Destas foram ignoradas as primitivas gráficas, não sendo esta uma implementação de uma versão gráfica da maquina virtual.
 
 \section{Planeamento e objetivos}
 \quad O simulador deve ser implementado de forma a funcionar num maior numero de ambientes possível:
 deve ser possível correr a simulação de vários modos possibilitando uma simulação interativa de cada programa.
-Existindo a possibilidade do jogador interagir com a simulação através da linha de comandos ou através de uma Interface
+Existindo a possibilidade do utilizador interagir com a simulação através da linha de comandos ou através de uma Interface
 gráfica a ser desenvolvida.\\
 \null\quad Podemos então dividir o projecto em 3 grandes grupos:
 \begin{itemize}
-	\item \textbf{Parser:} O parser é responsável por percorrer o input do sistema e devolve
+    \item \textbf{Parser:} O parser é responsável por percorrer o input do sistema (o teste com o programa assembly) e devolve
 	os tokens, que correspondem a qualquer instrução, isto é, qualquer conjunto de símbolos que não incluam
 	espaçamentos e mudanças de linha.
 	\quad Por fim, o parser filtra também o texto por forma a remover qualquer ocorrência de espaçamentos e mudanças de linhas.
@@ -586,7 +586,7 @@ O projeto desenvolvido, tem 3 opções de utilização, estas são:
 
 \begin{itemize}
 \item \textbf{Error: Index out of array - } Provocado por um acesso indevido a zona de código, seja acesso as duas heaps ou a pilha;
-%\item \textbf{Error: fp == sp - } Provocado quando ...
+\item \textbf{Error: fp == sp - } Provocado quando se retira da pilha um valor que deveria ser uma variavel local, isto é, quando o stack pointer e o frame pointer forem o mesmo valor;
 \item \textbf{Error: Opening file - } Provocado quando ocorreu um erro a abrir um ficheiro;
 \item \textbf{Error: You must specify a '-d' or '-g' option, or a program file\nTry 'man vms' for more information.\n - } Provocado quando e iniciado o simulador
 com as opções/flags incorrectas;
