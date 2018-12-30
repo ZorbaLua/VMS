@@ -98,7 +98,9 @@ void Heap_addPos(heapPt pt, Value v){
         case T_heapPt:
             len = asprintf(&buffer, "%d", v.val.h);
 		break;
-        default: len = asprintf(&buffer, "");
+        default:
+            buffer = NULL;
+            len = 0;
     }
     for(i=0; i<len; i++) add(pt+i, buffer[i]);
     add(pt+i, '\0');

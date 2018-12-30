@@ -31,6 +31,8 @@ void insCall(char*);
 void insOP(char*);
 void insHeap(char*);
 
+#define UNUSED(v) ((void) (v))
+
 //-----------------------------------------------------------------------------//
 
 void quickInput (GtkWindow *parent, gchar *message, GtkEntryBuffer *buffer) {
@@ -234,15 +236,21 @@ static void exeInst (const char* nvezes) {
 }
 
 static void bExe (GtkWidget *widget, gpointer data) {
+  UNUSED(widget);
+  UNUSED(data);
   exeInst("1");
 }
 
 static void bExeT (GtkWidget *widget, gpointer data) {
+  UNUSED(widget);
+  UNUSED(data);
   const char* n = gtk_entry_buffer_get_text(bufferS);
   exeInst(n);
 }
 
 static void bLoadPFile (GtkWidget *widget, gpointer data) {
+  UNUSED(widget);
+  UNUSED(data);
 
   //if(lastfile != NULL) { free(lastfile); }
   char* inputFile=NULL;
@@ -257,6 +265,8 @@ static void bLoadPFile (GtkWidget *widget, gpointer data) {
 }
 
 static void bReloadFile (GtkWidget *widget, gpointer data) {
+  UNUSED(widget);
+  UNUSED(data);
 
   limpaStacks();
   cleanReload();
@@ -266,6 +276,8 @@ static void bReloadFile (GtkWidget *widget, gpointer data) {
 }
 
 static void bLoadIFile (GtkWidget *widget, gpointer data) {
+  UNUSED(widget);
+  UNUSED(data);
   char* inputFile=NULL;
   GtkFileOpen(&inputFile);
   cleanReload();

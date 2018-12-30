@@ -18,6 +18,7 @@
 #include "structs/heap.h"
 
 #define eprintf(...) fprintf(stderr,__VA_ARGS__)
+#define UNUSED(v) ((void) (v))
 
 extern FILE* yyin;
 char* lastfile;
@@ -214,13 +215,13 @@ void runDebug(){
             stop = 0;
             if(input[5] != '/'){ getcwd(path, MAXPATHLEN); asprintf(&lastfile, "%s/%s", path, &input[5]); }
             else{ asprintf(&lastfile, "%s", &input[5]); }
-            if((yyin = fopen(lastfile, "r"))<0) try(-1);
+            if((yyin = fopen(lastfile, "r")) == NULL) try(-1);
             yyparse();
         }
         if ( !strncmp(input, "reload", 6)){
             freeStructs();
             stop = 0;
-            if((yyin = fopen(lastfile, "r"))<0) try(-1);
+            if((yyin = fopen(lastfile, "r")) == NULL) try(-1);
             yyparse();
         }
         else if( !strncmp(input,"next ", 5) ){
@@ -313,7 +314,7 @@ void options(int argc, char** argv){// debug
         else{
             free(lastfile);
             lastfile = strdup(argv[i]);
-            if((yyin = fopen(argv[i], "r"))<0) try(-1);
+            if((yyin = fopen(argv[i], "r")) == NULL) try(-1);
             if(debug) parseInitial=1;
         }
     }
@@ -353,6 +354,8 @@ char* debuggerFunctionNames_generator(const char *text, int state){
 }
 
 char** debuggerFunctionNames_completion(const char *text, int start, int end){
+    UNUSED(start);
+    UNUSED(end);
     rl_attempted_completion_over = 1;
     return rl_completion_matches(text, debuggerFunctionNames_generator);
 }

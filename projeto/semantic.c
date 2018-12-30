@@ -261,7 +261,7 @@ void semFree() {
 }
 
 void auxAtox(char x) {
-    char* s;
+    char* s = NULL;
     Uvalue uv;
     OperandElem oe;
     try(OpStack_pop(&oe));
@@ -274,7 +274,7 @@ void auxAtox(char x) {
             break;
         case 'f':
             s = Heap_getBlock(oe->val.val.h);
-            uv.i = atof(s);
+            uv.f = atof(s);
             OpStack_push(newOperandElem(newValue(uv, T_float)));
             break;
     }
