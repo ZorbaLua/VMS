@@ -1,5 +1,6 @@
 CC=cc
-CFLAGS=-Wall -Wextra -std=gnu18 -O3
+#CFLAGS=-Wall -Wextra -std=gnu18 -O3
+CFLAGS=-Wall -Wextra -Wno-unused-result  -std=gnu99 -O3 
 STRUCTS=structs
 GTK_LIBS=`pkg-config --cflags --libs gtk+-3.0`
 GTK_FLAGS=`pkg-config --cflags gtk+-3.0`
